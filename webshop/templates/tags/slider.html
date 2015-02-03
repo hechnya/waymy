@@ -1,0 +1,221 @@
+{% load i18n %}
+{% load catalog_tags %}
+{#            flex-slider#}
+{#<div class="my_slider">#}
+{#    <section class="flexslider-wrapper ">#}
+{#        <div class="flexslider" data-slidernav="auto" data-transition="slide" id="flexslider-0">#}
+{#            <div class="slides" style="width:800%; -webkit-transition: 0s; transition: 0s; -webkit-transform: translate3d(-1170px, 0, 0);">#}
+{#                {% for slide in slides %}#}
+{#                    <div class="slide row-fluid" style="background: url('/media/{{ slide.image }}');">#}
+{#                        <div class="container">#}
+{#                            <div class="row">#}
+{#                                <div class="col-md-6 caption">#}
+{#                                    <h2 class="enlarge">{{ slide.product.name }}</h2>#}
+{#                                    <h4>{{ slide.product.brand }}</h4>#}
+{#                                    <p>{{ slide.product.description }}</p>#}
+{#                                    <a href="{{ slide.product.get_absolute_url }}" class="btn more-link large i-right">Подробнее<i class="default"></i></a>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+{#</div>#}
+
+<style>
+			#example {
+				height: 500px;
+				overflow: hidden;
+			}
+			#example .mSButtons {
+				height: 80%;
+			}
+			#example .frame {
+				width: 100%;
+				height: 100%;
+			}
+			#example .frame .slide_element {
+				height: 100%;
+			}
+			#example .frame .slide_element > div {
+				float: left;
+				height: 100%;
+				overflow: hidden;
+			}
+			#example .frame .mSCover img {
+				max-width: none;
+			}
+			#example .credit {
+				position: absolute;
+				bottom: 10px;
+				left: 10px;
+				font-size: 11px;
+				line-height: normal;
+				font-weight: 300;
+				text-shadow: rgba(0,0,0,0.7) 0 1px 0px;
+				color: #CCC;
+				background: #000;
+				background: rgba(0,0,0,0.6);
+				padding: 0 4px;
+				white-space: nowrap;
+				z-index: 1002;
+				text-transform: uppercase;
+			}
+			#example .credit a {
+				color: #FFF;
+				font-weight: 400;
+			}
+			.infoBlock {
+				position: absolute;
+				top: 30px;
+				right: 30px;
+				left: auto;
+				max-width: 30%;
+				padding-bottom: 0;
+				background: #FFF;
+				background: rgba(255, 255, 255, 0.6);
+				overflow: hidden;
+				padding: 20px;
+				z-index: 1002;
+			}
+			.infoBlockLeftBlack {
+				color: #FFF;
+				background: #000;
+				background: rgba(0,0,0,0.55);
+				left: 90px;
+				right: auto;
+				opacity: 0;
+			}
+			.infoBlock2 {
+				top: 90px;
+				left: 100px;
+			}
+			.infoBlock h4 {
+				font-size: 16px;
+				font-weight: 600;
+				line-height: 1.2;
+				margin: 0;
+				padding-bottom: 3px;
+				color: inherit;
+				text-align: left;
+			}
+			.infoBlock p {
+				font-size: 16px;
+				font-weight: 300;
+				margin: 4px 0 0;
+			}
+			.infoBlock a {
+				color: #FFF;
+				text-decoration: underline;
+			}
+
+			@media (max-width: 979px) {
+				#example {
+					height: 400px;
+					margin-top: 0;
+				}
+				.infoBlock {
+					min-width: 40%;
+				}
+			}
+
+			@media (max-width: 768px) {
+				#example {
+					margin: 0 -20px;
+					height: 300px;
+				}
+				.infoBlock {
+					padding: 10px;
+					height: auto;
+					max-height: 100%;
+				}
+				.infoBlock h4 {
+					font-size: 14px;
+					line-height: 17px;
+				}
+				.infoBlock p {
+					font-size: 12px;
+				}
+			}
+		</style>
+
+<div id="example" class="mightyslider_modern_skin">
+    <!-- FRAME -->
+    <div class="frame">
+        <!-- SLIDEELEMENT -->
+        <div class="slide_element">
+            <!-- SLIDES -->
+            <div class="slide" data-mightyslider="
+                cover: '/media/slider/slider1.jpg',
+            ">
+                <div class="mSCaption infoBlock infoBlockLeftBlack" data-msanimation="{
+                    speed: 700,
+                    easing: 'easeOutQuint',
+                    style: {
+                        left: 30,
+                        opacity: 1
+                    }
+                }">
+                    <h4>Создайте незабываемую атмосферу</h4>
+                    <p>вместе с нашим набором "Tea for everybody"</p>
+                </div>
+{#                <div class="credit">#}
+{#                    © By <a href="http://www.flickr.com/photos/36081137@N05/" target="_blank">Fabius_climbing</a>#}
+{#                </div>#}
+            </div>
+            <div class="slide" data-mightyslider="
+                cover: '/media/slider/slider2.jpg',
+            ">
+                <div class="infoBlock">
+                    <h4>Создайте незабываемую атмосферу</h4>
+                    <p>вместе с нашим набором "Tea for everybody"</p>
+                </div>
+{#                <div class="credit">#}
+{#                    © By <a href="http://www.flickr.com/photos/azalkimista/" target="_blank">Csaba Kovacs</a>#}
+{#                </div>#}
+            </div>
+            <!-- END OF SLIDES -->
+        </div>
+        <!-- END OF SLIDEELEMENT -->
+    </div>
+    <!-- END OF FRAME -->
+</div>
+
+<script>
+			jQuery(document).ready(function($) {
+				(function(){
+					var $example = $('#example'),
+					$frame = $('.frame', $example);
+					$frame.mightySlider({
+						speed: 1000,
+						easing: 'easeOutExpo',
+						viewport: 'fill',
+
+						// Navigation options
+						navigation: {
+							slideSize: '100%',
+							keyboardNavBy: 'slides'
+						},
+
+						// Dragging
+						dragging: {
+							swingSpeed:    0.1
+						},
+
+						// Pages
+						pages: {
+							activateOn: 'click'
+						},
+
+						// Commands
+						commands: {
+							pages: 1,
+							buttons: 1
+						}
+					});
+				})();
+			});
+		</script>
