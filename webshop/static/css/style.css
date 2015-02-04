@@ -1607,7 +1607,7 @@ ul.menu li:hover ul.children {
 .special {
     padding: 20px 0;
     background: url("../images/bg1.jpg") no-repeat;
-    background-size: auto  100%;
+    background-size: 100%;
     text-align: center;
 }
 .special img {
