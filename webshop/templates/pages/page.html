@@ -34,43 +34,49 @@
 
 
     <div id="stranica">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
 
-        <h1>{{ page.name }}</h1>
+                    <h1>{{ page.name }}</h1>
 
 {#        <h2>{{ tiny }}</h2>#}
 {#        <h2>{{ static }}</h2>#}
 
-        {% if request.user.is_superuser %}
+                    {% if request.user.is_superuser %}
 
-            <ul id="myTab" class="nav nav-tabs">
-                <li class="active"><a href="#home" data-toggle="tab">Содержание</a></li>
-                <li class=""><a href="#edit" data-toggle="tab">Редактировать</a></li>
-            </ul>
-            <div id="myTabContent" class="tab-content">
-                <div class="tab-pane fade active in" id="home">
-                    {{ page.text|safe }}
-                </div>
-                <div class="tab-pane" id="edit">
-                    <form class="" action="." method="post">{% csrf_token %}
-                        <h3>Измените материал</h3>
-                        <table>
-                            {{ form.media }}
-                            {{ form.as_p }}
-                        </table>
-                        <table>
-                        <tr>
-                            <th colspan="2">
-                                <input type="submit" value="Отправить" class="submit review_button" />
-                            </th>
-                        </tr>
-                        </table>
-                    </form>
+                        <ul id="myTab" class="nav nav-tabs">
+                            <li class="active"><a href="#home" data-toggle="tab">Содержание</a></li>
+                            <li class=""><a href="#edit" data-toggle="tab">Редактировать</a></li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div class="tab-pane fade active in" id="home">
+                                {{ page.text|safe }}
+                            </div>
+                            <div class="tab-pane" id="edit">
+                                <form class="" action="." method="post">{% csrf_token %}
+                                    <h3>Измените материал</h3>
+                                    <table>
+                                        {{ form.media }}
+                                        {{ form.as_p }}
+                                    </table>
+                                    <table>
+                                    <tr>
+                                        <th colspan="2">
+                                            <input type="submit" class="btn btn-primary" value="Отправить" class="submit review_button" />
+                                        </th>
+                                    </tr>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    {% else %}
+
+                        {{ page.text|safe }}
+                    {% endif %}
+
                 </div>
             </div>
-        {% else %}
-
-            {{ page.text|safe }}
-        {% endif %}
-
+        </div>
     </div>
 {% endblock %}
