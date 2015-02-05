@@ -204,6 +204,7 @@ INSTALLED_APPS = (
     'webshop.ajaxapp',
     'webshop.slider',
     'webshop.pages',
+    'webshop.reviews',
     'mptt',
     'bootstrap3',
     'sorl.thumbnail',

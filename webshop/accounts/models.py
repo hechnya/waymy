@@ -11,6 +11,9 @@ class UserProfile(BaseOrderInfo):
     """Профиль пользователя"""
     user = models.ForeignKey(User, unique=True)
 
+    icon = models.FileField(_(u'Image'), upload_to='accounts/images/',
+                             help_text=u'Фото', blank=True)
+
     def __unicode__(self):
         return _(u'Профиль: ') + self.user.username
 
