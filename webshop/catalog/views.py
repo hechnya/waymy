@@ -7,15 +7,19 @@ from django.template import RequestContext
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
+import datetime
 
 from webshop.cart import cart
 from webshop.catalog.forms import ProductAddToCartForm, get_form_add_to_cart
 from django.core.mail import send_mail
 from webshop.catalog.models import *
+from webshop.reviews.models import ReviewsProduct
+from webshop.reviews.forms import ReviewProductForm
 from webshop.catalog.forms import FormFront
 from webshop.slider.models import Slider
 from webshop.news.models import News
 from webshop.pages.models import Page
+from webshop.accounts.models import UserProfile
 
 
 def index_view(request, template_name="catalog/index.html"):
@@ -139,6 +143,16 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
     # categories = p.categories.filter(is_active=True)
     # categories = p.categories.objects.all()
 
+    reviews = ReviewsProduct.objects.filter(product=p)
+
+    user = request.user
+    try:
+        profile = UserProfile.objects.get(user=user)
+        user.have_profile = True
+    except:
+        user.have_profile = False
+
+
     # breadcrumbs
     cat = p.categories.all()
     c = get_object_or_404(Category, id=cat[0].id)
@@ -174,43 +188,58 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
     if request.method == 'POST':
         # Добавление в корзину, создаем связанную форму
         postdata = request.POST.copy()
-        form = ProductAddToCartForm(request, postdata)
-        # form = get_form_add_to_cart(request, postdata)
-        # form2 = ProductOneClickForm(request.POST or None)
-        # Проверка что отправляемые данные корректны
-        if form.is_valid():
-            # Добавляем в корзину и делаем перенаправление на страницу с корзиной
-            cart.add_to_cart(request)
-            # Если cookies работают, читаем их
-            if request.session.test_cookie_worked():
-                request.session.delete_test_cookie()
-            # url = urlresolvers.reverse('show_cart')
+
+        if postdata.has_key('review'):
+            # form2 = ReviewProductForm(request, postdata)
+            review = ReviewsProduct()
+            review.text = postdata.get('text', '')
+            review.userProfile = UserProfile.objects.get(user=request.user)
+            review.product = p
+            review.date = datetime.date.today()
+            review.save()
+
             return HttpResponseRedirect('/product/%s' % product_slug)
-        # if form2.is_valid():
-        #     phone = request.POST['phone']
-        #     text = u'Заявка на товар %s \n телефон: %s' % (page_title, phone)
-        #     send_mail('в 1 клик', text, 'teamer777@gmail.com', ['greenteamer@bk.ru'], fail_silently=False)
-        #     return HttpResponseRedirect('/product/%s/' % product_slug)
+
         else:
+
             form = ProductAddToCartForm(request, postdata)
             # form = get_form_add_to_cart(request, postdata)
-            error = form.errors
-            return render_to_response(template_name, locals(),
-                              context_instance=RequestContext(request))
-            # return HttpResponseRedirect('/product/%s' % product_slug)
-            # return render(request, template_name, {
-            #     'form': form,
-            #     'error': form.errors,
-            # })
+            # form2 = ProductOneClickForm(request.POST or None)
+            # Проверка что отправляемые данные корректны
+            if form.is_valid():
+                # Добавляем в корзину и делаем перенаправление на страницу с корзиной
+                cart.add_to_cart(request)
+                # Если cookies работают, читаем их
+                if request.session.test_cookie_worked():
+                    request.session.delete_test_cookie()
+                # url = urlresolvers.reverse('show_cart')
+                return HttpResponseRedirect('/product/%s' % product_slug)
+            # if form2.is_valid():
+            #     phone = request.POST['phone']
+            #     text = u'Заявка на товар %s \n телефон: %s' % (page_title, phone)
+            #     send_mail('в 1 клик', text, 'teamer777@gmail.com', ['greenteamer@bk.ru'], fail_silently=False)
+            #     return HttpResponseRedirect('/product/%s/' % product_slug)
+            else:
+                form = ProductAddToCartForm(request, postdata)
+                # form = get_form_add_to_cart(request, postdata)
+                error = form.errors
+                return render_to_response(template_name, locals(),
+                                  context_instance=RequestContext(request))
+                # return HttpResponseRedirect('/product/%s' % product_slug)
+                # return render(request, template_name, {
+                #     'form': form,
+                #     'error': form.errors,
+                # })
 
     else:
         # Если запрос GET, создаем не привязанную форму. request передаем в kwarg
         form = ProductAddToCartForm(request=request, label_suffix=':')
+        form2 = ReviewProductForm()
         # form = get_form_add_to_cart(request, postdata=None)
         # form2 = ProductOneClickForm()
     # form = get_form_add_to_cart(request)
     # Присваиваем значению скрытого поля чистое имя продукта
-    form.fields['product_slug'].widget.attrs['value'] = product_slug
+        form.fields['product_slug'].widget.attrs['value'] = product_slug
 
 
     # form2.fields['product_name'].widget.attrs['value'] = p.name

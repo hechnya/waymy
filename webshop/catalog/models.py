@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
-#!/usr/bin/env python
+    # -*- coding: utf-8 -*-
+    #!/usr/bin/env python
 from django.db import models
 import decimal
 from django.db.models import permalink

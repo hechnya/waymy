@@ -4,6 +4,7 @@
 @import "http://webfonts.ru/import/archive.css";
 @import "http://webfonts.ru/import/bravo.css";
 @import "http://webfonts.ru/import/cleanvertising.css";
+
 body{
     padding-bottom: 0!important;
     padding-top: 10px!important;
@@ -431,6 +432,8 @@ padding: 40px 0px 100px 0px;
 }
 .border_bot{
     border-bottom: 1px solid #E4E4E4;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
 }
 #catalog .product_thumbnail{
     margin-bottom: 30px;
@@ -643,6 +646,7 @@ font-family: 'Open Sans Condensed', sans-serif;
 }
 #product_lict,#oplata, #cart,#stranica{
     /*border-top: 1px solid #E8E8E8;*/
+    padding-bottom: 60px;
 }
 .price_cart{
     border-top: 1px solid #E8E8E8;
@@ -1692,6 +1696,7 @@ ul.menu li:hover ul.children {
 #cart .btn-success {
     margin-bottom: 20px;
 }
+
 /*#cart .panel-group {*/
     /*position: absolute;*/
     /*z-index: 100;*/
