@@ -168,13 +168,13 @@ DAJAX_FUNCTIONS=(
     'webshop.ajaxapp.onload_cart',
     'webshop.ajaxapp.calc_delivery',
     'webshop.ajaxapp.change_atrs',
+    'webshop.ajaxapp.addToCart',
 )
 
 SOUTH_MIGRATION_MODULES = {
     'captcha': 'captcha.south_migrations',
     'easy_thumbnails': 'easy_thumbnails.south_migrations',
 }
-
 
 INSTALLED_APPS = (
 
@@ -218,6 +218,8 @@ INSTALLED_APPS = (
     'ckeditor',
     'mptt_tree_editor',
 )
+
+
 
 THUMBNAIL_DEBUG = True
 

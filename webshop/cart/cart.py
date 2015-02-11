@@ -270,3 +270,54 @@ def look_at_price_delivery(request, delivery, type):
                 delivery.delivery_price = type[key]
 
     return delivery
+
+def add_to_cart_ajax(request, tovar, quantity, value):
+    """Добавление товара в корзину"""
+
+    # Получаем чистое имя товара, возвращает пустую строку если нет
+    product_slug = tovar
+
+    # Получаем количество добавлеых товаров, возрат 1 если нет
+    quantity = quantity
+
+    # получаем набор атрибутов
+    atributes = ProductVolume.objects.get(id=value)
+
+    # получаем вкус
+    feel = ''
+    if feel == '':
+        feel = None
+
+    # Получаем товар, или возвращаем ошибку "не найден" если его не существует
+    p = get_object_or_404(Product, slug=product_slug)
+
+    # Получаем товары в корзине
+    cart_products = get_cart_items(request)
+    cupon = get_cupon(request)
+    product_in_cart = False
+
+    # Проверяем что продукт уже в корзине
+    for cart_item in cart_products:
+        if (cart_item.product.id == p.id) and ((cart_item.feel_id == feel) or ('%s' % cart_item.feel_id == feel)) and (cart_item.atributes == atributes):
+            # Обновляем количество если найден
+            cart_item.augment_quantity(quantity)
+            product_in_cart = True
+
+    if not product_in_cart:
+        # Создаем и сохраняем новую корзину
+        ci = CartItem()
+        ci.product = p
+        ci.quantity = quantity
+        ci.cart_id = _cart_id(request)
+        ci.cupon = cupon
+
+        ci.atributes = atributes
+
+        try:
+            feelProduct = get_object_or_404(FeelName, id=feel)
+        except Exception:
+            feelProduct = None
+        ci.feel = feelProduct
+
+
+        ci.save()

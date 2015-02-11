@@ -684,11 +684,23 @@ font-family: 'Open Sans Condensed', sans-serif;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
-color: #000;
-background: #fff;
+    color: #000;
+    background: #fff;
     border:1px solid #2ad38e!important;
-border: 0;
-
+    border: 0;
+}
+.btn-mini {
+    padding: 5px 10px;
+    border-color: #8e8e8e;
+}
+.btn-mini:hover {
+    cursor: pointer;
+}
+input#id_quantity {
+    padding: 10px;
+}
+.quantity {
+    margin-bottom: 10px;
 }
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
     color: #FFF;
