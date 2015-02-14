@@ -139,48 +139,48 @@
                 </div>
 
 {#            таблица доставки#}
-{#            {% if cart_items %}#}
-{#                <div class="col-xs-7 delivery_all">#}
-{#                    <div class="row">#}
-{#                        <div class="col-xs-7">#}
-{#                            <form action="." method="POST" id="rb_delivery">#}
-{#                                {% csrf_token %}#}
-{#                                {{ deliveryForm.delivery.errors }}#}
-{#                                <label for="id_delivery"><i class="fa fa-plane"></i> <strong>Выберите способ доставки: </strong></label>#}
-{#                                {{ deliveryForm.delivery }}#}
-{#                            </form>#}
-{#                        </div>#}
-{#                        <div class="col-xs-5 current_delivery">#}
-{#                            <h4><strong>Текущий способ доставки:</strong></h4>#}
-{#                            <p>Способ доставки: <span id="type_ajax">{{ delivery.delivery_type }}</span></p>#}
-{#                            <p style="{% if delivery.is_to_big %}color: red;{% endif %}">Вес посылки {% if delivery.is_to_big %}слишком большой{% endif %}: <span id="weight_ajax">{{ delivery.weight }} гр.</span></p>#}
-{#                            <p>{% if not delivery.is_to_big %}Стоимость доставки: <span id="price_ajax">{{ delivery.delivery_price }} руб.</span> {% endif %}</p>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="col-xs-5">#}
-                    {#вывод подарков#}
-{#                    {% if cart_gift %}#}
-{#                        <div class="gift_in_cart">#}
-{#                            <h4><strong>Для Вас есть подарок!</strong></h4>#}
-{#                                <div style="">#}
-{#                                    {% thumbnail cart_gift.url "100x100" crop="center" as im %}#}
-{#                                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" align="left">#}
-{#                                    {% endthumbnail %}#}
-{#                                    <p>{{ cart_gift.name  }}</p>#}
-{#                                    <p>{{ cart_gift.description|truncatewords:100|safe }}</p>#}
-{#                                </div>#}
-{#                        </div>#}
-{#                    {% endif %}#}
-{#                    <p style="font-weight: bold;" id="price">{% if not delivery.is_to_big %}<span>ИТОГО: </span>{{ cart_total }} <span>руб.</span>{% endif %}</p>#}
-{#                </div>#}
-{#                <div class="col-xs-12">#}
-{#                    <form style="float: right;" name="testrb" method="post" action="." class="cart">{% csrf_token %}#}
-{#                        <button {% if delivery.is_to_big %}disabled="disabled"{% endif %} class="btn btn-success" type="submit" name="checkout">#}
-{#                        <i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i><span>Оформить заказ</span></button>#}
-{#                    </form>#}
-{#                </div>#}
-{#            {% endif %}#}
+            {% if cart_items %}
+                <div class="col-xs-7 delivery_all">
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <form action="." method="POST" id="rb_delivery">
+                                {% csrf_token %}
+                                {{ deliveryForm.delivery.errors }}
+                                <label for="id_delivery"><i class="fa fa-plane"></i> <strong>Выберите способ доставки: </strong></label>
+                                {{ deliveryForm.delivery }}
+                            </form>
+                        </div>
+                        <div class="col-xs-5 current_delivery">
+                            <h4><strong>Текущий способ доставки:</strong></h4>
+                            <p>Способ доставки: <span id="type_ajax">{{ delivery.delivery_type }}</span></p>
+                            <p style="{% if delivery.is_to_big %}color: red;{% endif %}">Вес посылки {% if delivery.is_to_big %}слишком большой{% endif %}: <span id="weight_ajax">{{ delivery.weight }} гр.</span></p>
+                            <p>{% if not delivery.is_to_big %}Стоимость доставки: <span id="price_ajax">{{ delivery.delivery_price }} руб.</span> {% endif %}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-5">
+                    вывод подарков
+                    {% if cart_gift %}
+                        <div class="gift_in_cart">
+                            <h4><strong>Для Вас есть подарок!</strong></h4>
+                                <div style="">
+                                    {% thumbnail cart_gift.url "100x100" crop="center" as im %}
+                                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" align="left">
+                                    {% endthumbnail %}
+                                    <p>{{ cart_gift.name  }}</p>
+                                    <p>{{ cart_gift.description|truncatewords:100|safe }}</p>
+                                </div>
+                        </div>
+                    {% endif %}
+                    <p style="font-weight: bold;" id="price">{% if not delivery.is_to_big %}<span>ИТОГО: </span>{{ cart_total }} <span>руб.</span>{% endif %}</p>
+                </div>
+                <div class="col-xs-12">
+                    <form style="float: right;" name="testrb" method="post" action="." class="cart">{% csrf_token %}
+                        <button {% if delivery.is_to_big %}disabled="disabled"{% endif %} class="btn btn-success" type="submit" name="checkout">
+                        <i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i><span>Оформить заказ</span></button>
+                    </form>
+                </div>
+            {% endif %}
         </div>
             </div>
     </div>

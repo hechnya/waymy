@@ -129,23 +129,23 @@
                                     <span id="price_old">{% trans "Price" %}: {{ atrs_default.price }} {% trans "руб." %} </span>
                                 </div>
 
-{#                                {% if p.sale_price.new_price != 0.00 %}#}
-{#                                    <div class="price_was">#}
-{#                                        {% trans "Was" %}: <span>{{ p.sale_price.price }} {% trans "руб." %}</span>#}
-{#                                    </div>#}
-{#                                    <div class="price_now">#}
-{#                                        {% trans "Now" %}:<span> {{ p.sale_price.new_price }} {% trans "руб." %} *</span>#}
-{#                                    </div>#}
-{#                                    <p>*за объем: {{ p.sale_price.volume }} мл.</p>#}
-{#                                {% else %}#}
+                                {% if p.sale_price.new_price != 0.00 %}
+                                    <div class="price_was">
+                                        {% trans "Was" %}: <span>{{ p.sale_price.price }} {% trans "руб." %}</span>
+                                    </div>
+                                    <div class="price_now">
+                                        {% trans "Now" %}:<span> {{ p.sale_price.new_price }} {% trans "руб." %} *</span>
+                                    </div>
+                                    <p>*за объем: {{ p.sale_price.volume }} мл.</p>
+                                {% else %}
 {#                                    <p>{{ p.sale_price.price }} {% trans "руб." %}</p>#}
-{#                                {% endif %}#}
+                                {% endif %}
 
 
                             </div>
 
                             <div class="col-xs-6">
-                                <form method="post" action="." class="cart">{% csrf_token %}
+                                <form method="post" action="." class="cart" id="addToCartForm">{% csrf_token %}
                                     <div class="hidden">
                                         {{ form.product_slug }}
                                     </div>
@@ -155,7 +155,7 @@
                                     {% if p.feel.count > 0 %}
                                         <div class="feel">
                                             {% if error.feel %}{{ error.feel }}<div class="error">{% endif %}
-{#                                            <label for="id_feel">Выберите вкус:</label>#}
+                                            <label for="id_feel">Выберите вкус:</label>
                                             <select name="feel" id="id_feel">
                                                 {% for feel in p.feel.all %}
                                                     <option value="{{ feel.id }}">{{ feel.name }}</option>
@@ -166,7 +166,9 @@
                                     {% endif %}
                                     <div class="quantity">
                                         <br/><label for="id_quantity">Количество:</label>
+                                        <i id="id_minus" class="btn-mini fa fa-minus-square" onselectstart="return false"></i>
                                         {{ form.quantity }}
+                                        <i id="id_plus" class="btn-mini fa fa-plus-square" onselectstart="return false"></i>
                                     </div>
 {#                                    <input class="btn btn-success" type="submit" value="{% trans "Add To Cart" %}"#}
 {#                                    name="submit" alt=" {% trans "Add To Cart" %}" />#}
@@ -175,10 +177,28 @@
                                         <i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i><span>Добавить в корзину</span>
                                     </button>
 
+
+
+{#                                     <input id="id_submit" value="Отправить" type="button" onclick="addToCart()">#}
                                 </form>
+{#                                <form method="post" action="." class="cart" id="addToCartForm">{% csrf_token %}#}
+{#                                    {{ form.as_p }}#}
+{##}
+{#                                    <button class="btn btn-success" type="submit" name="submit">#}
+{#                                        <i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i><span>Добавить в корзину</span>#}
+{#                                    </button>#}
+{##}
+{#                                    <input id="id_submit" value="Отправить" type="button" onclick="addToCart()">#}
+{##}
+{#                                </form>#}
+
+
+
 {#                                <form method="post" action="." class="cart">{% csrf_token %}#}
 {#                                    {{ form.as_p }}#}
 {#                                </form>#}
+
+                            <div id="message"></div>
                             </div>
                         </div>
                     </div>
@@ -237,32 +257,20 @@
 
 {#подключаем скрипт blueimp только на этой странице что бы не засорять код#}
 {% block bottom_script %}
-    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls " style="display: none;">
-        <div class="slides" style="width: 7684px;"></div>
-        <h3 class="title">Галерея</h3>
-        <a class="prev">‹</a>
-        <a class="next">›</a>
-        <a class="close">×</a>
-        <a class="play-pause"></a>
-        <ol class="indicator"></ol>
-    </div>
-    <script type="text/javascript" src="{{ STATIC_URL }}blueimp/blueimp-gallery.min.js"></script>
+
     <script type="text/javascript">
-		document.getElementById('links').onclick = function (event) {
-			event = event || window.event;
-			var target = event.target || event.srcElement,
-				link = target.src ? target.parentNode : target,
-				options = {index: link, event: event},
-				links = this.getElementsByTagName('a');
-			blueimp.Gallery(links, options);
+        document.getElementById('id_plus').onclick = function (plus) {
+            var quantity = document.getElementById('id_quantity').value;
+            quantity = parseInt(quantity)+1;
+            $('#id_quantity').val(quantity);
 		};
-		document.getElementById('links2').onclick = function (event) {
-			event = event || window.event;
-			var target = event.target || event.srcElement,
-				link = target.src ? target.parentNode : target,
-				options = {index: link, event: event},
-				links = this.getElementsByTagName('a');
-			blueimp.Gallery(links, options);
+        document.getElementById('id_minus').onclick = function (plus) {
+            var quantity = document.getElementById('id_quantity').value;
+            if (parseInt(quantity) > 1) {
+                quantity = parseInt(quantity)-1;
+                $('#id_quantity').val(quantity);
+            }
 		};
 	</script>
+
 {% endblock %}

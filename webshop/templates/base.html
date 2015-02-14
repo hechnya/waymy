@@ -89,6 +89,20 @@
                 Dajaxice.webshop.ajaxapp.change_atrs(Dajax.process, {'option':this.value});
             }
 
+
+
+          //  function pluss() {
+
+
+      //      }
+
+
+           //     $('#price_old').addClass('hidden');
+
+
+{#                    Dajaxice.webshop.ajaxapp.addToCart(Dajax.process,{'form':$('#addToCartForm').serialize(true)});#}
+
+
         </script>
 
     {% block onload_cart_script %}
@@ -100,6 +114,17 @@
 
 
         <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+
+{#        <script type="text/javascript">#}
+{#            var quantity = $('#id_quantity').value();#}
+{#                quantity = parseInt(quantity);#}
+{#                $('#message_show').value('hidden');#}
+{#                $('#id_submit').click(function(){#}
+{#                    $('#id_quantity').value(quantity+1);#}
+{#                    console.log(1);#}
+{#                    //alert('hello');#}
+{#                });#}
+{#        </script>#}
 {#        <script src="{{ STATIC_URL }}mightySlider/src/js/mightyslider.min.js"></script>#}
 
 {#    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>#}
@@ -132,8 +157,12 @@
             (function($) {
                 $(function() {
                     $('select').selectbox();
-                })
-            })(jQuery)
+                });
+
+
+
+            })(jQuery);
+
         </script>
 
 {#    ------------------Меню------------------------- #}

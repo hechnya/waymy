@@ -18,6 +18,7 @@ from webshop.checkout import checkout
 from webshop.cart.cart import *
 from webshop.catalog.models import *
 from webshop.cart import cart
+from webshop.catalog.forms import ProductAddToCartForm
 
 @dajaxice_register
 def order_form(request, form):
@@ -137,6 +138,7 @@ def change_atrs(request, option):
     dajax = Dajax()
     atrs = ProductVolume.objects.get(id=option)
 
+
     # обновляем инфу без преезагрузки
     dajax.assign('#volume', 'innerHTML', '%s' % atrs.volume )
     dajax.assign('#weight', 'innerHTML', '%s гр.' % atrs.weight )
@@ -238,3 +240,14 @@ def onload_cart(request):
 
     return dajax.json()
 
+# @dajaxice_register
+# def addToCart(request, form):
+#     dajax = Dajax()
+#     tovar = 'pervyj-produkt'
+#
+#     quantity = 1
+#     value = 1
+#
+#     add_to_cart_ajax(request, tovar, quantity, value)
+#
+#     return dajax.json()
