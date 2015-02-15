@@ -129,17 +129,17 @@
                                     <span id="price_old">{% trans "Price" %}: {{ atrs_default.price }} {% trans "руб." %} </span>
                                 </div>
 
-                                {% if p.sale_price.new_price != 0.00 %}
-                                    <div class="price_was">
-                                        {% trans "Was" %}: <span>{{ p.sale_price.price }} {% trans "руб." %}</span>
-                                    </div>
-                                    <div class="price_now">
-                                        {% trans "Now" %}:<span> {{ p.sale_price.new_price }} {% trans "руб." %} *</span>
-                                    </div>
-                                    <p>*за объем: {{ p.sale_price.volume }} мл.</p>
-                                {% else %}
+{#                                {% if p.sale_price.new_price != 0.00 %}#}
+{#                                    <div class="price_was">#}
+{#                                        {% trans "Was" %}: <span>{{ p.sale_price.price }} {% trans "руб." %}</span>#}
+{#                                    </div>#}
+{#                                    <div class="price_now">#}
+{#                                        {% trans "Now" %}:<span> {{ p.sale_price.new_price }} {% trans "руб." %} *</span>#}
+{#                                    </div>#}
+{#                                    <p>*за объем: {{ p.sale_price.volume }} мл.</p>#}
+{#                                {% else %}#}
 {#                                    <p>{{ p.sale_price.price }} {% trans "руб." %}</p>#}
-                                {% endif %}
+{#                                {% endif %}#}
 
 
                             </div>
