@@ -26,152 +26,292 @@
 {#</div>#}
 
 <style>
-			#example {
-				height: 500px;
-				overflow: hidden;
-			}
-			#example .mSButtons {
-				height: 80%;
-			}
-			#example .frame {
-				width: 100%;
-				height: 100%;
-			}
-			#example .frame .slide_element {
-				height: 100%;
-			}
-			#example .frame .slide_element > div {
-				float: left;
-				height: 100%;
-				overflow: hidden;
-			}
-			#example .frame .mSCover img {
-				max-width: none;
-			}
-			#example .credit {
-				position: absolute;
-				bottom: 10px;
-				left: 10px;
-				font-size: 11px;
-				line-height: normal;
-				font-weight: 300;
-				text-shadow: rgba(0,0,0,0.7) 0 1px 0px;
-				color: #CCC;
-				background: #000;
-				background: rgba(0,0,0,0.6);
-				padding: 0 4px;
-				white-space: nowrap;
-				z-index: 1002;
-				text-transform: uppercase;
-			}
-			#example .credit a {
-				color: #FFF;
-				font-weight: 400;
-			}
-			.infoBlock {
-				position: absolute;
-				top: 30px;
-				right: 30px;
-				left: auto;
-				max-width: 30%;
-				padding-bottom: 0;
-				background: #FFF;
-				background: rgba(255, 255, 255, 0.6);
-				overflow: hidden;
-				padding: 20px;
-				z-index: 1002;
-			}
-			.infoBlockLeftBlack {
-				color: #FFF;
-				background: #000;
-				background: rgba(0,0,0,0.55);
-				left: 90px;
-				right: auto;
-				opacity: 0;
-			}
-			.infoBlock2 {
-				top: 90px;
-				left: 100px;
-			}
-			.infoBlock h4 {
-				font-size: 16px;
-				font-weight: 600;
-				line-height: 1.2;
-				margin: 0;
-				padding-bottom: 3px;
-				color: inherit;
-				text-align: left;
-			}
-			.infoBlock p {
-				font-size: 16px;
-				font-weight: 300;
-				margin: 4px 0 0;
-			}
-			.infoBlock a {
-				color: #FFF;
-				text-decoration: underline;
-			}
+        .featurette {
+			overflow: visible;
+		}
+		#example {
+			position: relative;
+			background: #000;
+			overflow: hidden;
+		}
+		#example .frame {
+			width: 100%;
+			height: 600px;
+		}
+		#example .frame .slide_element {
+			height: 100%;
+		}
+		#example .frame .slide_element > div {
+			float: left;
+			width: 100%;
+			height: 100%;
 
-			@media (max-width: 979px) {
-				#example {
-					height: 400px;
-					margin-top: 0;
-				}
-				.infoBlock {
-					min-width: 40%;
-				}
-			}
+			-webkit-transform-style: preserve-3d;
+				-ms-transform-style: preserve-3d;
+					transform-style: preserve-3d;
+		}
+		#example .frame .slide_element > div.slide1 {
+			background: #0ac2d2;
+		}
+		#example .frame .slide_element > div.slide2 {
+			background: #f68dbb;
+		}
+		#example .frame .slide_element > div.slide3 {
+			background: #60d7a9;
+		}
+		#example .frame .slide_element > div.slide4 {
+			background: #fdc162;
+		}
+		#example .mSCaption {
+			display: none;
+			position: absolute;
+			color: #FFF;
+			line-height: normal;
+		}
+		#example .titleCaption {
+			top: 400px;
+			left: 0;
+			width: 100% !important;
+			font-size: 36px;
+			text-align: center;
+			text-transform: uppercase;
+			white-space: nowrap;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+		#example .block {
+			width: 200px;
+			height: 74px;
+			padding: 25px;
+			background: #000;
+			text-align: center;
+			text-transform: uppercase;
+			font-size: 18px;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+		#example .whiteBlock {
+			background: #FFF;
+			color: #000;
 
-			@media (max-width: 768px) {
-				#example {
-					margin: 0 -20px;
-					height: 300px;
-				}
-				.infoBlock {
-					padding: 10px;
-					height: auto;
-					max-height: 100%;
-				}
-				.infoBlock h4 {
-					font-size: 14px;
-					line-height: 17px;
-				}
-				.infoBlock p {
-					font-size: 12px;
-				}
-			}
+			-webkit-perspective: 1000px;
+				-ms-perspective: 1000px;
+					perspective: 1000px;
+
+			-webkit-perspective-origin: 50% 50%;
+				-ms-perspective-origin: 50% 50%;
+					perspective-origin: 50% 50%;
+		}
+		#example .noOpacity {
+			opacity: 1;
+			filter: alpha(opacity=100);
+		}
+		#example .textShadow {
+			text-shadow: 0 1px 0 rgba(0,0,0,0.3);
+		}
+		#example .blurBackground {
+			top: 0;
+			left: 0;
+			width: 100% !important;
+			height: 100% !important;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+		#example .blurBackground img {
+{#			width: 100%;#}
+			height: auto;
+            margin-top: -160px;;
+		}
+		#example .quoteCaption {
+			top: 240px;
+			left: 15% !important;
+			width: 70% !important;
+			font-size: 22px;
+			font-weight: 300;
+			line-height: 100%;
+			text-align: left;
+			text-transform: uppercase;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+		#example .quoterCaption {
+			top: 290px;
+			left: 915px;
+			font-size: 22px;
+			font-weight: 600;
+			text-align: left;
+			white-space: nowrap;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+
+        #example .lastText {
+			top: 240px;
+			left: 25% !important;
+			width: 50% !important;
+			font-size: 22px;
+			font-weight: 300;
+			line-height: 100%;
+			text-align: center;
+			text-transform: uppercase;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+
+		#example .mightySlider {
+			top: 176px;
+			left: 430px;
+            width: 60%;
+			font-size: 42px;
+			font-weight: 600;
+			text-align: center;
+			white-space: nowrap;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+{#		#example .mightySlider strong {#}
+{#			font-weight: 300;#}
+{#		}#}
+		#example .lastText img {
+			max-width: 400px;
+			display: block;
+			margin: 0 auto;
+		}
+
+		/* Blocks default styles */
+		#example .block.simpleFade {
+			top: 160px;
+			left: 125px;
+		}
+		#example .block.fromTop {
+			top: 120px;
+			left: 365px;
+		}
+		#example .block.fromBottom {
+			top: 200px;
+			left: 605px;
+		}
+		#example .block.fromLeft {
+			top: 160px;
+			left: 745px;
+		}
+		#example .block.fromRight {
+			top: 274px;
+			left: 345px;
+		}
+		#example .block.fromNE {
+			top: 234px;
+			left: 445px;
+		}
+		#example .block.fromSW {
+			top: 314px;
+			left: 765px;
+		}
+		#example .block.scaleDown {
+			top: 160px;
+			left: 125px;
+		}
+		#example .block.scaleUp {
+			top: 160px;
+			left: 365px;
+		}
+		#example .block.rotate {
+			top: 160px;
+			left: 605px;
+		}
+		#example .block.skew {
+			top: 160px;
+			left: 845px;
+		}
+		#example .block.rotateDown {
+			top: 274px;
+			left: 245px;
+		}
+		#example .block.rotateUp {
+			top: 274px;
+			left: 475px;
+		}
+		#example .block.turnOn {
+			top: 274px;
+			left: 725px;
+		}
+		#example .block.easing {
+			top: 100px;
+			left: -200px;
+		}
+		#example .block.delay {
+			top: 200px;
+			left: -200px;
+		}
+		#example .block.speed {
+			top: 300px;
+			left: -200px;
+		}
+		#example .block.repeatable {
+			top: 400px;
+			left: -200px;
+		}
+
 		</style>
 
 <div id="example" class="mightyslider_modern_skin">
     <!-- FRAME -->
-    <div class="frame">
+    <div class="frame" data-mightyslider="width:1170, height: 500">
         <!-- SLIDEELEMENT -->
         <div class="slide_element">
             <!-- SLIDES -->
             <div class="slide" data-mightyslider="
-                cover: '/media/slider/slider3.jpg',
+                cover: '/media/slider/slider5.jpg',
             ">
-                <div class="mSCaption infoBlock infoBlockLeftBlack" data-msanimation="{
-                    speed: 700,
-                    easing: 'easeOutQuint',
-                    style: {
-                        left: 30,
-                        opacity: 1
-                    }
-                }">
-                    <h4>Создайте незабываемую атмосферу</h4>
-                    <p>вместе с нашим набором "Tea for everybody"</p>
+{#                <div class="mSCaption infoBlock infoBlockLeftBlack" data-msanimation="{#}
+{#                    speed: 700,#}
+{#                    easing: 'easeOutQuint',#}
+{#                    style: {#}
+{#                        left: 30,#}
+{#                        opacity: 1#}
+{#                    },#}
+{#                }">#}
+{#                    <h4>Создайте незабываемую атмосферу</h4>#}
+{#                    <p>вместе с нашим набором "Tea for everybody"</p>#}
+{#                </div>#}
+                <div class="mSCaption titleCaption textShadow" data-msanimation="{ speed: 400, style: { top: 220, opacity: 1 } }, { delay: 2000, speed: 400, style: { opacity: 0 } }">
+                    Добро пожаловать в наш магазин здоровья!
+                </div>
+                <div class="mSCaption blurBackground" data-msanimation="{ delay: 2800, speed: 1000, style: { opacity: 1  } }" data-mightyslider="
+                cover: '/media/slider/slider5_fade.jpg',
+            "></div>
+                <div class="mSCaption quoteCaption textShadow" data-msanimation="{ delay: 3500, speed: 1000, style: { opacity: 1 } }, { delay: 7000, speed: 500, style: { opacity: 0 } }">
+                    Кто крепок телом, может терпеть и жару, и холод. Так и тот, кто здоров душевно, в состоянии перенести и гнев, и горе, и радость, и остальные чувства.
+                </div>
+                <div class="mSCaption quoterCaption textShadow" data-msanimation="{ delay: 5500, speed: 1000, style: { opacity: 1 } }, { delay: 5150, speed: 500, style: { opacity: 0 } }">
+                    -Эпиктет
+                </div>
+                <div class="mSCaption lastText textShadow" data-msanimation="{ delay: 12500, speed: 1000, style: { top: 150, opacity: 1 } }">
+                    <img src="/static/images/logo2_2.png" />
+                    магазин для здоровья,<br/><strong>магазин для Вас</strong>
                 </div>
 {#                <div class="credit">#}
 {#                    © By <a href="http://www.flickr.com/photos/36081137@N05/" target="_blank">Fabius_climbing</a>#}
 {#                </div>#}
             </div>
             <div class="slide" data-mightyslider="
-                cover: '/media/slider/slider5.jpg',
+                cover: '/media/slider/slider3.jpg',
             ">
-                <div class="infoBlock">
-                    <h4>Создайте незабываемую атмосферу</h4>
-                    <p>вместе с нашим набором "Tea for everybody"</p>
+                <div class="mSCaption titleCaption textShadow" data-msanimation="{ speed: 400, style: { top: 220, opacity: 1 } }, { delay: 2000, speed: 400, style: { opacity: 0 } }">
+                    Добро пожаловать в наш магазин здоровья!
+                </div>
+                <div class="mSCaption blurBackground" data-msanimation="{ delay: 2800, speed: 1000, style: { opacity: 1  } }" data-mightyslider="
+                cover: '/media/slider/slider3_blur.jpg',
+            "></div>
+                <div class="mSCaption quoteCaption textShadow" data-msanimation="{ delay: 3500, speed: 1000, style: { opacity: 1 } }, { delay: 7000, speed: 500, style: { opacity: 0 } }">
+                    Кто крепок телом, может терпеть и жару, и холод. Так и тот, кто здоров душевно, в состоянии перенести и гнев, и горе, и радость, и остальные чувства.
+                </div>
+                <div class="mSCaption quoterCaption textShadow" data-msanimation="{ delay: 5500, speed: 1000, style: { opacity: 1 } }, { delay: 5150, speed: 500, style: { opacity: 0 } }">
+                    -Эпиктет
+                </div>
+                <div class="mSCaption lastText textShadow" data-msanimation="{ delay: 12500, speed: 1000, style: { top: 150, opacity: 1 } }">
+                    <img src="/static/images/logo2_2.png" />
+                    магазин для здоровья,<br/><strong>магазин для Вас</strong>
                 </div>
 {#                <div class="credit">#}
 {#                    © By <a href="http://www.flickr.com/photos/azalkimista/" target="_blank">Csaba Kovacs</a>#}
@@ -183,7 +323,10 @@
     </div>
     <!-- END OF FRAME -->
 </div>
-
+<script src="http://mightyslider.com/assets/js/jquery.requestAnimationFrame.js"></script>
+<script src="http://mightyslider.com/assets/js/jquery.easing-1.3.pack.js" type="text/javascript"></script>
+<script src="http://mightyslider.com/assets/js/jquery.mousewheel.js" type="text/javascript"></script>
+<script src="http://mightyslider.com/assets/js/jquery.isotope.min.js"></script>
 <script>
 			jQuery(document).ready(function($) {
 				(function(){
@@ -191,9 +334,10 @@
 					$frame = $('.frame', $example);
 					$frame.mightySlider({
 						speed: 1000,
+                        autoScale:1,
 						easing: 'easeOutExpo',
-						viewport: 'fill',
-
+{#						viewport: 'fill',#}
+                        parallaxDimensions: {x:1, y:1, z:1},
 						// Navigation options
 						navigation: {
 							slideSize: '100%',

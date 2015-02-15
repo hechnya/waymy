@@ -1,0 +1,20 @@
+@media (max-width: 767px) {
+
+    .auth span {
+        display: none;
+    }
+    .auth .dropdown-menu span{
+        display: block;
+    }
+    .cart_icon n,
+    .auth n {
+        display: none;
+    }
+    .cart_icon i,
+    .auth i{
+        font-size: 30px!important;
+    }
+    .navbar-nav .open .dropdown-menu {
+        float: right;
+    }
+}
