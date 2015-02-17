@@ -124,6 +124,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
     'django.template.loaders.eggs.Loader',
+    'django_mobile.loader.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -135,6 +136,8 @@ MIDDLEWARE_CLASSES = (
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'breadcrumbs.middleware.BreadcrumbsMiddleware',
+    'django_mobile.middleware.MobileDetectionMiddleware',
+    'django_mobile.middleware.SetFlavourMiddleware',
     #'webshop.SSLMiddleware.SSLRedirect',
 )
 
@@ -158,6 +161,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 	'django.core.context_processors.request',
 	'django.contrib.messages.context_processors.messages',
 	'webshop.utils.context_processors.webshop',
+    'django_mobile.context_processors.flavour',
 )
 if DEBUG:
     TEMPLATE_CONTEXT_PROCESSORS += ('django.core.context_processors.debug',)
@@ -217,6 +221,7 @@ INSTALLED_APPS = (
     'image_cropping',
     'ckeditor',
     'mptt_tree_editor',
+    'django_mobile',
 )
 
 
