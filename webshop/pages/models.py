@@ -60,3 +60,7 @@ class Review(models.Model):
 
     class Meta:
         verbose_name_plural = (u'Отзывы пользователей')
+
+class Menu(models.Model):
+    name = models.CharField(max_length=100, verbose_name=u'Имя ссылки')
+    # page =

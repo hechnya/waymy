@@ -1,0 +1,224 @@
+{#{% extends "base.html" %}#}
+{% load catalog_tags %}
+
+<style>
+{#    html, body{#}
+{#	-webkit-tap-highlight-color: rgba(0,0,0,0); /* disable webkit tap highlight */#}
+{#    }#}
+
+    /* Lists */
+
+{#    ul{#}
+{#        margin: 0;#}
+{#        padding: 0;#}
+{#    }#}
+
+    /* Container */
+
+{#    #container{#}
+{#        position: relative;#}
+{#        padding: 20px 40px;#}
+{#    }#}
+
+    /* Menu Button */
+
+    .menu-btn{
+        width: 80px;
+        padding: 10px;
+        margin-bottom: 30px;
+{#        background: #000;#}
+        color: #000;
+        border: 1px solid #8B8B8B;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .menu-btn:hover{
+{#        background: #000;#}
+        color: #2ad38e;
+    }
+    /*! Pushy - v0.9.2 - 2014-9-13
+    * Pushy is a responsive off-canvas navigation menu using CSS transforms & transitions.
+    * https://github.com/christophery/pushy/
+    * by Christopher Yee */
+
+    /* Menu Appearance */
+
+    .pushy{
+        position: fixed;
+        width: 200px;
+        height: 100%;
+        top: 0;
+        z-index: 9999;
+        background: #333332;
+        font-size: 0.9em;
+        font-weight: bold;
+        -webkit-box-shadow: inset -10px 0 6px -9px rgba(0, 0, 0, .7);
+        -moz-box-shadow: inset -10px 0 6px -9px rgba(0, 0, 0, .7);
+        box-shadow: inset -10px 0 6px -9px rgba(0, 0, 0, .7);
+        overflow: auto;
+        -webkit-overflow-scrolling: touch; /* enables momentum scrolling in iOS overflow elements */
+    }
+
+    .pushy a{
+        display: block;
+        color: #b3b3b1;
+        padding: 15px 30px;
+        border-bottom: 1px solid rgba(0, 0, 0, .1);
+        border-top: 1px solid rgba(255, 255, 255, .1);
+        text-decoration: none;
+    }
+
+    .pushy a:hover{
+        background: #2ad38e;
+        color: #FFF;
+    }
+
+    /* Menu Movement */
+
+    .pushy-left{
+        -webkit-transform: translate3d(-200px,0,0);
+        -moz-transform: translate3d(-200px,0,0);
+        -ms-transform: translate3d(-200px,0,0);
+        -o-transform: translate3d(-200px,0,0);
+        transform: translate3d(-200px,0,0);
+    }
+
+    .pushy-open{
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+    }
+
+    .container-push, .push-push{
+        -webkit-transform: translate3d(200px,0,0);
+        -moz-transform: translate3d(200px,0,0);
+        -ms-transform: translate3d(200px,0,0);
+        -o-transform: translate3d(200px,0,0);
+        transform: translate3d(200px,0,0);
+    }
+
+    /* Menu Transitions */
+
+    .pushy, #container, .push{
+        -webkit-transition: -webkit-transform .2s cubic-bezier(.16, .68, .43, .99);
+        -moz-transition: -moz-transform .2s cubic-bezier(.16, .68, .43, .99);
+        -o-transition: -o-transform .2s cubic-bezier(.16, .68, .43, .99);
+        transition: transform .2s cubic-bezier(.16, .68, .43, .99);
+    }
+
+    .pushy h3 {
+        color: #fff;
+{#        text-align: center;#}
+        padding-left: 20px;
+        margin-top: 40px;
+    }
+    .pushy #accordion a {
+        border-bottom: none;
+        color: #000;
+        font-size: 14px;
+        text-align: left;
+        padding-left: 20px;
+    }
+    .pushy #accordion .panel-default>.panel-heading {
+        border: 0px solid #ccc;
+        padding: 0;
+    }
+    .pushy #accordion .panel {
+        border-radius: 0;
+    }
+
+    /* Site Overlay */
+
+    .site-overlay{
+        display: none;
+    }
+
+    .pushy-active .site-overlay{
+        display: block;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 9998;
+        background-color: rgba(0,0,0,0.5);
+        -webkit-animation: fade 500ms;
+        -moz-animation: fade 500ms;
+        -o-animation: fade 500ms;
+        animation: fade 500ms;
+    }
+
+    @keyframes fade{
+        0%   { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    @-moz-keyframes fade{
+        0%   { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    @-webkit-keyframes fade{
+        0%   { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    @-o-keyframes fade{
+        0%   { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    /* Example Media Query */
+
+    @media screen and (max-width: 768px){
+        .pushy{
+            font-size: 1.0em;
+        }
+    }
+
+
+
+</style>
+
+    <nav class="pushy pushy-left">
+        <ul>
+            <li><a href="/"><span class=""></span>Главная</a></li>
+            {% for page in pages %}
+                {% if page.slug != '404' %}
+                    <li><a href="/page/{{ page.slug }}"><span class=""></span>{{ page.name }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+
+
+{#            <li><a href="/"><span class=""></span>Главная</a></li>#}
+{#            <li><a href="/page/akcii"><span class=""></span>О доставке</a></li>#}
+{#            <li><a href="/review"><span class=""></span>Отзывы</a></li>#}
+{#            <li><a href="/page/kontakty"><span class=""></span>Контакты</a></li>#}
+{#            <li><a href="#">Item 5</a></li>#}
+{#            <li><a href="#">Item 6</a></li>#}
+        </ul>
+    <h3>Каталог</h3>
+        {% categories_tree request %}
+    </nav>
+
+
+
+{#<ul class="nav navbar-nav">#}
+{#  <li class="dropdown">#}
+{#    <a href="{% url show_cart %}" class="dropdown-toggle" data-toggle="dropdown">#}
+{#        <i class="fa fa-bars"></i>#}
+{#        <n style="">Меню</n>#}
+{#    </a>#}
+{#    <ul class="dropdown-menu">#}
+{#        <a href="/"><span class=""></span>Главная</a>#}
+{#        <a href="/page/akcii"><span class=""></span>О доставке</a>#}
+{#        <a href="/review"><span class=""></span>Отзывы</a>#}
+{#        <a href="/page/kontakty"><span class=""></span>Контакты</a>#}
+{#    </ul>#}
+{#  </li>#}
+{#</ul>#}
+

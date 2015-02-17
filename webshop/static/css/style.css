@@ -1451,7 +1451,7 @@ input#order_submit {
     background: #000;
 }
 .cart_icon .dropdown-menu {
-    width: 100%;
+    width: auto;
     padding: 0px;
     margin: 0px;
 }
@@ -1624,7 +1624,7 @@ ul.menu li:hover ul.children {
 .special {
     padding: 20px 0;
     background: url("../images/bg1.jpg") no-repeat;
-    background-size: 100%;
+    /*background-size: 100%;*/
     text-align: center;
 }
 .special img {
@@ -1708,6 +1708,18 @@ ul.menu li:hover ul.children {
 #cart .btn-success {
     margin-bottom: 20px;
 }
+
+.auth .dropdown-menu{
+    background-color: #fff!important;
+    border: 1px solid #E4E4E4!important;
+    border-top: 3px solid #2ad38e!important;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.175);
+    left: initial;
+    right: 0;
+    padding: 10px;
+}
+
 
 /*#cart .panel-group {*/
     /*position: absolute;*/

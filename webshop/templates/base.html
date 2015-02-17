@@ -12,20 +12,20 @@
 
         <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/css.css" />
 {#        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>#}
-
 {#        {% bootstrap_css %}#}
         <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css"/>
+{#        <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap-theme.css"/>#}
         <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
         <link href="{{ STATIC_URL }}css/myResponsive.css" rel="stylesheet" />
 {#        <link href="{{ STATIC_URL }}css/non-responsive.css" rel="stylesheet" />#}
         <link rel="stylesheet" href="{{ STATIC_URL }}css/selectbox.css"/>
-        <link rel="stylesheet" href="{{ STATIC_URL }}fancybox/source/jquery.fancybox.css" type="text/css" media="screen" />
+{#        <link rel="stylesheet" href="{{ STATIC_URL }}fancybox/source/jquery.fancybox.css" type="text/css" media="screen" />#}
 
-        <link href="{{ STATIC_URL }}css/flexslider.css" rel="stylesheet">
-        <link href="{{ STATIC_URL }}css/theme-style.css" rel="stylesheet">
+{#        <link href="{{ STATIC_URL }}css/flexslider.css" rel="stylesheet">#}
+{#        <link href="{{ STATIC_URL }}css/theme-style.css" rel="stylesheet">#}
         <link href="{{ STATIC_URL }}font/css/font-awesome.min.css" rel="stylesheet">
 {#        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">#}
-        <link href="{{ STATIC_URL }}font/css/whhg.css" rel="stylesheet">
+{#        <link href="{{ STATIC_URL }}font/css/whhg.css" rel="stylesheet">#}
 
 
 {#    <link href="http://mightyslider.com/assets/css/style.css" rel="stylesheet">#}
@@ -53,7 +53,8 @@
         <meta charset="utf-8">
         <meta name="keywords" content="{{ meta_keywords }}" />
         <meta name="description" content="{{ meta_description }}" />
-{#        <meta name="viewport" content="width=device-width, initial-scale=1.0" />#}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
         <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -251,6 +252,23 @@
 
 {#        {% include "common/navigation.html" %}#}
 
+        {% block menu %}
+            {% menu request %}
+{#            <nav class="pushy pushy-left">#}
+{#                <ul>#}
+{#                    <li><a href="#">Item 1</a></li>#}
+{#                    <li><a href="#">Item 2</a></li>#}
+{#                    <li><a href="#">Item 3</a></li>#}
+{#                    <li><a href="#">Item 4</a></li>#}
+{#                    <li><a href="#">Item 5</a></li>#}
+{#                    <li><a href="#">Item 6</a></li>#}
+{#                </ul>#}
+{#            </nav>#}
+        {% endblock %}
+
+        <!-- Site Overlay -->
+        <div class="site-overlay"></div>
+
         {#                содержимое в catalog.html#}
         {% block site_wrapper %}
         {% endblock %}
@@ -262,6 +280,8 @@
         {#    blueimp#}
         {% block bottom_script %}
         {% endblock %}
+
+        <script src="{{ STATIC_URL }}js/pushy.min.js"></script>
 
     </body>
 </html>

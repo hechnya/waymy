@@ -13,6 +13,7 @@ from webshop.catalog.models import Category, Product, ProductImage, BrandName
 from webshop.slider.models import Slider
 from webshop.checkout import checkout
 from webshop.catalog.models import Category
+from webshop.pages.models import Page
 
 
 register = template.Library()
@@ -81,3 +82,12 @@ def slider(context, request):
     }
 # Register the custom tag as an inclusion tag with takes_context=True.
 register.inclusion_tag('tags/slider.html', takes_context=True)(slider)
+
+def menu(context, request):
+    pages = Page.objects.all()
+    return {
+        # 'products': products,
+        'pages': pages,
+    }
+# Register the custom tag as an inclusion tag with takes_context=True.
+register.inclusion_tag('tags/menu.html', takes_context=True)(menu)

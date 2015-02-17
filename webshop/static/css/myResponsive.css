@@ -1,5 +1,23 @@
+/*для мобилок*/
 @media (max-width: 767px) {
-
+    .separator_line {
+        width: 100%;
+    }
+    .auth {
+        margin-top: 0;
+    }
+    .auth .navbar-nav {
+        margin: 0;
+    }
+    .auth .nav>li>a {
+        padding-left: 5px;
+    }
+    .cart_icon .nav>li>a:hover,
+    .cart_icon .nav>li>a:focus,
+    .auth .nav>li>a:hover,
+    .auth .nav>li>a:focus {
+         background-color: #fff;
+     }
     .auth span {
         display: none;
     }
@@ -17,4 +35,247 @@
     .navbar-nav .open .dropdown-menu {
         float: right;
     }
+    .dropdown-menu {
+        right: 0!important;
+        /*width: 300px!important;*/
+        left: initial;
+    }
+    .main_menu {
+        background-size: 800px;
+    }
+    .main_menu .nav>li>a {
+        padding: 6px 1px;
+        margin-top: 0;
+    }
+    .menu_left {
+        display: none;
+    }
+
+    /*каталог меню*/
+    .cat_menu {
+        display: none;
+        margin-top: 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 0;
+        left: 0;
+    }
+    .cat_menu #accordion .panel-heading {
+        float: left;
+    }
+    .cat_menu h4.panel-title {
+        font-size: 12px;
+    }
+}
+/*для таблеток*/
+@media (min-width: 768px) {
+    .cart_icon n,
+    .auth n {
+        display: none;
+    }
+    .cart_icon i,
+    .auth i{
+        font-size: 30px!important;
+    }
+    .auth {
+        margin-top: 0;
+    }
+    .auth .nav>li>a{
+        padding: 10px 15px;
+        margin-top: 5px;
+    }
+    .dropdown-menu {
+        right: 0!important;
+        /*width: 300px!important;*/
+        left: initial;
+    }
+    .main_menu {
+        background-size: 1410px;
+    }
+    .menu_left {
+        display: none;
+    }
+    .cat_menu {
+        display: none;
+    }
+
+}
+/*для таблеток побольше*/
+@media (min-width: 992px) {
+    .menu-btn {
+        display: none;
+    }
+    .menu_left {
+        display: block;
+    }
+    .cart_icon n,
+    .auth n {
+        display: inline-block;
+    }
+    .cat_menu {
+        display: block;
+    }
+    .cat_menu h4.panel-title {
+        font-size: 16px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+    .menu_left p a, .menu_right p a {
+        font-size: 15px;
+    }
+
+}
+@media (min-width: 1200px) {
+    .cat_menu h4.panel-title {
+        font-size: 22px;
+    }
+}
+
+
+
+
+/*для фона меню*/
+@media (min-width: 1411px) {
+    .main_menu {
+        background-size: 1680px;
+    }
+}
+
+/*ГОТОВЫЕ УСЛОВИЯ*/
+/* Смартфоны (портретный и альбомный режимы) ----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) {
+    .auth {
+        margin-top: 0;
+    }
+    .auth .navbar-nav {
+        margin: 0;
+    }
+    .auth .nav>li>a {
+        padding-left: 5px;
+    }
+    .cart_icon .nav>li>a:hover,
+    .cart_icon .nav>li>a:focus,
+    .auth .nav>li>a:hover,
+    .auth .nav>li>a:focus {
+         background-color: #fff;
+     }
+    .auth span {
+        display: none;
+    }
+    .auth .dropdown-menu span{
+        display: block;
+    }
+    .cart_icon n,
+    .auth n {
+        display: none;
+    }
+    .cart_icon i,
+    .auth i{
+        font-size: 30px!important;
+    }
+    .navbar-nav .open .dropdown-menu {
+        float: right;
+    }
+    .dropdown-menu {
+        right: 0!important;
+        /*width: 300px!important;*/
+        left: initial;
+    }
+    .main_menu {
+        background-size: 800px;
+    }
+    .main_menu .nav>li>a {
+        padding: 6px 1px;
+        margin-top: 0;
+    }
+    .menu_left {
+        display: none;
+    }
+
+    /*каталог меню*/
+    .cat_menu {
+        display: none;
+        /*margin-top: 0;*/
+        /*position: fixed;*/
+        /*top: 0;*/
+        /*width: 100%;*/
+        /*padding: 0;*/
+        /*left: 0;*/
+    }
+    .separator_line {
+        width: 100%;
+    }
+}
+
+/* Смартфоны (альбомный режим) ----------- */
+@media only screen
+and (min-width : 321px) {
+/* Сюда добавляем стили*/
+}
+
+/* Смартфоны (портретный режим) ----------- */
+@media only screen
+and (max-width : 320px) {
+/* Сюда добавляем стили*/
+}
+
+/* iPad (портретный и альбомный режимы) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px) {
+/* Сюда добавляем стили*/
+}
+
+/* iPad (альбомный режим) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) {
+/* Сюда добавляем стили*/
+}
+
+/* iPad (портретный режим) ----------- */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+/* Сюда добавляем стили*/
+}
+
+/* Настольные компьютеры и ноутбуки ----------- */
+@media only screen
+and (min-width : 1224px) {
+/* Сюда добавляем стили*/
+}
+
+/* Большие экраны ----------- */
+@media only screen
+and (min-width : 1824px) {
+/* Сюда добавляем стили*/
+}
+
+/* iPhone 5 (портретный и альбомный режимы)----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px) {
+/* Сюда добавляем стили*/
+}
+
+/* iPhone 5 (альбомный режим)----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : landscape) {
+/* Сюда добавляем стили*/
+}
+
+/* iPhone 5 (портретный режим)----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : portrait) {
+
 }
