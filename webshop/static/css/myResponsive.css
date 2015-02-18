@@ -48,7 +48,7 @@
         margin-top: 0;
     }
     .menu_left {
-        display: none;
+        /*display: none;*/
     }
 
     /*каталог меню*/
@@ -94,7 +94,7 @@
         background-size: 1410px;
     }
     .menu_left {
-        display: none;
+        /*display: none;*/
     }
     .cat_menu {
         display: none;
@@ -147,67 +147,58 @@
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 480px) {
-    .auth {
-        margin-top: 0;
-    }
-    .auth .navbar-nav {
-        margin: 0;
-    }
-    .auth .nav>li>a {
-        padding-left: 5px;
-    }
-    .cart_icon .nav>li>a:hover,
-    .cart_icon .nav>li>a:focus,
-    .auth .nav>li>a:hover,
-    .auth .nav>li>a:focus {
-         background-color: #fff;
-     }
-    .auth span {
-        display: none;
-    }
-    .auth .dropdown-menu span{
-        display: block;
-    }
-    .cart_icon n,
-    .auth n {
-        display: none;
-    }
-    .cart_icon i,
-    .auth i{
-        font-size: 30px!important;
-    }
-    .navbar-nav .open .dropdown-menu {
-        float: right;
-    }
-    .dropdown-menu {
-        right: 0!important;
+    /*.auth {*/
+        /*margin-top: 0;*/
+    /*}*/
+    /*.auth .navbar-nav {*/
+        /*margin: 0;*/
+    /*}*/
+    /*.auth .nav>li>a {*/
+        /*padding-left: 5px;*/
+    /*}*/
+    /*.cart_icon .nav>li>a:hover,*/
+    /*.cart_icon .nav>li>a:focus,*/
+    /*.auth .nav>li>a:hover,*/
+    /*.auth .nav>li>a:focus {*/
+         /*background-color: #fff;*/
+     /*}*/
+    /*.auth span {*/
+        /*display: none;*/
+    /*}*/
+    /*.auth .dropdown-menu span{*/
+        /*display: block;*/
+    /*}*/
+    /*.cart_icon n,*/
+    /*.auth n {*/
+        /*display: none;*/
+    /*}*/
+    /*.cart_icon i,*/
+    /*.auth i{*/
+        /*font-size: 30px!important;*/
+    /*}*/
+    /*.navbar-nav .open .dropdown-menu {*/
+        /*float: right;*/
+    /*}*/
+    /*.dropdown-menu {*/
+        /*right: 0!important;*/
         /*width: 300px!important;*/
-        left: initial;
-    }
-    .main_menu {
-        background-size: 800px;
-    }
-    .main_menu .nav>li>a {
-        padding: 6px 1px;
-        margin-top: 0;
-    }
-    .menu_left {
-        display: none;
-    }
+        /*left: initial;*/
+    /*}*/
+    /*.main_menu {*/
+        /*background-size: 800px;*/
+    /*}*/
+    /*.main_menu .nav>li>a {*/
+        /*padding: 6px 1px;*/
+        /*margin-top: 0;*/
+    /*}*/
 
     /*каталог меню*/
-    .cat_menu {
-        display: none;
-        /*margin-top: 0;*/
-        /*position: fixed;*/
-        /*top: 0;*/
+    /*.cat_menu {*/
+        /*display: none;*/
+    /*}*/
+    /*.separator_line {*/
         /*width: 100%;*/
-        /*padding: 0;*/
-        /*left: 0;*/
-    }
-    .separator_line {
-        width: 100%;
-    }
+    /*}*/
 }
 
 /* Смартфоны (альбомный режим) ----------- */
@@ -261,7 +252,73 @@ and (min-width : 1824px) {
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 568px) {
-/* Сюда добавляем стили*/
+    .separator_line {
+        width: 100%;
+    }
+    .auth {
+        margin-top: 0;
+    }
+    .auth .navbar-nav {
+        margin: 0;
+    }
+    .auth .nav>li>a {
+        padding-left: 5px;
+    }
+    .cart_icon .nav>li>a:hover,
+    .cart_icon .nav>li>a:focus,
+    .auth .nav>li>a:hover,
+    .auth .nav>li>a:focus {
+         background-color: #fff;
+     }
+    .auth span {
+        display: none;
+    }
+    .auth .dropdown-menu span{
+        display: block;
+    }
+    .cart_icon n,
+    .auth n {
+        display: none;
+    }
+    .cart_icon i,
+    .auth i{
+        font-size: 30px!important;
+    }
+    .navbar-nav .open .dropdown-menu {
+        float: right;
+    }
+    .dropdown-menu {
+        right: 0!important;
+        /*width: 300px!important;*/
+        left: initial;
+    }
+    .main_menu {
+        background-size: 800px;
+    }
+    .main_menu .nav>li>a {
+        padding: 6px 1px;
+        margin-top: 0;
+    }
+    .menu_left {
+        /*display: none;*/
+    }
+
+    /*каталог меню*/
+    .cat_menu {
+        display: none;
+        margin-top: 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 0;
+        left: 0;
+    }
+    .cat_menu #accordion .panel-heading {
+        float: left;
+    }
+    .cat_menu h4.panel-title {
+        font-size: 12px;
+    }
 }
 
 /* iPhone 5 (альбомный режим)----------- */

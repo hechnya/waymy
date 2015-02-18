@@ -637,6 +637,12 @@ font-family: 'Open Sans Condensed', sans-serif;
     text-shadow: none!important;
 
 }
+#footer p {
+    color: #fff;
+}
+#footer img {
+    width: 50px;
+}
 
 /*-------------Страница товара--------------*/
 
@@ -1694,7 +1700,10 @@ ul.menu li:hover ul.children {
     display: inline-block;
 }
 .payment {
-    margin-top: 100px;
+    margin-top:50px;
+}
+a.brand {
+    color:#fff;
 }
 .cart_icon .nav a:hover {
     color: #000!important;
@@ -1708,7 +1717,6 @@ ul.menu li:hover ul.children {
 #cart .btn-success {
     margin-bottom: 20px;
 }
-
 .auth .dropdown-menu{
     background-color: #fff!important;
     border: 1px solid #E4E4E4!important;

@@ -23,6 +23,7 @@ THUMBNAIL_PROCESSORS = (
     'image_cropping.thumbnail_processors.crop_corners',
 ) + thumbnail_settings.THUMBNAIL_PROCESSORS
 
+# FLAVOURS = (u'full', u'ipad', u'mobile', )
 
 ADMINS = (
 	# ('Your Name', 'your_email@example.com'),
