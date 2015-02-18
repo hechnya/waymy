@@ -14,6 +14,7 @@ from webshop.slider.models import Slider
 from webshop.checkout import checkout
 from webshop.catalog.models import Category
 from webshop.pages.models import Page
+from webshop.catalog import mobile
 
 
 register = template.Library()
@@ -44,9 +45,23 @@ def footer_links():
 # The first argument *must* be called "context" here.
 def cart_box(context, request):
     cart_i = cart.get_cart_items(request)
+
+    # определение устройства
+    user_agent = request.META.get("HTTP_USER_AGENT")
+    http_accept = request.META.get("HTTP_ACCEPT")
+    device = ''
+    if user_agent and http_accept:
+        agent = mobile.UAgentInfo(userAgent=user_agent, httpAccept=http_accept)
+        if agent.detectTierIphone():
+            device = 'mobile'
+        if agent.detectMobileQuick():
+            device = 'mobile'
+        if agent.detectTierTablet():
+            device = 'tablet'
     return {
         # 'products': products,
         'cart_i': cart_i,
+        'device': device,
     }
 # Register the custom tag as an inclusion tag with takes_context=True.
 register.inclusion_tag('tags/cart_box.html', takes_context=True)(cart_box)
@@ -76,9 +91,24 @@ register.inclusion_tag('tags/brand_filter.html', takes_context=True)(brand_filte
 # The first argument *must* be called "context" here.
 def slider(context, request):
     slides = Slider.objects.all()
+
+    # определение устройства
+    user_agent = request.META.get("HTTP_USER_AGENT")
+    http_accept = request.META.get("HTTP_ACCEPT")
+    device = ''
+    if user_agent and http_accept:
+        agent = mobile.UAgentInfo(userAgent=user_agent, httpAccept=http_accept)
+        if agent.detectTierIphone():
+            device = 'mobile'
+        if agent.detectMobileQuick():
+            device = 'mobile'
+        if agent.detectTierTablet():
+            device = 'tablet'
+
     return {
         # 'products': products,
         'slides': slides,
+        'device': device,
     }
 # Register the custom tag as an inclusion tag with takes_context=True.
 register.inclusion_tag('tags/slider.html', takes_context=True)(slider)

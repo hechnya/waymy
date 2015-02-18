@@ -8,6 +8,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
 import datetime
+from django_mobile import set_flavour
+from webshop.catalog import mobile
 
 from webshop.cart import cart
 from webshop.catalog.forms import ProductAddToCartForm, get_form_add_to_cart
@@ -24,6 +26,29 @@ from webshop.accounts.models import UserProfile
 
 def index_view(request, template_name="catalog/index.html"):
     """Представление главной страницы"""
+
+    # set_flavour('ipad')
+    # определение устройства
+    user_agent = request.META.get("HTTP_USER_AGENT")
+    http_accept = request.META.get("HTTP_ACCEPT")
+    if user_agent and http_accept:
+        agent = mobile.UAgentInfo(userAgent=user_agent, httpAccept=http_accept)
+        # устройство посетителя - новый смартфон (iPhone, Android, Windows Phone 7, и т.д.)
+        if agent.detectTierIphone():
+            device = u'mobile'
+            template_name="mobile/catalog/index.html"
+            # HttpResponseRedirect('/myapp/i/')
+        # устройство посетителя - старый телефон
+        if agent.detectMobileQuick():
+            device = u'mobiled'
+            template_name="mobile/catalog/index.html"
+            # HttpResponseRedirect('/myapp/m/')
+        if agent.detectTierTablet():
+            device = u'tablet'
+            template_name="tablet/catalog/index.html"
+    # Для традиционных компьютеров и планшетов (iPad, Android, и т.д.)
+    # return HttpResponseRedirect('/myapp/d/')
+
     page_title = _(u'Internet Magazine')
     products = Product.objects.all()
     for p in products:
@@ -34,13 +59,6 @@ def index_view(request, template_name="catalog/index.html"):
             p.image = "/media/products/images/none.png"
 
     reviews = Review.objects.all()
-
-    # bestseller = Product.bestseller.all()
-    # for b in bestseller:
-    #     try:
-    #         b.image = ProductImage.objects.get(product=b, default=True)
-    #     except Exception:
-    #         b.image = "/media/products/images/none.png"
 
     #Далее вывод новостей
     news = News.objects.all()[:5]

@@ -6,10 +6,166 @@
 
 {% block content %}
 
+    <div class="tovari">
+        <div class="container">
+            <div class="row">
+{#                <div class="col-md-12">#}
 
-    <h2>Привет мобильная версия</h2>
+                        {% if products %}
+
+                            {% for p in products %}
+                                {% if forloop.counter < 4 %}
+                                    <div class="col-xs-12 popular_products">
+                                        <div class="product_thumbnail">
+                                            {% thumbnail p.image.url "100x100" crop="center" as im %}
+                                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                            {% endthumbnail %}
+                                            <h3>{{ p.name }}</h3>
+                                            <div class="description_tovar">{{ p.description|removetags:"img"|truncatewords:"12"|safe }}</div>
+                                            <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
+                                            <span class="price">{{ p.volume.price }} руб.</span><a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a>
+
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                        {% else %}
+                            <p>товары не найдены</p>
+                        {% endif %}
+
+{#                </div>#}
+            </div>
+        </div>
+    </div>
+
+    <div class="special">
+        <div class="container">
+            <div class="row">
+                <h1>Наше специальное предложение</h1>
+                    <div class="col-xs-6">
+                        <div class="big_text spesial_text">
+                            <p>Балгарский байховый мед из из лучших кладовых балгарии, созданый по древним рецептам  и правилам , специально для Вас со скидкой 30%</p>
+                            <a class="btn btn-default" href="">Подробнее</a>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <img src="{{ STATIC_URL }}images/med_1136.jpg" alt=""/>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="review">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="center">О нас говорят</h1>
+
+                    <style>
+                        #simple .frame {
+                            width: 100%;
+                            height: 210px;
+                        }
+                        #simple .frame ul {
+                            list-style: none;
+                            height: 100%;
+                            padding: 0;
+                            margin: 0;
+                        }
+                        #simple .frame ul li {
+                            float: left;
+                            height: 160px;
+                            padding: 0 10px;
+                        }
+                        #simple .frame ul li img {
+                            max-width: none;
+                        }
+                        #simple .frame ul li .details {
+                            padding-top: 10px;
+                            font-weight: 300;
+                        }
+                        #simple .frame ul li .details strong {
+                            display: block;
+                            color: #000;
+                        }
+                        #simple .frame ul li .details b {
+                        }
+                        #simple ul.mSPages {
+                            float: right;
+                            margin-bottom: 20px;
+                            margin-right: 12px;
+                        }
+                        #simple .mSButtons {
+                            top: 91px;
+                            bottom: auto;
+                        }
+                    </style>
 
 
+
+                     <!-- Button trigger modal -->
+
+                    <!-- PARENT -->
+                    <div class="mightyslider_carouselSimple_skin clearfix" id="simple">
+                        <ul class="mSPages"></ul>
+                        <div class="frame">
+                            <ul class="slide_element">
+
+                                {% for review in reviews %}
+{#                                    <li class="slide" data-mightyslider="cover:'{{ MEDIA_URL }}{{ review.photo }}', link: { url: '{{ MEDIA_URL }}{{ review.photo }}', 'data-caption': '&lt;strong&gt;Blossom&lt;/strong&gt; by &lt;b&gt;Christopher Wesser&lt;/b&gt;' }">#}
+                                    <li class="slide">
+                                        <div class="details">
+                                            <img src="{{ MEDIA_URL }}{{ review.photo }}" alt=""/>
+                                            <strong>{{ review.name }}</strong>
+                                            <div style="width:90%">{{ review.review|truncatewords:"30"|safe }}</div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="order_mail">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-8 col-md-offset-2 form_area">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form_container">
+                                    <h4 style="text-align: center;"><span class="gift_day">Получите наш подарок дня</span><br/> прямо сейчас!</h4>
+{#                                    <h4 style="text-align: center;"></h4>#}
+                                    <form action="." method="post" id="my_form">
+                                        <div class="">
+                                            {% csrf_token %}
+                                            <p>{{ form.name }}</p>
+                                            <p>{{ form.phone }}</p>
+                                            <input class="btn btn-default" id="" value="Отправить" type="submit">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h2 >Waymy - это товары высочайшего качества, которые придутся по душе Вам и Вашей семье!</h2>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+    </div>
 
 
 {% endblock %}
@@ -26,7 +182,6 @@
     <script type="text/javascript">
         jQuery(document).ready(function($){
 
-            $(".fancybox").fancybox();
 
 
             var $win = $(window),

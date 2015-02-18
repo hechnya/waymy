@@ -1,31 +1,115 @@
 {% load i18n %}
 {% load catalog_tags %}
-{#            flex-slider#}
-{#<div class="my_slider">#}
-{#    <section class="flexslider-wrapper ">#}
-{#        <div class="flexslider" data-slidernav="auto" data-transition="slide" id="flexslider-0">#}
-{#            <div class="slides" style="width:800%; -webkit-transition: 0s; transition: 0s; -webkit-transform: translate3d(-1170px, 0, 0);">#}
-{#                {% for slide in slides %}#}
-{#                    <div class="slide row-fluid" style="background: url('/media/{{ slide.image }}');">#}
-{#                        <div class="container">#}
-{#                            <div class="row">#}
-{#                                <div class="col-md-6 caption">#}
-{#                                    <h2 class="enlarge">{{ slide.product.name }}</h2>#}
-{#                                    <h4>{{ slide.product.brand }}</h4>#}
-{#                                    <p>{{ slide.product.description }}</p>#}
-{#                                    <a href="{{ slide.product.get_absolute_url }}" class="btn more-link large i-right">Подробнее<i class="default"></i></a>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                {% endfor %}#}
 
-{#            </div>#}
-{#        </div>#}
-{#    </section>#}
-{#</div>#}
+{#меняем стиль слайдера в зависимости от устройства#}
+{% if device == 'mobile' %}
+    <style>
+        #example .titleCaption {
+			top: 400px;
+			left: 0;
+			width: 100% !important;
+			font-size: 40px;
+			text-align: center;
+			text-transform: uppercase;
+			white-space: nowrap;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+        #example .quoteCaption {
+			top: 100px;
+			left: 5% !important;
+			width: 90% !important;
+			font-size: 22px;
+			font-weight: 300;
+			line-height: 100%;
+			text-align: left;
+			text-transform: uppercase;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+        #example .lastText {
+			top: 20px;
+			left: 25% !important;
+			width: 50% !important;
+			font-size: 26px;
+			font-weight: 300;
+			line-height: 100%;
+			text-align: center;
+			text-transform: uppercase;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+        #example .lastText img {
+			max-width: 100px;
+			display: block;
+			margin: 0 auto;
+		}
 
-<style>
+    </style>
+{% elif device == 'tablet' %}
+    <style>
+        #example .titleCaption {
+			top: 400px;
+			left: 0;
+			width: 100% !important;
+			font-size: 36px;
+			text-align: center;
+			text-transform: uppercase;
+			white-space: nowrap;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+        #example .quoteCaption {
+			top: 240px;
+			left: 15% !important;
+			width: 70% !important;
+			font-size: 22px;
+			font-weight: 300;
+			line-height: 100%;
+			text-align: left;
+			text-transform: uppercase;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+        #example .lastText img {
+			max-width: 300px;
+			display: block;
+			margin: 0 auto;
+		}
+    </style>
+{% else %}
+    <style>
+        #example .titleCaption {
+			top: 400px;
+			left: 0;
+			width: 100% !important;
+			font-size: 36px;
+			text-align: center;
+			text-transform: uppercase;
+			white-space: nowrap;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+        #example .quoteCaption {
+			top: 240px;
+			left: 15% !important;
+			width: 70% !important;
+			font-size: 22px;
+			font-weight: 300;
+			line-height: 100%;
+			text-align: left;
+			text-transform: uppercase;
+			opacity: 0;
+			filter: alpha(opacity=0);
+		}
+        #example .lastText img {
+			max-width: 400px;
+			display: block;
+			margin: 0 auto;
+		}
+    </style>
+{% endif %}
+    <style>
         .featurette {
 			overflow: visible;
 		}
@@ -67,17 +151,6 @@
 			position: absolute;
 			color: #FFF;
 			line-height: normal;
-		}
-		#example .titleCaption {
-			top: 400px;
-			left: 0;
-			width: 100% !important;
-			font-size: 36px;
-			text-align: center;
-			text-transform: uppercase;
-			white-space: nowrap;
-			opacity: 0;
-			filter: alpha(opacity=0);
 		}
 		#example .block {
 			width: 200px;
@@ -122,18 +195,6 @@
 			height: auto;
             margin-top: -160px;;
 		}
-		#example .quoteCaption {
-			top: 240px;
-			left: 15% !important;
-			width: 70% !important;
-			font-size: 22px;
-			font-weight: 300;
-			line-height: 100%;
-			text-align: left;
-			text-transform: uppercase;
-			opacity: 0;
-			filter: alpha(opacity=0);
-		}
 		#example .quoterCaption {
 			top: 290px;
 			left: 915px;
@@ -172,11 +233,7 @@
 {#		#example .mightySlider strong {#}
 {#			font-weight: 300;#}
 {#		}#}
-		#example .lastText img {
-			max-width: 400px;
-			display: block;
-			margin: 0 auto;
-		}
+
 
 		/* Blocks default styles */
 		#example .block.simpleFade {
@@ -254,39 +311,35 @@
 
 		</style>
 
+
 <div id="example" class="mightyslider_modern_skin">
     <!-- FRAME -->
     <div class="frame" data-mightyslider="width:1170, height: 500">
         <!-- SLIDEELEMENT -->
         <div class="slide_element">
             <!-- SLIDES -->
-            <div class="slide" data-mightyslider="
-                cover: '/media/slider/slider5.jpg',
-            ">
-{#                <div class="mSCaption infoBlock infoBlockLeftBlack" data-msanimation="{#}
-{#                    speed: 700,#}
-{#                    easing: 'easeOutQuint',#}
-{#                    style: {#}
-{#                        left: 30,#}
-{#                        opacity: 1#}
-{#                    },#}
-{#                }">#}
-{#                    <h4>Создайте незабываемую атмосферу</h4>#}
-{#                    <p>вместе с нашим набором "Tea for everybody"</p>#}
-{#                </div>#}
+            <div class="slide" {% if device == 'mobile' %} data-mightyslider="cover: '/media/slider/slider5_1136.jpg',"{% else %}data-mightyslider="cover: '/media/slider/slider5.jpg',"{% endif %}>
                 <div class="mSCaption titleCaption textShadow" data-msanimation="{ speed: 400, style: { top: 220, opacity: 1 } }, { delay: 2000, speed: 400, style: { opacity: 0 } }">
-                    Добро пожаловать в наш магазин здоровья!
+                     Добро пожаловать в наш магазин здоровья!
                 </div>
-                <div class="mSCaption blurBackground" data-msanimation="{ delay: 2800, speed: 1000, style: { opacity: 1  } }" data-mightyslider="
-                cover: '/media/slider/slider5_fade.jpg',
-            "></div>
-                <div class="mSCaption quoteCaption textShadow" data-msanimation="{ delay: 3500, speed: 1000, style: { opacity: 1 } }, { delay: 7000, speed: 500, style: { opacity: 0 } }">
+{#                грузим картинку только на desktop#}
+                {% if device != 'mobile' and device != 'tablet' %}
+                    <div class="mSCaption blurBackground"
+                         data-msanimation="{ delay: 2800, speed: 1000, style: { opacity: 1 } }"  data-mightyslider="cover: '/media/slider/slider5_fade.jpg',">
+                    </div>
+                {% else %}
+                    <div class="mSCaption blurBackground"
+                         data-msanimation="{ delay: 2800, speed: 1000, style: { opacity: 0.5 } }">
+                        <div class="" style="width: 100%; height: 100%; background: #000"></div>
+                    </div>
+                {% endif %}
+                <div class="mSCaption quoteCaption textShadow"{% if device == 'mobile' %} style="font-size: 45px;"{% endif %} data-msanimation="{ delay: 3500, speed: 1000, style: { opacity: 1 } }, { delay: 7000, speed: 500, style: { opacity: 0 } }">
                     Кто крепок телом, может терпеть и жару, и холод. Так и тот, кто здоров душевно, в состоянии перенести и гнев, и горе, и радость, и остальные чувства.
                 </div>
-                <div class="mSCaption quoterCaption textShadow" data-msanimation="{ delay: 5500, speed: 1000, style: { opacity: 1 } }, { delay: 5150, speed: 500, style: { opacity: 0 } }">
+                <div class="mSCaption quoterCaption textShadow" {% if device == 'mobile' %} style="font-size: 40px;"{% endif %} data-msanimation="{ delay: 5500, speed: 1000, style: { opacity: 1 } }, { delay: 5150, speed: 500, style: { opacity: 0 } }">
                     -Эпиктет
                 </div>
-                <div class="mSCaption lastText textShadow" data-msanimation="{ delay: 12500, speed: 1000, style: { top: 150, opacity: 1 } }">
+                <div class="mSCaption lastText textShadow" {% if device == 'mobile' %} style="font-size: 40px;" data-msanimation="{ delay: 12500, speed: 1000, style: { top: 50, opacity: 1 } }"{% else %} data-msanimation="{ delay: 12500, speed: 1000, style: { top: 150, opacity: 1 } }" {% endif %}>
                     <img src="/static/images/logo2_2.png" />
                     магазин для здоровья,<br/><strong>магазин для Вас</strong>
                 </div>
@@ -294,22 +347,28 @@
 {#                    © By <a href="http://www.flickr.com/photos/36081137@N05/" target="_blank">Fabius_climbing</a>#}
 {#                </div>#}
             </div>
-            <div class="slide" data-mightyslider="
-                cover: '/media/slider/slider3.jpg',
-            ">
+            <div class="slide" {% if device == 'mobile' %}data-mightyslider="cover: '/media/slider/slider3_1136.jpg',"{% else %}data-mightyslider="cover: '/media/slider/slider3.jpg',"{% endif %}>
                 <div class="mSCaption titleCaption textShadow" data-msanimation="{ speed: 400, style: { top: 220, opacity: 1 } }, { delay: 2000, speed: 400, style: { opacity: 0 } }">
                     Добро пожаловать в наш магазин здоровья!
                 </div>
-                <div class="mSCaption blurBackground" data-msanimation="{ delay: 2800, speed: 1000, style: { opacity: 1  } }" data-mightyslider="
-                cover: '/media/slider/slider3_blur.jpg',
-            "></div>
-                <div class="mSCaption quoteCaption textShadow" data-msanimation="{ delay: 3500, speed: 1000, style: { opacity: 1 } }, { delay: 7000, speed: 500, style: { opacity: 0 } }">
+{#                грузим картинку только на desktop#}
+                {% if device != 'mobile' and device != 'tablet' %}
+                    <div class="mSCaption blurBackground" data-msanimation="{ delay: 2800, speed: 1000, style: { opacity: 1  } }" data-mightyslider="
+                        cover: '/media/slider/slider3_blur.jpg',
+                    "></div>
+                {% else %}
+                    <div class="mSCaption blurBackground"
+                         data-msanimation="{ delay: 2800, speed: 1000, style: { opacity: 0.5 } }">
+                        <div class="" style="width: 100%; height: 100%; background: #000"></div>
+                    </div>
+                {% endif %}
+                <div class="mSCaption quoteCaption  textShadow" {% if device == 'mobile' %} style="font-size: 45px;"{% endif %} data-msanimation="{ delay: 3500, speed: 1000, style: { opacity: 1 } }, { delay: 7000, speed: 500, style: { opacity: 0 } }">
                     Кто крепок телом, может терпеть и жару, и холод. Так и тот, кто здоров душевно, в состоянии перенести и гнев, и горе, и радость, и остальные чувства.
                 </div>
-                <div class="mSCaption quoterCaption textShadow" data-msanimation="{ delay: 5500, speed: 1000, style: { opacity: 1 } }, { delay: 5150, speed: 500, style: { opacity: 0 } }">
+                <div class="mSCaption quoterCaption textShadow" {% if device == 'mobile' %} style="font-size: 40px;"{% endif %} data-msanimation="{ delay: 5500, speed: 1000, style: { opacity: 1 } }, { delay: 5150, speed: 500, style: { opacity: 0 } }">
                     -Эпиктет
                 </div>
-                <div class="mSCaption lastText textShadow" data-msanimation="{ delay: 12500, speed: 1000, style: { top: 150, opacity: 1 } }">
+                <div class="mSCaption lastText textShadow" {% if device == 'mobile' %} style="font-size: 40px;" data-msanimation="{ delay: 12500, speed: 1000, style: { top: 50, opacity: 1 } }"{% else %} data-msanimation="{ delay: 12500, speed: 1000, style: { top: 150, opacity: 1 } }" {% endif %}>
                     <img src="/static/images/logo2_2.png" />
                     магазин для здоровья,<br/><strong>магазин для Вас</strong>
                 </div>
@@ -323,43 +382,86 @@
     </div>
     <!-- END OF FRAME -->
 </div>
-<script src="http://mightyslider.com/assets/js/jquery.requestAnimationFrame.js"></script>
-<script src="http://mightyslider.com/assets/js/jquery.easing-1.3.pack.js" type="text/javascript"></script>
-<script src="http://mightyslider.com/assets/js/jquery.mousewheel.js" type="text/javascript"></script>
-<script src="http://mightyslider.com/assets/js/jquery.isotope.min.js"></script>
-<script>
-			jQuery(document).ready(function($) {
-				(function(){
-					var $example = $('#example'),
-					$frame = $('.frame', $example);
-					$frame.mightySlider({
-						speed: 1000,
-                        autoScale:1,
-						easing: 'easeOutExpo',
-{#						viewport: 'fill',#}
-                        parallaxDimensions: {x:1, y:1, z:1},
-						// Navigation options
-						navigation: {
-							slideSize: '100%',
-							keyboardNavBy: 'slides'
-						},
 
-						// Dragging
-						dragging: {
-							swingSpeed:    0.1
-						},
+{#<script src="http://mightyslider.com/assets/js/jquery.requestAnimationFrame.js"></script>#}
+{#<script src="http://mightyslider.com/assets/js/jquery.easing-1.3.pack.js" type="text/javascript"></script>#}
+{#<script src="http://mightyslider.com/assets/js/jquery.mousewheel.js" type="text/javascript"></script>#}
+{#<script src="http://mightyslider.com/assets/js/jquery.isotope.min.js"></script>#}
 
-						// Pages
-						pages: {
-							activateOn: 'click'
-						},
+{#2 разных скрипта для разных стройств#}
+{% if device == 'mobile' or device == 'tablet' %}
+    <script>
+        jQuery(document).ready(function($) {
+            (function(){
+                var $example = $('#example'),
+                $frame = $('.frame', $example);
+                $frame.mightySlider({
+                    speed: 1000,
+                    autoScale:1,
+                    easing: 'easeOutExpo',
+                    // Navigation options
+                    navigation: {
+                        slideSize: '100%'
+                    },
 
-						// Commands
-						commands: {
-							pages: 1,
-							buttons: 1
-						}
-					});
-				})();
-			});
-		</script>
+                    // Dragging
+                    dragging: {
+                        swingSpeed:    0.1
+                    },
+
+                    // Commands
+                    commands: {
+{#                        pages: 1#}
+                    },
+                    // Cycling options
+                    cycling: {
+                        cycleBy: 'slides',
+                        pauseTime: 15000,
+                        pauseOnHover: 1
+                    }
+                });
+            })();
+        });
+    </script>
+{% else %}
+    <script>
+        jQuery(document).ready(function($) {
+            (function(){
+                var $example = $('#example'),
+                $frame = $('.frame', $example);
+                $frame.mightySlider({
+                    speed: 1000,
+                    autoScale:1,
+                    easing: 'easeOutExpo',
+                    // Navigation options
+                    navigation: {
+                        slideSize: '100%',
+                        keyboardNavBy: 'slides'
+                    },
+
+                    // Dragging
+                    dragging: {
+                        swingSpeed:    0.1
+                    },
+
+                    // Pages
+                    pages: {
+                        activateOn: 'click'
+                    },
+
+                    // Commands
+                    commands: {
+                        pages: 1,
+                        buttons: 1
+                    },
+                    cycling: {
+                        cycleBy: 'slides',
+                        pauseTime: 15000,
+                        pauseOnHover: 1
+                    }
+                });
+            })();
+        });
+    </script>
+{% endif %}
+
