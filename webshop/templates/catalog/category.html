@@ -29,36 +29,41 @@
                         <h1>{{ c.name }}</h1>
                     </div>
 
-{#                    {{ products/ }}#}
-
                     {% if products %}
-{#                        цыкл по продуктам (осуществляется проход до тех пор пока есть продукты)#}
+{#                        {% for p in products %}#}
+{#                            <div class="col-xs-12 col-md-3">#}
+{#                                <div class="product_thumbnail">#}
+{#                                    <a href="{{ p.get_absolute_url }}">#}
+{#                                        <img src="/media/{{ p.image_url }}" width="100" height="100">#}
+{#                                        <h3>{{ p.name|truncatewords:15 }}</h3>#}
+{#                                    </a>#}
+{#                                    {% if p.sale_price.new_price != 0.00 %}#}
+{#                                        <div class="price_was">#}
+{#                                            {% trans "Was" %}: <span>{{ p.sale_price.price }} {% trans "руб." %}</span>#}
+{#                                        </div>#}
+{#                                        <div class="price_now">#}
+{#                                            {% trans "Now" %}:<span> {{ p.sale_price.new_price }} {% trans "руб." %} *</span>#}
+{#                                        </div>#}
+{#                                        <p>*за объем: {{ p.sale_price.volume }} мл.</p>#}
+{#                                    {% else %}#}
+{#                                        <p>{{ p.sale_price.price }} {% trans "руб." %}</p>#}
+{#                                    {% endif %}#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        {% endfor %}#}
+{#                        закончить цыкл#}
+
                         {% for p in products %}
-                            <div class="col-xs-3">
+                            <div class="col-xs-12 col-cp-6 {% if forloop.last %}last{% endif %} popular_products">
                                 <div class="product_thumbnail">
-                                    <a href="{{ p.get_absolute_url }}">
-{#                                        {% thumbnail p.image_url "200x200" crop="center" as im %}#}
-                                            <img src="/media/{{ p.image_url }}" width="200" height="200">
-{#                                        {% endthumbnail %}#}
-{#                                            <img src="{{ p.image_url.url }}" width="187" height="187">#}
-                                        <br />
-                                        <h2>{{ p.name|truncatewords:15 }}</h2>
-                                    </a>
-                                    {% if p.sale_price.new_price != 0.00 %}
-                                        <div class="price_was">
-                                            {% trans "Was" %}: <span>{{ p.sale_price.price }} {% trans "руб." %}</span>
-                                        </div>
-                                        <div class="price_now">
-                                            {% trans "Now" %}:<span> {{ p.sale_price.new_price }} {% trans "руб." %} *</span>
-                                        </div>
-                                        <p>*за объем: {{ p.sale_price.volume }} мл.</p>
-                                    {% else %}
-                                        <p>{{ p.sale_price.price }} {% trans "руб." %}</p>
-                                    {% endif %}
+                                    <img src="/media/{{ p.image_url }}" width="100" height="100">
                                 </div>
+                                <name>{{ p.name }}</name>
+                                <div class="description_tovar">{{ p.description|removetags:"img"|truncatewords:"12"|safe }}</div>
+                                <span class="price">{{ p.volume.price }} руб.</span><a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a>
+                                <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
                             </div>
                         {% endfor %}
-{#                        закончить цыкл#}
 
 {#                    иначе .... если продукты не существуют#}
                     {% else %}

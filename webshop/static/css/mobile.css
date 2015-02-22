@@ -7,6 +7,16 @@ h2, h3, h4 {
     text-transform: uppercase;
     font-size: 20px;
 }
+#catalog h1 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+name {
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
 h1 {
     font-size: 27px;
 }
@@ -14,7 +24,7 @@ h1 {
 
 }
 .global_mobile .main_menu {
-    background: url("../images/menu_bg_1136_2.png") center no-repeat;
+    /*background: url("../images/menu_bg_1136_2.png") center no-repeat;*/
     background-size: 100%;
     height: 100px;
     margin-top: -30px;
@@ -81,6 +91,10 @@ h1 {
     float: right;
     position: relative;
 }
+.global_mobile .cart_icon .dropdown-menu {
+width: 300px;
+left: -110px;
+}
 .global_mobile .special {
     padding: 20px 0;
     background: url("../images/bg1_1136.jpg") no-repeat;
@@ -130,7 +144,16 @@ h1 {
     line-height: 34px;
     font-size: 20px;
 }
-.global_mobile .product_thumbnail {
+/*.global_mobile .product_thumbnail {*/
+    /*margin-bottom: 20px;*/
+/*}*/
+.popular_products {
+    padding-bottom: 40px;
+}
+.last.popular_products{
+    padding-bottom: 0;
+}
+#catalog .last {
     margin-bottom: 20px;
 }
 .global_mobile .spesial_text {
@@ -146,7 +169,7 @@ h1 {
 .global_mobile #simple .frame ul li img {
     max-width: 100px;
     float: left;
-    padding-right: 10px;
+    margin-right: 10px;
     border-radius: 85px;
 }
 .global_mobile #simple .frame ul li div {
@@ -204,4 +227,209 @@ h1 {
 }
 .global_mobile #footer .socials img {
     width :30px;
+}
+.pushy ul {
+    padding-left: 0;
+}
+.pushy #accordion a {
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    border-top: 1px solid rgba(255, 255, 255, .1);
+}
+
+img.img_menu {
+    width: 100%;
+    position: absolute;
+    z-index: 0;
+}
+.global_mobile .tovari {
+    margin-bottom: 30px;
+}
+
+.pushy h3 {
+    color: #373737;
+    background: #F2F2F2;
+    padding-left: 20px;
+    margin-top: 40px;
+    margin-bottom: 0;
+}
+.pushy .collapse {
+    display: block;
+    visibility: visible;
+}
+.pushy .accordion_button {
+    display: none;
+}
+.pushy .panel-body,
+.pushy .panel-body .panel-heading {
+    padding:0 ;
+}
+.pushy .panel-body .panel-heading a {
+    padding:5px 10px 5px 25px ;
+}
+#id_minus, #id_plus {
+    padding: 10px;
+}
+#new_price, #old_price {
+    border: 1px solid #5b5b5b;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 30px;
+}
+.product_text h1,
+#cart h1{
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 300;
+    font-size: 27px;
+}
+#cart .button_margin {
+    margin-bottom: 20px;
+}
+/*.button_margin .btn-success span{*/
+    /*background: #2ad38e;*/
+/*}*/
+
+/* iPhone 5 (альбомный режим)----------- */
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : landscape) {
+
+    img.img_menu {
+        margin-top: -20px;
+    }
+
+    .main_menu .container {
+        padding-top: 10px;
+    }
+    .menu-btn {
+        font-size: 20px;
+        line-height: 20px;
+        margin-top: 0px;
+        width: auto;
+        padding: 2px 2px;
+    }
+    .menu-btn a,
+    .cart_icon .nav>li>a,
+    .auth .nav>li>a {
+        font-size: 20px;
+        line-height: 20px;
+        width: auto;
+        padding: 2px 2px;
+    }
+    .cart_icon,
+    .auth {
+        margin-top: 0px;
+    }
+    .global_mobile .tovari {
+        margin-top: 60px;
+        margin-bottom: 30px;
+    }
+    .global_mobile .tovari img {
+        margin-right: 20px;
+    }
+    .last.popular_products .separator_line{
+        display: none;
+    }
+}
+
+/*iPhone4s landscape */
+@media only screen
+and (max-width : 480px)
+and (orientation : landscape) {
+    img.img_menu {
+        margin-top: -10px;
+    }
+    .last.popular_products .separator_line{
+        display: none;
+    }
+}
+
+/*iPhone6 landscape*/
+@media only screen
+and (min-width : 569px)
+and (max-width : 667px)
+and (orientation : landscape) {
+    img.img_menu {
+        margin-top: -35px;
+    }
+    .col-cp-6 {
+        width: 50%;
+    }
+}
+
+/*iPhone6Plus landscape*/
+@media only screen
+and (min-width : 668px)
+and (max-width : 960px)
+and (orientation : landscape) {
+    img.img_menu {
+        margin-top: -45px;
+    }
+    .col-cp-6 {
+        width: 50%;
+    }
+}
+/* iPhone 5 (портретный режим)----------- */
+@media only screen
+and (device-width : 320px)
+and (orientation : portrait) {
+    .last.popular_products .separator_line{
+        display: none;
+    }
+    name {
+        font-size: 16px;
+    }
+}
+
+/*iPhone6 portrait*/
+@media only screen
+and (min-width : 321px)
+and (max-width : 375px)
+and (orientation : portrait) {
+    img.img_menu {
+        margin-top: -7px;
+    }
+    .last.popular_products .separator_line{
+        display: none;
+    }
+    name {
+        font-size: 16px;
+    }
+}
+
+/*iPhone6Plus portrait*/
+@media only screen
+and (min-width : 376px)
+and (max-width : 540px)
+and (orientation : portrait) {
+    img.img_menu {
+        margin-top: -15px;
+    }
+    .col-cp-6 {
+        width: 50%;
+    }
+    .tovari .popular_products {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .tovari .popular_products .separator_line {
+        margin-top: 0px;
+    }
+    .tovari .popular_products .description_tovar {
+        font-size: 11px;
+    }
+    .tovari .popular_products a{
+        font-size: 10px;
+    }
+    .tovari .popular_products img{
+        float: none;
+    }
+    .tovari .popular_products h3{
+        font-size: 18px;
+    }
+    name {
+        font-size: 16px;
+    }
 }

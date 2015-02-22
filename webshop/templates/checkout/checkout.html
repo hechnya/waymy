@@ -11,7 +11,7 @@
     <div id="checkout">
         <div class="container">
             <div class="row">
-                <div class="alert alert-info col-xs-5">
+                <div class="alert alert-info col-xs-12 col-md-5">
                     <strong>{% trans "Warning" %}!</strong><br /> * {% trans "Required fields" %}
                 </div>
 
@@ -32,6 +32,7 @@
                       </div>
 {#                    </div>#}
 
+
                     {% if error_message %}
 {#                        <div class="row-fluid">#}
                             <div class="alert alert-error span5">
@@ -40,6 +41,15 @@
 {#                        </div>#}
                     {% endif %}
 
+                <div class="col-xs-12">
+                    <form action="." id="my_form" method="post">
+                        {% csrf_token %}
+                        <table>
+                        {{ form.as_table }}
+                        </table>
+                        <input id="order_submit" class="btn btn-primary" value="Заказать" type="submit"/>
+                    </form>
+                </div>
 {#                    <form action="." id="my_form" method="post">#}
 {#                        {% csrf_token %}#}
 {#                        {{ form.as_p }}#}
@@ -87,11 +97,4 @@
         </div>
     </div>
 
-    <form action="." id="my_form" method="post">
-        {% csrf_token %}
-        <table>
-        {{ form.as_table }}
-        </table>
-        <input id="order_submit" class="btn btn-primary" value="Заказать" type="submit"/>
-    </form>
 {% endblock %}

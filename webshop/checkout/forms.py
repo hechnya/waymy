@@ -36,7 +36,7 @@ class ContactForm(forms.ModelForm):
         # переопределяем аттрибуты по умолчанию
         self.fields['payment_method'].widget = forms.HiddenInput()
         for field in self.fields:
-            self.fields[field].widget.attrs['size'] = '30'
+            self.fields[field].widget.attrs['size'] = '20'
 
     def clean_phone(self):
         """Проверка телефонного номера (>10 цифр)"""

@@ -14,18 +14,17 @@
                         {% if products %}
 
                             {% for p in products %}
-                                {% if forloop.counter < 4 %}
-                                    <div class="col-xs-12 popular_products">
+                                {% if forloop.counter < 5 %}
+                                    <div class="col-xs-12 col-cp-6 {% if forloop.counter == 4 %}last{% endif %} popular_products">
                                         <div class="product_thumbnail">
                                             {% thumbnail p.image.url "100x100" crop="center" as im %}
                                                 <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
                                             {% endthumbnail %}
-                                            <h3>{{ p.name }}</h3>
-                                            <div class="description_tovar">{{ p.description|removetags:"img"|truncatewords:"12"|safe }}</div>
-                                            <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
-                                            <span class="price">{{ p.volume.price }} руб.</span><a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a>
-
                                         </div>
+                                        <name>{{ p.name }}</name>
+                                        <div class="description_tovar">{{ p.description|removetags:"img"|truncatewords:"12"|safe }}</div>
+                                        <span class="price">{{ p.volume.price }} руб.</span><a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a>
+                                        <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
                                     </div>
                                 {% endif %}
                             {% endfor %}

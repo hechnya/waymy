@@ -3,6 +3,7 @@
 {% load catalog_filters %}
 {% load thumbnail %}
 {% load cropping %}
+{% load catalog_tags %}
 
 {% block product_js %}
     <script src="{{ STATIC_URL }}js/slides.min.jquery.js"></script>
@@ -21,6 +22,17 @@
 		});
 	</script>
     <link rel="stylesheet" href="{{ STATIC_URL }}css/product.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}Swiper/dist/css/swiper.min.css">
+    <style>
+        .swiper-container {
+            width: 100%;
+            min-height: 320px;
+        }
+    .swiper-container img {
+        width: 100%;
+        height: auto;
+    }
+    </style>
 
 {% endblock %}
 
@@ -30,6 +42,7 @@
 {% endblock %}
 
 {% block content %}
+
     <div id="product_lict">
         <div class="container">
             <div class="row row-fluid">
@@ -39,79 +52,77 @@
                 </div>
 
 
-                <div class="col-xs-5">
-{#                    {% thumbnail product_image.url "298x319" crop="center" as im %}#}
-{#                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">#}
-{#                    {% endthumbnail %}#}
-                    {% if images %}
 
-                        <div id="products_example">
-                            <div id="products">
-                                <div class="slides_container">
-                                    {% for image in images %}
-                                        <a name="">
-{#                                        {% thumbnail image.url "300x300" crop="center" as im %}#}
-{#                                            <img src="{{ im.url }}" >#}
-{#                                        {% endthumbnail %}#}
-{#                                            <img src="{% cropped_thumbnail image "cropping" scale=1%}">#}
-                                            <img src="/media/{{ image.url }}" width="300" height="300">
-                                        </a>
-                                    {% endfor %}
-                                </div>
-                                <ul class="pagination">
-                                    {% for image in images %}
-                                        <li><a href="#"><img src="/media/{{ image.url }}" width="55" alt=""/></a></li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
 
-                    {% else %}
-                        <p>Нет фото</p>
-                    {% endif %}
 
-                </div>
 
-                <div class="tabbable">
-                    <div class="col-xs-7">
-
-                        <h2>Описание:</h2>
-                        <div class="tab-pane" id="description">{{ p.description|truncatewords:30|safe }}</div>
-                        <br/>
-                        <div class="row">
-                            <div class="col-xs-12" style="height: 40px;">
-                                <div class="row">
-                                    <div class="col-xs-6">Брэнд:</div>
-                                    <div class="col-xs-6">{{ p.brand_name.name }}</div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12" style="height: 40px;">
-                                <div class="row">
-                                    <div class="col-xs-6">Объем:</div>
-                                    <div class="col-xs-6">
-                                        <select onchange="Dajaxice.webshop.ajaxapp.change_atrs(Dajax.process, {'option':this.value})" size="1">
-                                            {% for atr in atrs %}
-                                                <option value="{{ atr.id }}">{{ atr.volume }}</option>
-                                            {% endfor %}
-                                        </select>
+                <div class="col-xs-12 col-md-4">
+                <!-- Slider main container -->
+                    <div class="swiper-container">
+                        <!-- Additional required wrapper -->
+                        <div class="swiper-wrapper">
+                            <!-- Slides -->
+                            {% if images %}
+                                {% for image in images %}
+                                    <div class="swiper-slide">
+                                        <img src="/media/{{ image.url }}" width="300" height="300">
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12" style="height: 40px;">
-                                <div class="row">
-                                    <div class="col-xs-6">Вес:</div>
-                                    <div class="col-xs-6"><span id="weight">{{ atrs_default.weight }} гр.</span></div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <!-- If we need pagination -->
+                        <div class="swiper-pagination"></div>
+
+                        <!-- If we need navigation buttons -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+
+                        <!-- If we need scrollbar -->
+{#                        <div class="swiper-scrollbar"></div>#}
+                    </div>
+
+                </div>
+
+
+                <div class="col-xs-12 col-md-8">
+
+                    <h2>Описание:</h2>
+                    <div class="tab-pane" id="description">{{ p.description|truncatewords:30|safe }}</div>
+                    <br/>
+                    <div class="row">
+{#                        <div class="col-xs-12" style="height: 40px;">#}
+{#                            <div class="row">#}
+{#                                <div class="col-xs-6">Брэнд:</div>#}
+{#                                <div class="col-xs-6">{{ p.brand_name.name }}</div>#}
+{#                            </div>#}
+{#                        </div>#}
+                        <div class="col-xs-12" style="height: 40px;">
+                            <div class="row">
+                                <div class="col-xs-6">Объем:</div>
+                                <div class="col-xs-6">
+                                    <select onchange="Dajaxice.webshop.ajaxapp.change_atrs(Dajax.process, {'option':this.value})" size="1">
+                                        {% for atr in atrs %}
+                                            <option value="{{ atr.id }}">{{ atr.volume }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
                         </div>
-
+                        <div class="col-xs-12" style="height: 40px;">
+                            <div class="row">
+                                <div class="col-xs-6">Вес:</div>
+                                <div class="col-xs-6"><span id="weight">{{ atrs_default.weight }} гр.</span></div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
 
-                <div class="col-xs-7">
+
+                <div class="col-xs-12 col-md-8">
                     <div class="row">
                         <div class="price_cart">
-                            <div class="col-xs-6">
+                            <div class="col-xs-4">
                                 {% if p.feel.count > 0 %}
                                     <p>Выберите разновидность:</p> <br/>
                                 {% endif %}
@@ -129,22 +140,9 @@
                                     <span id="price_old">{% trans "Price" %}: {{ atrs_default.price }} {% trans "руб." %} </span>
                                 </div>
 
-{#                                {% if p.sale_price.new_price != 0.00 %}#}
-{#                                    <div class="price_was">#}
-{#                                        {% trans "Was" %}: <span>{{ p.sale_price.price }} {% trans "руб." %}</span>#}
-{#                                    </div>#}
-{#                                    <div class="price_now">#}
-{#                                        {% trans "Now" %}:<span> {{ p.sale_price.new_price }} {% trans "руб." %} *</span>#}
-{#                                    </div>#}
-{#                                    <p>*за объем: {{ p.sale_price.volume }} мл.</p>#}
-{#                                {% else %}#}
-{#                                    <p>{{ p.sale_price.price }} {% trans "руб." %}</p>#}
-{#                                {% endif %}#}
-
-
                             </div>
 
-                            <div class="col-xs-6">
+                            <div class="col-xs-8">
                                 <form method="post" action="." class="cart" id="addToCartForm">{% csrf_token %}
                                     <div class="hidden">
                                         {{ form.product_slug }}
@@ -170,33 +168,12 @@
                                         {{ form.quantity }}
                                         <i id="id_plus" class="btn-mini fa fa-plus-square" onselectstart="return false"></i>
                                     </div>
-{#                                    <input class="btn btn-success" type="submit" value="{% trans "Add To Cart" %}"#}
-{#                                    name="submit" alt=" {% trans "Add To Cart" %}" />#}
 
                                     <button class="btn btn-success" type="submit" name="submit">
                                         <i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i><span>Добавить в корзину</span>
                                     </button>
 
-
-
-{#                                     <input id="id_submit" value="Отправить" type="button" onclick="addToCart()">#}
                                 </form>
-{#                                <form method="post" action="." class="cart" id="addToCartForm">{% csrf_token %}#}
-{#                                    {{ form.as_p }}#}
-{##}
-{#                                    <button class="btn btn-success" type="submit" name="submit">#}
-{#                                        <i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i><span>Добавить в корзину</span>#}
-{#                                    </button>#}
-{##}
-{#                                    <input id="id_submit" value="Отправить" type="button" onclick="addToCart()">#}
-{##}
-{#                                </form>#}
-
-
-
-{#                                <form method="post" action="." class="cart">{% csrf_token %}#}
-{#                                    {{ form.as_p }}#}
-{#                                </form>#}
 
                             <div id="message"></div>
                             </div>
@@ -204,13 +181,17 @@
                     </div>
                 </div>
 
-                <div class="col-md-12">
-                    <h4>Описание:</h4>
-                    <div class="tab-pane border_bot" id="description">{{ p.description|safe }}</div>
-                </div>
 
-                <div class="col-md-12">
-                    <h1 class="center">Отзывы о продукте</h1>
+                {% if flavour == 'mobile' %}
+                    <div class="col-xs-12"><img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/></div>
+                {% endif %}
+{#                <div class="col-md-12">#}
+{#                    <h4>Описание:</h4>#}
+{#                    <div class="tab-pane border_bot" id="description">{{ p.description|safe }}</div>#}
+{#                </div>#}
+
+                <div class="col-xs-12 col-md-12">
+                    <name class="center">Отзывы о продукте</name>
                 
                     {% if user.is_authenticated %}
                         <form  method="post" action="." class="border_bot">{% csrf_token %}
@@ -257,6 +238,26 @@
 
 {#подключаем скрипт blueimp только на этой странице что бы не засорять код#}
 {% block bottom_script %}
+
+    <script src="{{ STATIC_URL }}Swiper/dist/js/swiper.min.js"></script>
+
+<script>
+    var mySwiper = new Swiper ('.swiper-container', {
+        // Optional parameters
+        direction: 'horizontal',
+        loop: true,
+
+        // If we need pagination
+        pagination: '.swiper-pagination',
+
+        // Navigation arrows
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+
+        // And if we need scrollbar
+{#        scrollbar: '.swiper-scrollbar'#}
+    })
+</script>
 
     <script type="text/javascript">
         document.getElementById('id_plus').onclick = function (plus) {
