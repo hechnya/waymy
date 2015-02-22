@@ -121,6 +121,7 @@ def category_view(request, category_slug, template_name="catalog/category.html")
     for p in products:
         try:
             p.image_url = ProductImage.objects.get(product=p, default=True).url
+            p.volume = ProductVolume.objects.get(product=p, default=True)
         except Exception:
             p.image_url = "/media/products/images/none.png"
     page_title = c.name

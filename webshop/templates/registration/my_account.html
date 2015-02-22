@@ -2,7 +2,12 @@
 {% load i18n %}
 
 {% block content %}
-  <h1>{% trans "My account" %}</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <h1>{% trans "My account" %}</h1>
   <strong>{% trans "Welcome" %}, {{ name|capfirst }}!</strong>
   <br /><br />
 
@@ -61,4 +66,12 @@
     </li>
   </ul>
   </fieldset>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
 {% endblock %}

@@ -16,6 +16,11 @@ h1,h2,h3,h4{
     font-family: 'Cleanvertising';
     text-transform: uppercase;
 }
+name {
+    font-size: 24px;
+    font-family: 'Cleanvertising';
+    text-transform: uppercase;
+}
 body {
     padding-top: 0!important;
 }
@@ -1128,7 +1133,8 @@ a#accordion {
     padding: 20px 0;
 }
 input#order_submit {
-    float: right;
+    /*float: right;*/
+    margin-bottom: 20px;
 }
 .socials {
     font-size:16px;
@@ -1610,6 +1616,7 @@ ul.menu li:hover ul.children {
     font-family:'Open Sans';
     font-weight: 100;
     text-align: left;
+    text-align: center;
 }
 .separetor {
     height: 1px;
