@@ -43,100 +43,161 @@
                     </form>
                 </div>
 
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">{% trans "Product" %}</th>
-                                <th scope="col">Характеристики</th>
-                                <th scope="col">{% trans "Price" %}</th>
-                                <th>Кол-во</th>
-                                <th></th>
-                                <th></th>
-                                <th scope="col" class="right">{% trans "Total" %}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% if cart_items %}
+                {% if flavour == 'mobile' %}
+                    {% if cart_items %}
+
+                        <div class="mobile_cart col-xs-12">
+                            <div class="row">
+
                                 {% for item in cart_items %}
-                            <tr>
-                                <td>
-{#                                    {% thumbnail item.get_default_image "50x50" crop="center" as im %}#}
-                                        <img class="item_img" src="/media/{{ item.get_default_image }}" width="50" height="50">
-{#                                    {% endthumbnail %}#}
-                                    <a href="{{ item.get_absolute_url }}" class="cart">
-                                    {{ item.name }}
-                                    </a>
-                                </td>
-                                <td>
-                                <div class="panel-group" id="accordion">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a class="accordion_button" data-toggle="collapse" data-parent="#accordion" href="#item{{ item.id }}">Подробнее <i class="fa fa-caret-down"></i></a>
-                                            </h4>
-                                        </div>
-                                        <div id="item{{ item.id }}" class="panel-collapse collapse" style="height: auto;">
-                                            <div class="panel-body" style="text-align: left">
-                                                <span><i class="fa fa-shopping-cart"></i> {{ item.atributes.volume }} мл.</span> <br/>
-                                                <span><i class="fa fa-tachometer"></i> {{ item.atributes.weight }} гр.</span> <br/>
-                                                <span><i class="fa fa-cutlery"></i> {{ item.feel.name }}</span>
+                                    <div class="col-xs-12 mobile_cart_item">
+                                        <div class="row">
+                                            <div class="col-xs-12" style="text-align: center">
+                                                <a href="{{ item.get_absolute_url }}" class="cart"><name>{{ item.name }}</name></a>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <img class="item_img" src="/media/{{ item.get_default_image }}" width="50" height="50">
+                                                <name>{{ item.total }} руб.</name>
+                                                <div class="panel-group" id="accordion">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <p class="panel-title">
+                                                                <a class="accordion_button" data-toggle="collapse" data-parent="#accordion" href="#item{{ item.id }}">Подробнее <i class="fa fa-caret-down"></i></a>
+                                                            </p>
+                                                        </div>
+                                                        <div id="item{{ item.id }}" class="panel-collapse collapse" style="height: auto;">
+                                                            <div class="panel-body" style="text-align: left">
+                                                                <span><i class="fa fa-shopping-cart"></i> {{ item.atributes.volume }} мл.</span> <br/>
+                                                                <span><i class="fa fa-tachometer"></i> {{ item.atributes.weight }} гр.</span> <br/>
+                                                                <span><i class="fa fa-cutlery"></i> {{ item.feel.name }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <form method="post" action="." class="cart">{% csrf_token %}
+                                                    <input type="text" name="quantity" value="{{ item.quantity }}" id="quantity" size="2" class="quantity" maxlength="5" />
+                                                    <input type="hidden" name="item_id" value="{{ item.id }}" />
+                                                    <input type="hidden" name="item_id" value="{{ item.id }}" />
+                                                    <button class="btn btn-success" type="submit" name="update">
+                                                    <i class="fa fa-refresh"></i></button>
+                                                </form>
+                                                <div class="remove_button">
+                                                    <form method="post" action="." class="cart">{% csrf_token %}
+                                                        <input type="hidden" name="item_id" value="{{ item.id }}" />
+                                                        <button class="btn btn-danger" type="submit" name="remove">
+                                                        <i class="icon-trash icon-white"></i> {% trans "Remove" %}</button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                </td>
-                                <td>
-                                    {{ item.price }} <i class="fa fa-rub"></i>
-                                </td>
-                                <td class="right">
-                                    <form method="post" action="." class="cart">{% csrf_token %}
-                                        {#<label class="control-label" for="quantity">{% trans "Quantity" %}:</label>#}
-                                        <input type="text" name="quantity" value="{{ item.quantity }}" id="quantity" size="2" class="quantity" maxlength="5" />
-                                        <input type="hidden" name="item_id" value="{{ item.id }}" />
-                                </td>
-                                <td>
-                                        <input type="hidden" name="item_id" value="{{ item.id }}" />
-                                        <button class="btn btn-success" type="submit" name="update">
-                                        <i class="icon-refresh icon-white"></i> <span>Обновить</span></button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form method="post" action="." class="cart">{% csrf_token %}
-                                        <input type="hidden" name="item_id" value="{{ item.id }}" />
-                                        <button class="btn btn-danger" type="submit" name="remove">
-                                        <i class="icon-trash icon-white"></i> {% trans "Remove" %}</button>
-                                    </form>
-                                </td>
-                                <td class="right">{{ item.total }} <i class="fa fa-rub"></i></td>
-                            </tr>
-                            {% endfor %}
-                            {% else %}
-                            <tr>
-                                <td colspan="6" style="height:30px;">
-                                    {% trans "Your cart is empty" %}
-                                </td>
-                            </tr>
-                            {% endif %}
-                        </tbody>
+                                    <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
 
-                        <tfoot>
-                            <tr>
-                                <th colspan="5">Стоимость товаров: {% if flavour == 'mobile' %}{{ cart_subtotal }} руб.{% endif %}</th>
-                                {% if flavour != 'mobile' %}<th>{{ cart_subtotal }} {% trans "руб." %}</th>{% endif %}
-                            </tr>
-                        </tfoot>
-                    </table>
+                                {% endfor %}
 
-{#                    <div class="col-xs-12">#}
-{#                        <form style="float: right;" name="testrb" method="post" action="." class="cart">{% csrf_token %}#}
-{#                            <button {% if delivery.is_to_big %}disabled="disabled"{% endif %} class="btn btn-success" type="submit" name="checkout">#}
-{#                            <i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i><span>Оформить заказ</span></button>#}
-{#                        </form>#}
-{#                    </div>#}
+                                <div class="col-xs-12" id="price"> Cтоимость без доставки: {{ cart_subtotal }} руб.</div>
 
-                </div>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+                {% else %}
+
+                    <div class="table-responsive">
+    {#                <div>#}
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">{% trans "Product" %}</th>
+                                    <th scope="col">Характеристики</th>
+                                    <th scope="col">{% trans "Price" %}</th>
+                                    <th>Кол-во</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th scope="col" class="right">{% trans "Total" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if cart_items %}
+                                    {% for item in cart_items %}
+                                <tr>
+                                    <td>
+    {#                                  {% thumbnail item.get_default_image "50x50" crop="center" as im %}#}
+                                            <img class="item_img" src="/media/{{ item.get_default_image }}" width="50" height="50">
+    {#                                  {% endthumbnail %}#}
+                                        <a href="{{ item.get_absolute_url }}" class="cart">
+                                        {{ item.name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                    <div class="panel-group" id="accordion">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title">
+                                                    <a class="accordion_button" data-toggle="collapse" data-parent="#accordion" href="#item{{ item.id }}">Подробнее <i class="fa fa-caret-down"></i></a>
+                                                </h4>
+                                            </div>
+                                            <div id="item{{ item.id }}" class="panel-collapse collapse" style="height: auto;">
+                                                <div class="panel-body" style="text-align: left">
+                                                    <span><i class="fa fa-shopping-cart"></i> {{ item.atributes.volume }} мл.</span> <br/>
+                                                    <span><i class="fa fa-tachometer"></i> {{ item.atributes.weight }} гр.</span> <br/>
+                                                    <span><i class="fa fa-cutlery"></i> {{ item.feel.name }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    </td>
+                                    <td>
+                                        {{ item.price }} <i class="fa fa-rub"></i>
+                                    </td>
+                                    <td class="right">
+                                        <form method="post" action="." class="cart">{% csrf_token %}
+                                            {#<label class="control-label" for="quantity">{% trans "Quantity" %}:</label>#}
+                                            <input type="text" name="quantity" value="{{ item.quantity }}" id="quantity" size="2" class="quantity" maxlength="5" />
+                                            <input type="hidden" name="item_id" value="{{ item.id }}" />
+                                    </td>
+                                    <td>
+                                            <input type="hidden" name="item_id" value="{{ item.id }}" />
+                                            <button class="btn btn-success" type="submit" name="update">
+                                            <i class="icon-refresh icon-white"></i> <span>Обновить</span></button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form method="post" action="." class="cart">{% csrf_token %}
+                                            <input type="hidden" name="item_id" value="{{ item.id }}" />
+                                            <button class="btn btn-danger" type="submit" name="remove">
+                                            <i class="icon-trash icon-white"></i> {% trans "Remove" %}</button>
+                                        </form>
+                                    </td>
+                                    <td class="right">{{ item.total }} <i class="fa fa-rub"></i></td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                <tr>
+                                    <td colspan="6" style="height:30px;">
+                                        {% trans "Your cart is empty" %}
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <th colspan="5">Стоимость товаров: {% if flavour == 'mobile' %}{{ cart_subtotal }} руб.{% endif %}</th>
+                                    {% if flavour != 'mobile' %}<th>{{ cart_subtotal }} {% trans "руб." %}</th>{% endif %}
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+
+                {% endif %}
+
 
 {#            таблица доставки#}
             {% if cart_items %}
