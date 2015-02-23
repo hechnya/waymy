@@ -23,6 +23,9 @@ h1 {
 .global_mobile .tovari {
 
 }
+.kupon .btn {
+    margin:10px 0;
+}
 .global_mobile .main_menu {
     /*background: url("../images/menu_bg_1136_2.png") center no-repeat;*/
     background-size: 100%;
