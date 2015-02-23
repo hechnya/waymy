@@ -23,6 +23,46 @@ h1 {
 .global_mobile .tovari {
 
 }
+.mobile_cart name {
+    font-size: 20px;
+}
+.mobile_cart #price {
+    border-top: 1px solid #DADADA;
+    border-bottom: 1px solid #DADADA;
+    border-left: 0;
+    border-right: 0;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 30px;
+    background: #EFEFEF;
+}
+#cart #price {
+    border: 1px solid #DADADA;
+    padding: 10px;
+    font-size: 20px;
+    margin-top: 30px;
+    background: #EFEFEF;
+}
+.mobile_cart {
+    border-top: 1px solid #a7a7a7;
+    /*border-bottom: 1px solid #a7a7a7;*/
+    margin: 10px 0;
+    padding: 10px 15px;
+}
+.mobile_cart .remove_button {
+    margin-top: 9px;
+}
+.mobile_cart .panel.panel-default {
+    margin-top: 10px;
+
+}
+.mobile_cart .panel-heading {
+    padding: 5px;
+    border-radius: 0;
+}
+.mobile_cart_item .btn-success {
+    padding: 14px 16px;
+}
 .kupon .btn {
     margin:10px 0;
 }
