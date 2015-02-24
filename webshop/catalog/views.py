@@ -161,12 +161,12 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
     p = get_object_or_404(Product, slug=product_slug)
     try:
         attachedProducts = p.itemsAttached.all()
-        for p in attachedProducts:
+        for attachedP in attachedProducts:
             try:
-                p.image_url = ProductImage.objects.get(product=p, default=True).url
-                p.volume = ProductVolume.objects.get(product=p, default=True)
+                attachedP.image_url = ProductImage.objects.get(product=attachedP, default=True).url
+                attachedP.volume = ProductVolume.objects.get(product=attachedP, default=True)
             except Exception:
-                p.image_url = "/media/products/images/none.png"
+                attachedP.image_url = "/media/products/images/none.png"
     except:
         None
 
