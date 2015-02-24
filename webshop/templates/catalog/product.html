@@ -220,23 +220,26 @@
                         </div>
                     {% endfor %}
                 </div>
+                {% if attachedProducts %}
 
-                <div class="col-xs-12 col-md-6">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h3>С товаром {{ p.name }} покупают:</h3>
-                        </div>
-                        {% for p in attachedProducts %}
-                            <div class="col-xs-12 col-cp-6 popular_products">
-                                <img src="/media/{{ p.image_url }}" width="100" height="100">
-                                <name>{{ p.name }}</name>
-                                <div class="description_tovar">{{ p.description|removetags:"img"|truncatewords:"12"|safe }}</div>
-                                <p><span class="price">{{ p.volume.price }} руб.</span><a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a></p>
-                                <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h3>С товаром {{ p.name }} покупают:</h3>
                             </div>
-                        {% endfor %}
+                            {% for attachedP in attachedProducts %}
+                                <div class="col-xs-12 col-cp-6 popular_products">
+                                    <img src="/media/{{ attachedP.image_url }}" width="100" height="100">
+                                    <name>{{ attachedP.name }}</name>
+                                    <div class="description_tovar">{{ attachedP.description|removetags:"img"|truncatewords:"12"|safe }}</div>
+                                    <p><span class="price">{{ attachedP.volume.price }} руб.</span><a class="btn btn-success" href="{{ attachedP.get_absolute_url }}">Подробнее</a></p>
+                                    <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
+
+                {% endif %}
 
             </div>
 
