@@ -159,8 +159,16 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
     """Представление для просмотра конкретного продукта"""
 
     p = get_object_or_404(Product, slug=product_slug)
-    # categories = p.categories.filter(is_active=True)
-    # categories = p.categories.objects.all()
+    try:
+        attachedProducts = p.itemsAttached.all()
+        for p in attachedProducts:
+            try:
+                p.image_url = ProductImage.objects.get(product=p, default=True).url
+                p.volume = ProductVolume.objects.get(product=p, default=True)
+            except Exception:
+                p.image_url = "/media/products/images/none.png"
+    except:
+        None
 
     reviews = ReviewsProduct.objects.filter(product=p)
 

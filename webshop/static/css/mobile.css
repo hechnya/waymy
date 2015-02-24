@@ -26,6 +26,10 @@ h1 {
 .mobile_cart name {
     font-size: 20px;
 }
+.tovari .popular_products name {
+    min-height: 52px;
+    display: block;
+}
 .mobile_cart #price {
     border-top: 1px solid #DADADA;
     border-bottom: 1px solid #DADADA;

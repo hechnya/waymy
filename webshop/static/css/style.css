@@ -1184,6 +1184,10 @@ input#order_submit {
 .cart_items_menu a:hover {
     background: #53a02d;
 }
+#product_lict .separator_line {
+    width: 100%;
+    opacity: 0.2;
+}
 #product_lict .selectbox .select,
 .sidebar_left .selectbox .select{
     width: 100%;

@@ -37,6 +37,7 @@ class Category(MPTTModel):
     parent = TreeForeignKey('self', verbose_name=_(u'Parent category'),
                             related_name='children', blank=True,
                             help_text=_(u'Parent-category for current category'), null=True)
+
     active = CommonActiveManager()
 
     class Meta:
@@ -134,6 +135,7 @@ class Product(models.Model):
     feel = models.ManyToManyField(FeelName, verbose_name=u'Вкус', blank=True, null=True)
     # volume = models.DecimalField(max_digits=9, decimal_places=2, verbose_name=u'Объем')
     # weight = models.DecimalField(max_digits=9, decimal_places=2, verbose_name=u'Вес')
+    itemsAttached = models.ManyToManyField('self', verbose_name=u'Выберите прилагающиеся товары')
 
     objects = models.Manager()
 

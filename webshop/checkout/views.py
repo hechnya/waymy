@@ -5,21 +5,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from webshop.settings import ADMIN_EMAIL
-import decimal
-
-# регистрация нового пользователя
-import random
-import string
-from webshop.accounts.forms import UserProfileForm, MyRegistrationForm
 from webshop.accounts.models import UserProfile, User
 from django.contrib.auth import authenticate, login
-
 from webshop.checkout.models import Order, OrderItem
 from webshop.catalog.models import Cupon
 from webshop.checkout import checkout
 from webshop.cart import cart
 from webshop.accounts import profile
-
 from django.core.mail import send_mail, EmailMultiAlternatives
 from webshop.checkout.forms import ContactForm, CheckoutForm
 from django.shortcuts import render
