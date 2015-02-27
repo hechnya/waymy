@@ -301,7 +301,8 @@
                                             {% csrf_token %}
                                             <p>{{ form.name }}</p>
                                             <p>{{ form.phone }}</p>
-                                            <input class="btn btn-default" id="" value="Отправить" type="submit">
+{#                                            <input class="btn btn-default" id="" value="Отправить" onclick="send_form();" type="submit">#}
+                                            <input id="" class="btn btn-default" value="Отправить" type="button" onclick="send_form();">
                                         </div>
                                     </form>
                                 </div>
@@ -318,6 +319,10 @@
             </div>
     </div>
 
+    <div id="message_show" class="hidden">
+        <h1>Ваше сообщение успешно отправлено!</h1>
+        <input id="status" type="text" value=""/>
+    </div>
 
 {% endblock %}
 
