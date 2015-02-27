@@ -68,16 +68,16 @@ def index_view(request, template_name="catalog/index.html"):
     except Exception:
         frontpage = Page.objects.get(slug="404")
 
-    if request.method == 'POST':
-        form = FormFront(request.POST)
-        subject = u'WayMy заявка от %s' % request.POST['name']
-        message = u'телефон: %s \n Имя: %s' % (request.POST['phone'], request.POST['name'])
-        if form.is_valid():
-            send_mail(subject, message, 'teamer777@gmail.com', ['teamer777@icloud.com'], fail_silently=False)
-            return HttpResponseRedirect('/')
-        else:
-            form = FormFront({'phone': u'Введите свой телефон',})
-    else:
+    # if request.method == 'POST':
+    #     form = FormFront(request.POST)
+    #     subject = u'WayMy заявка от %s' % request.POST['name']
+    #     message = u'телефон: %s \n Имя: %s' % (request.POST['phone'], request.POST['name'])
+    #     if form.is_valid():
+    #         send_mail(subject, message, 'teamer777@gmail.com', ['teamer777@icloud.com'], fail_silently=False)
+    #         return HttpResponseRedirect('/')
+    #     else:
+    #         form = FormFront({'phone': u'Введите свой телефон',})
+    # else:
         form = FormFront()
 
     # Функция locals получает все поля словаря

@@ -18,7 +18,8 @@ from webshop.checkout import checkout
 from webshop.cart.cart import *
 from webshop.catalog.models import *
 from webshop.cart import cart
-from webshop.catalog.forms import ProductAddToCartForm
+from webshop.catalog.forms import ProductAddToCartForm, FormFront
+from webshop.settings import ADMIN_EMAIL
 
 @dajaxice_register
 def order_form(request, form):
@@ -61,51 +62,37 @@ def order_form(request, form):
 
 
 
-# @dajaxice_register
-# def send_form(request, form):
-#     dajax = Dajax()
-#     # form = ProductOneClickForm(deserialize_form(form))
-#     # dajax.remove_css_class('#my_form .loading', 'hidden')
-#     if form.is_valid():
-#         dajax.remove_css_class('#my_form input', 'error')
-#         # dajax.remove_css_class('#status', 'hidden')
-#
-#         # result = u'Отправляем сообщение'
-#         # dajax.assign('#status', 'value', result)
-#
-#         phone = form.cleaned_data.get('phone')
-#         product_name = form.cleaned_data.get('product_name')
-#         subject = u'Заявка в 1 клик'
-#         message = u'Телефон: %s \n Товар: %s' % (phone , product_name)
-#         send_mail(subject, message, 'teamer777@gmail.com', ['fish153.ru@gmail.com'], fail_silently=False)
-#
-#         order = OrderOneClick(phone=phone , product_name=product_name)
-#         order.save()
-#
-#         # dajax.remove_css_class('#status', 'hidden')
-#         # result = u'Сообщение отправлено'
-#         # dajax.assign('#status', 'value', result)
-#         dajax.remove_css_class('#message_show', 'hidden')
-#         # dajax.script('closemodal()')
-#
-#
-#
-#         # dajax.redirect('/', delay=2000)
-#         # dajax.code('$(".close").click()')
-#
-#     else:
-#         dajax.remove_css_class('#my_form input', 'error')
-#     #     dajax.remove_css_class('#status', 'hidden')
-#     #     result = u'Введите данные'
-#     #     dajax.assign('#status', 'value', result)
-#         for error in form.errors:
-#             dajax.add_css_class('#id_%s' % error, 'error')
-#
-#
-#
-#     # dajax.add_css_class('div .loading', 'hidden')
-#     # dajax.alert("Form is_valid(), your phone is: %s" % form.cleaned_data.get('phone'))
-#     return dajax.json()
+@dajaxice_register
+def send_form(request, form):
+    dajax = Dajax()
+    form = FormFront(deserialize_form(form))
+    if form.is_valid():
+        dajax.remove_css_class('#message_show', 'hidden')
+        dajax.assign('#status', 'value', form)
+    else:
+        dajax.remove_css_class('#my_form p', 'error')
+    # dajax.remove_css_class('#my_form .loading', 'hidden')
+        # dajax.remove_css_class('#my_form p', 'error')
+        dajax.remove_css_class('#status', 'hidden')
+        # result = u'Отправляем сообщение'
+        # dajax.assign('#status', 'value', result)
+        # name = form.cleaned_data.get('name')
+        # phone = form.cleaned_data.get('phone')
+        # subject = u'Заявка waymy.ru'
+        # message = u'Телефон: %s \n Имя: %s' % (phone, name)
+        # send_mail(subject, message, 'teamer777@gmail.com', [ADMIN_EMAIL], fail_silently=False)
+        # dajax.remove_css_class('#status', 'hidden')
+        # result = u'Сообщение отправлено'
+        # dajax.assign('#status', 'value', result)
+        # dajax.remove_css_class('#message_show', 'hidden')
+        # dajax.script('closemodal()')
+        # dajax.redirect('/', delay=2000)
+        # dajax.code('$(".close").click()')
+    # for error in form.errors:
+    #     dajax.add_css_class('#id_%s' % error, 'error')
+    # dajax.add_css_class('div .loading', 'hidden')
+    # dajax.alert("Form is_valid(), your phone is: %s" % form.cleaned_data.get('phone'))
+    return dajax.json()
 
 
 @dajaxice_register

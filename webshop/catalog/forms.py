@@ -94,3 +94,20 @@ class FormFront(forms.Form):
     name = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'placeholder': u'Ваше имя'}))
     phone = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': u'Ваш телефон'}))
 
+    # name = forms.CharField(max_length=100)
+    # phone = forms.CharField(max_length=100)
+
+    # def __init__(self, request=None, *args, **kwargs):
+    #     """
+    #     Переопределение метода __init__ по умолчанию для получения словаря request
+    #     нужен для проверки работы cookies
+    #     """
+    #     self.request = request
+    #     super(FormFront, self).__init__(*args, **kwargs)
+    #
+    # def clean(self):
+    #     """Проверка что cookies в браузере включены"""
+    #     if self.request:
+    #         if not self.request.session.test_cookie_worked():
+    #             raise forms.ValidationError(_(u'Cookies must be enabled.'))
+    #     return self.cleaned_data
