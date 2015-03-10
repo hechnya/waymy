@@ -1,33 +1,30 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 from django.core import urlresolvers
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
-from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.csrf import csrf_protect
-from django.shortcuts import render
 import datetime
-from django_mobile import set_flavour
+from django.utils import simplejson
 from webshop.catalog import mobile
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from webshop.cart import cart
-from webshop.catalog.forms import ProductAddToCartForm, get_form_add_to_cart
-from django.core.mail import send_mail
+from webshop.catalog.forms import ProductAddToCartForm
 from webshop.catalog.models import *
 from webshop.reviews.models import ReviewsProduct
 from webshop.reviews.forms import ReviewProductForm
 from webshop.catalog.forms import FormFront
-from webshop.slider.models import Slider
 from webshop.news.models import News
 from webshop.pages.models import Page
 from webshop.accounts.models import UserProfile
+from webshop.cart.models import CartItem
 
 
 def index_view(request, template_name="catalog/index.html"):
     """Представление главной страницы"""
 
-    # set_flavour('ipad')
     # определение устройства
     user_agent = request.META.get("HTTP_USER_AGENT")
     http_accept = request.META.get("HTTP_ACCEPT")
@@ -49,7 +46,7 @@ def index_view(request, template_name="catalog/index.html"):
     # Для традиционных компьютеров и планшетов (iPad, Android, и т.д.)
     # return HttpResponseRedirect('/myapp/d/')
 
-    page_title = _(u'Internet Magazine')
+    page_title = u'Internet Magazine'
     products = Product.objects.all()
     for p in products:
         try:
@@ -57,6 +54,21 @@ def index_view(request, template_name="catalog/index.html"):
             p.volume = ProductVolume.objects.get(product=p, default=True)
         except Exception:
             p.image = "/media/products/images/none.png"
+        """достаем основные атрибуты"""
+        try:
+            p.atrs_default = ProductVolume.objects.get(product=p, default=True)
+            p.atrs = ProductVolume.objects.filter(product=p)
+        except Exception:
+            print  u'Основные атрибуты продукта %s не найдены' % p.name
+
+    paginator = Paginator(products, 5)
+    page = request.GET.get('page')
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
 
     reviews = Review.objects.all()
 
@@ -96,8 +108,6 @@ def sortAndUniq(input):
 def category_view(request, category_slug, template_name="catalog/category.html"):
     """Представление для просмотра конкретной категории"""
     c = get_object_or_404(Category.active, slug=category_slug)
-
-    # products = Product.objects.all()
     products = []
     if c.level == 0:
         loop_category = Category.objects.filter(tree_id=c.tree_id)
@@ -124,11 +134,28 @@ def category_view(request, category_slug, template_name="catalog/category.html")
             p.volume = ProductVolume.objects.get(product=p, default=True)
         except Exception:
             p.image_url = "/media/products/images/none.png"
+        """достаем основные атрибуты"""
+        try:
+            p.atrs_default = ProductVolume.objects.get(product=p, default=True)
+            p.atrs = ProductVolume.objects.filter(product=p)
+        except Exception:
+            print  u'Основные атрибуты продукта %s не найдены' % p.name
+
+    paginator = Paginator(products, 9)
+    page = request.GET.get('page')
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+
     page_title = c.name
     meta_keywords = c.meta_keywords
     meta_description = c.meta_description
     return render_to_response(template_name, locals(),
                               context_instance=RequestContext(request))
+
 
 def sale_view(request, template_name="", type=""):
     """Представление для просмотра скидок"""
@@ -156,9 +183,36 @@ def sale_view(request, template_name="", type=""):
 
 @csrf_protect
 def product_view(request, product_slug, template_name="catalog/product.html"):
-    """Представление для просмотра конкретного продукта"""
-
+    """представление для конкретного товара"""
+    """достаем объект, характеристики, все фотки + дефолтную"""
     p = get_object_or_404(Product, slug=product_slug)
+    try:
+        product_image = ProductImage.objects.get(product=p, default=True)
+        images = ProductImage.objects.filter(product=p)
+    except Exception:
+        print "Image for product #%s not found" % p.id
+
+    """достаем основные атрибуты"""
+    try:
+        atrs_default = ProductVolume.objects.get(product=p, default=True)
+        atrs = ProductVolume.objects.filter(product=p)
+    except Exception:
+        print  u'Основные атрибуты продукта %s не найдены' % p.name
+
+    user = request.user
+    try:
+        profile = UserProfile.objects.get(user=user)
+        user.have_profile = True
+    except:
+        user.have_profile = False
+
+    reviews = ReviewsProduct.objects.filter(product=p)
+
+    page_title = p.name
+    meta_keywords = p.meta_keywords
+    meta_description = p.meta_description
+
+    """Достаем присоединенные товары и их картинки"""
     try:
         attachedProducts = p.itemsAttached.all()
         for attachedP in attachedProducts:
@@ -170,17 +224,7 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
     except:
         None
 
-    reviews = ReviewsProduct.objects.filter(product=p)
-
-    user = request.user
-    try:
-        profile = UserProfile.objects.get(user=user)
-        user.have_profile = True
-    except:
-        user.have_profile = False
-
-
-    # breadcrumbs
+    """хлебные крошки"""
     cat = p.categories.all()
     c = get_object_or_404(Category, id=cat[0].id)
     if c.level == 0:
@@ -190,28 +234,6 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
         parent_url = parent_cat.get_absolute_url()
         request.breadcrumbs([('%s' % parent_cat.name, parent_url), ('%s' % c.name, c.get_absolute_url()), ('%s' % p.name, request.path_info)])
 
-
-    page_title = p.name
-    meta_keywords = p.meta_keywords
-    meta_description = p.meta_description
-
-    # достаем все фотки + дефлтную
-    try:
-        product_image = ProductImage.objects.get(product=p, default=True)
-        images = ProductImage.objects.filter(product=p)
-    except Exception:
-        print "Image for product #%s not found" % p.id
-
-    characteristics = Characteristic.objects.filter(product=p)
-
-    # достаем основные атрибуты
-    try:
-        atrs_default = ProductVolume.objects.get(product=p, default=True)
-        atrs = ProductVolume.objects.filter(product=p)
-    except Exception:
-        print  u'Основные атрибуты продукта %s не найдены' % p.name
-
-    # Проверка HTTP метода
     if request.method == 'POST':
         # Добавление в корзину, создаем связанную форму
         postdata = request.POST.copy()
@@ -227,46 +249,27 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
 
             return HttpResponseRedirect('/product/%s' % product_slug)
 
-        else:
-
-            form = ProductAddToCartForm(request, postdata)
-            # form = get_form_add_to_cart(request, postdata)
-            # form2 = ProductOneClickForm(request.POST or None)
-            # Проверка что отправляемые данные корректны
-            if form.is_valid():
-                # Добавляем в корзину и делаем перенаправление на страницу с корзиной
-                cart.add_to_cart(request)
-                # Если cookies работают, читаем их
-                if request.session.test_cookie_worked():
-                    request.session.delete_test_cookie()
-                # url = urlresolvers.reverse('show_cart')
-                return HttpResponseRedirect('/product/%s' % product_slug)
-            # if form2.is_valid():
-            #     phone = request.POST['phone']
-            #     text = u'Заявка на товар %s \n телефон: %s' % (page_title, phone)
-            #     send_mail('в 1 клик', text, 'teamer777@gmail.com', ['greenteamer@bk.ru'], fail_silently=False)
-            #     return HttpResponseRedirect('/product/%s/' % product_slug)
-            else:
-                form = ProductAddToCartForm(request, postdata)
-                # form = get_form_add_to_cart(request, postdata)
-                error = form.errors
-                return render_to_response(template_name, locals(),
-                                  context_instance=RequestContext(request))
-                # return HttpResponseRedirect('/product/%s' % product_slug)
-                # return render(request, template_name, {
-                #     'form': form,
-                #     'error': form.errors,
-                # })
+        # else:
+        #
+        #     form = ProductAddToCartForm(request, postdata)
+        #     if form.is_valid():
+        #         # Добавляем в корзину и делаем перенаправление на страницу с корзиной
+        #         cart.add_to_cart(request)
+        #         # Если cookies работают, читаем их
+        #         if request.session.test_cookie_worked():
+        #             request.session.delete_test_cookie()
+        #         return HttpResponseRedirect('/product/%s' % product_slug)
+        #     else:
+        #         form = ProductAddToCartForm(request, postdata)
+        #         error = form.errors
+        #         return render_to_response(template_name, locals(),
+        #                           context_instance=RequestContext(request))
 
     else:
-        # Если запрос GET, создаем не привязанную форму. request передаем в kwarg
         form = ProductAddToCartForm(request=request, label_suffix=':')
         form2 = ReviewProductForm()
-        # form = get_form_add_to_cart(request, postdata=None)
-        # form2 = ProductOneClickForm()
-    # form = get_form_add_to_cart(request)
     # Присваиваем значению скрытого поля чистое имя продукта
-        form.fields['product_slug'].widget.attrs['value'] = product_slug
+    #     form.fields['product_slug'].widget.attrs['value'] = product_slug
 
 
     # form2.fields['product_name'].widget.attrs['value'] = p.name

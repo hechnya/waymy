@@ -4,7 +4,8 @@
 {% load i18n %}
 {% load mptt_tags %}
 {% load thumbnail %}
-{% load dajaxice_templatetags %}
+
+{#{% load dajaxice_templatetags %}#}
 
 <!DOCTYPE HTML>
 <html>
@@ -160,10 +161,12 @@
             <script type="text/javascript" src="{{ STATIC_URL }}mightySlider/assets/js/jquery.mobile.just-touch.js"></script>
             <script src="{{ STATIC_URL }}js/pushy.min.js"></script>
         {% else %}
-            <script src="{{ STATIC_URL }}js/jquery.selectbox.min.js"></script>
-            <script>
-                (function($) { $(function() { $('select').selectbox(); });})(jQuery);
-            </script>
+{#            <script src="{{ STATIC_URL }}js/jquery.selectbox.min.js"></script>#}
+{#            <script>#}
+{#                (function($) { $(function() { $('select').selectbox(); });})(jQuery);#}
+{#            </script>#}
+            <script src="{{ STATIC_URL }}js/bootstrap-combobox.min.js"></script>
+            <script>$('select').btComboBox()</script>
         {% endif %}
 
         <script type="text/javascript" src="{{ STATIC_URL }}mightySlider/assets/js/jquery.easing.1.3.js"></script>
@@ -171,27 +174,27 @@
         <script src="{{ STATIC_URL }}js/custom.js"></script>
 
         {#    dajax#}
-        <script type="text/javascript" src="{{ STATIC_URL }}dajax/jquery.dajax.core.js"></script>
-        <script type="text/javascript" charset="utf-8">
-            function send_form(){
-                Dajaxice.webshop.ajaxapp.send_form(Dajax.process,{'form':$('#my_form').serialize(true)});
-            }
-            function order_form(){
-                Dajaxice.webshop.ajaxapp.order_form(Dajax.process,{'form':$('#my_form').serialize(true)});
-            }
-            function closeMessage(){
-                $('#message_show').addClass('hidden');
-            }
-            function calc_delivery() {
-                Dajaxice.webshop.ajaxapp.calc_delivery(Dajax.process,{'form':$('#rb_delivery').serialize(true)});
-            }
-            function change_atrs() {
-                Dajaxice.webshop.ajaxapp.change_atrs(Dajax.process, {'option':this.value});
-            }
+{#        <script type="text/javascript" src="{{ STATIC_URL }}dajax/jquery.dajax.core.js"></script>#}
+{#        <script type="text/javascript" charset="utf-8">#}
+{#            function send_form(){#}
+{#                Dajaxice.webshop.ajaxapp.send_form(Dajax.process,{'form':$('#my_form').serialize(true)});#}
+{#            }#}
+{#            function order_form(){#}
+{#                Dajaxice.webshop.ajaxapp.order_form(Dajax.process,{'form':$('#my_form').serialize(true)});#}
+{#            }#}
+{#            function closeMessage(){#}
+{#                $('#message_show').addClass('hidden');#}
+{#            }#}
+{#            function calc_delivery() {#}
+{#                Dajaxice.webshop.ajaxapp.calc_delivery(Dajax.process,{'form':$('#rb_delivery').serialize(true)});#}
+{#            }#}
+{#            function change_atrs() {#}
+{#                Dajaxice.webshop.ajaxapp.change_atrs(Dajax.process, {'option':this.value});#}
+{#            }#}
+{##}
+{#        </script>#}
 
-        </script>
-
-        <script type="text/javascript" src="{{ STATIC_URL }}dajax/dajaxice.core.js"></script>
+{#        <script type="text/javascript" src="{{ STATIC_URL }}dajax/dajaxice.core.js"></script>#}
 
         {% block bottom_script %}
         {% endblock %}

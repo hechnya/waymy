@@ -4,8 +4,8 @@
 
 <ul class="nav">
   <li class="dropdown">
-    <a href="{% url show_cart %}" class="dropdown-toggle" data-toggle="dropdown">
-        <n style="">Корзина</n> <i class="fa fa-shopping-cart"><span >{{ cart_i.count }}</span></i>
+    <a href="/cart" class="dropdown-toggle" data-toggle="dropdown">
+        <n id="cart_label" style="">Корзина</n> <i class="fa fa-shopping-cart"><span id="total_count">{{ quantity }}</span></i>
     </a>
     <ul class="dropdown-menu">
 
@@ -21,16 +21,17 @@
 
                         <div class="text_item">
                             <p class="name_item">{{ item.product.name }}</p>
-                            <p>Цена: <i class="fa fa-rub"></i>{{ item.atributes.price }}</p>
-                            <p>Колличество: {{ item.quantity }}</p>
+                            <p>Цена: <i class="fa fa-rub"></i>{% if item.product.get_atributes.new_price != 0.00 %}{{ item.atributes.new_price }}{% else %}{{ item.atributes.price }}{%  endif %}</p>
+
+                            <p id="quantity{{ item.id }}">Колличество: {{ item.quantity }}</p>
                         </div>
                     </div>
                 {% endfor %}
-                <a href="{% url show_cart %}" class="btn btn-success"><i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i> Показать корзину</a>
             {% else %}
                 <p>Нет товаров в корзине</p>
             {% endif %}
         </div>
+            <a id="cart_link" href="/cart" class="btn btn-success"><i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i> Показать корзину</a>
 
         </div>
 

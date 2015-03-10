@@ -4,6 +4,10 @@
 {% load catalog_tags %}
 {% load search_tags %}
 
+{% block product_js %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/animate.css">
+{% endblock %}
+
 {% block content %}
 
     <div class="tovari">
@@ -12,7 +16,6 @@
                 <div class="col-md-12">
 
                         {% if products %}
-
                             {% for p in products %}
                                 {% if p == products.1 %}
                                     <div class="col-md-4 cat_menu">
@@ -28,22 +31,40 @@
                                 {% endif %}
                                 <div class="col-md-4 popular_products">
                                     <div class="product_thumbnail">
-                                        {% thumbnail p.image.url "150x150" crop="center" as im %}
-                                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-                                        {% endthumbnail %}
+                                        <a href="{{ p.get_absolute_url }}">
+                                            {% thumbnail p.image.url "150x150" crop="center" as im %}
+                                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                            {% endthumbnail %}
+                                        </a>
                                         <br />
                                         <name>{{ p.name }}</name>
                                         <div class="description_tovar">{{ p.description|removetags:"img"|truncatewords:"20"|safe }}</div>
-                                        <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
-                                        <a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a><span class="price">{{ p.volume.price }} руб.</span>
 
-{#                                        <div class="description_hidden opacity">#}
-{#                                            <p class="description_brand">{{ p.brand }}</p>#}
-{#                                            <p class="description_name">{{ p.name }}</p>#}
-{#                                            <p>{{ p.description|removetags:"img"|truncatewords:"30"|safe }}</p>#}
-{#                                            <a href="{{ p.get_absolute_url }}">Подробнее</a>#}
-{#                                            <p class="description_price"><i class="fa fa-rub"></i>{{ p.price }}</p>#}
-{#                                        </div>#}
+                                        <a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a>
+                                        <span class="price">{{ p.volume.price }} руб.</span>
+
+                                        <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
+
+                                            <div class="inline_form">
+                                                <input type="hidden" class="slug" value="{{ p.slug }}" />
+
+                                                <select id="option_{{ p.slug }}" class="option_value" size="1">
+                                                    {% for atr in p.atrs %}
+                                                        <option value="{{ atr.id }}">{{ atr.volume }}</option>
+                                                    {% endfor %}
+                                                </select>
+
+                                                <div id="{{ p.id }}" class="quantity">
+                                                    <i class="btn-mini fa fa-minus-square minus" onselectstart="return false"></i>
+                                                    <input name="quantity{{ p.id }}" maxlength="2" id="id_quantity{{ p.id }}" type="text" class="q_val" value="1" size="1">
+                                                    <i class="btn-mini fa fa-plus-square plus" onselectstart="return false"></i>
+                                                </div>
+
+                                                <button class="btn btn-primary clickbutton" id="{{ p.id }}">В корзину</button>
+                                            </div>
+
+
+
 
                                     </div>
                                 </div>
@@ -54,6 +75,21 @@
                         {% endif %}
 
                 </div>
+
+                <div class="col-xs-12" style="text-align: center">
+                    <ul class="pagination">
+                        {% if products.has_previous %}
+                            <li class=""><a href="?page={{ products.previous_page_number }}">&laquo;</a></li>
+                        {% endif %}
+                        {% for num in paginator.page_range %}
+                            <li {% if num == products.number %} class="active"{% endif %}><a href="?page={{ num }}" >{{ num }} <span class="sr-only">{{ num }}</span></a></li>
+                        {% endfor %}
+                        {% if products.has_next %}
+                            <li><a href="?page={{ products.next_page_number }}">&raquo;</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
             </div>
         </div>
     </div>
@@ -156,132 +192,12 @@
         </div>
     </div>
 
-{#    <div class="boloc_news">#}
-{#        <div class="row">#}
-{#           {% if news %}#}
-{#                <div class="breadcrumb">#}
-{#                    <h3>Новости</h3>#}
-{#                </div>#}
-{#                    <div class="well">#}
-{#                        {% for n in news %}#}
-{#                            <h4>#}
-{#                                <a href="{{ n.get_absolute_url }}">{{ n.header }}</a>#}
-{#                            </h4>#}
-{#                                <i class="icon-time"></i>&nbsp;{{ n.created|date:"h:m, j F Y" }}#}
-{#                            <br />#}
-{#                            <div class="alert alert-info">#}
-{#                                {{ n.body|safe }}#}
-{#                            </div>#}
-{#                        {% endfor %}#}
-{#                    </div>#}
-{#            {% endif %}#}
-{#        </div>#}
-{#    </div>#}
     {% block popular_products %}
-{#        <div id="popular_products">#}
-{#            <div class="container">#}
-{#                <div class="row">#}
-{#                    <div class="col-md-12">#}
-{#                        <div class="row">#}
-{##}
-{#                            <div class="col-md-12 border_bot">#}
-{#                                <div class="row">#}
-{#                                    <div class="col-md-4">#}
-{#                                        <h3>#}
-{#                                            <div class="breadcrumb">Популярные товары</div>#}
-{#                                        </h3>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{##}
-{#                            {% if products %}#}
-{##}
-{#                                {% for p in products %}#}
-{#                                    <div class="col-md-3 popular_products">#}
-{#                                        <div class="product_thumbnail">#}
-{#                                            {% thumbnail p.image.url "298x319" crop="center" as im %}#}
-{#                                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">#}
-{#                                            {% endthumbnail %}#}
-{#                                            <br />#}
-{#                                            <h3>{{ p.name }}</h3>#}
-{#                                            <br />#}
-{#                                            <p>{{ p.price }} руб.</p>#}
-{##}
-{#                                            <div class="description_hidden opacity">#}
-{#                                                <p class="description_brand">{{ p.brand }}</p>#}
-{#                                                <p class="description_name">{{ p.name }}</p>#}
-{#                                                <p>{{ p.description|removetags:"img"|truncatewords:"30"|safe }}</p>#}
-{#                                                <a href="{{ p.get_absolute_url }}">Подробнее</a>#}
-{#                                                <p class="description_price"><i class="fa fa-rub"></i>{{ p.price }}</p>#}
-{#                                            </div>#}
-{##}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                {% endfor %}#}
-{##}
-{#                            {% else %}#}
-{#                                <p>Популярные товары не найдены</p>#}
-{#                            {% endif %}#}
-{##}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
         
     {% endblock %}
 
     {% block promotion_discount %}
-{#        <div id="promotion_discount">#}
-{#            <div class="container">#}
-{#                <div class="row">#}
-{#                    <div class="promotion">#}
-{#                        <div class="col-md-6">#}
-{##}
-{#                                <div class="row">#}
-{#                                    <div class="col-md-4">#}
-{#                                        <div class="static-image">#}
-{#                                            <a href="#"><img src="{{ STATIC_URL }}images/price-tag.png" alt=""></a>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                    <div class="col-md-8">#}
-{#                                        <div class="static-text">#}
-{#                                            <div class="icon">&nbsp;</div>#}
-{#                                            <h3>АКЦИИ И СКИДКИ</h3>#}
-{#                                            <p>В нашем интернет магазине существуют выгодные акции и большие скидки</p>#}
-{#                                            <a href="#">Подробнее</a>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{##}
-{#                        </div>#}
-{#                    </div>#}
-{##}
-{#                    <div class="discount">#}
-{#                        <div class="col-md-6">#}
-{##}
-{#                                <div class="row">#}
-{#                                    <div class="col-md-4">#}
-{#                                        <div class="static-image"><a href="#">#}
-{#                                            <img src="{{ STATIC_URL }}images/ak-phone.png" alt=""></a>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                    <div class="col-md-8">#}
-{#                                        <div class="static-text">#}
-{#                                            <div class="icon"></div>#}
-{#                                                <h3>ТЕЛЕФОН +7 (913) 888 99-22</h3>#}
-{#                                                <p>Вы можите звонить нам в любое время, Вы получить ответ не все ваши вопросы и предложения </p>#}
-{#                                            <a href="#">Подробнее</a>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{##}
-{#                        </div>#}
-{#                    </div>#}
-{##}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
+
     {% endblock %}
 
 {#        блок лучшие продажи#}
@@ -329,6 +245,8 @@
 
 
 {% block bottom_script %}
+
+    <script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
 
     <script type="text/javascript">
         jQuery(document).ready(function($){
@@ -389,5 +307,99 @@
             })();
         });
     </script>
+
+<script type="text/javascript">
+    //по нажатию на + или - меняем значение в поле quantity
+    (function($) {
+        $(document).ready(function() {
+            $('.plus').click(function (){
+                var current_q = $(this).parent(".quantity").children(".q_val").val();
+                var current_quantity = parseInt(current_q) + 1;
+                $(this).parent(".quantity").children(".q_val").attr("value", current_quantity);
+            });
+            $('.minus').click(function (){
+                var current_q = $(this).parent(".quantity").children(".q_val").val();
+                if (parseInt(current_q)>1){
+                    var current_quantity = parseInt(current_q) - 1;
+                    $(this).parent(".quantity").children(".q_val").attr("value", current_quantity);
+                }
+            });
+        });
+    })(jQuery);
+
+</script>
+
+<script>
+    (function($) {
+        $(document).ready(function() {
+
+            $(".clickbutton").click(function (){
+                var current_id = $(this).attr("id");
+                var current_slug = $(this).parent(".inline_form").children(".slug").val();
+                var current_quantity = $(this).parent(".inline_form").children(".quantity").children(".q_val").val();
+                // что бы работать с селектами нормально подключен скрипт:
+                // bootstrap-combobox https://github.com/cchantep/bootstrap-combobox
+                var current_option = $(this).parent(".inline_form").children('.option_value').btComboBox('value');
+                csrftoken = $.cookie('csrftoken');
+{#                alert(current_slug);#}
+                $.post(
+                    "/ajax-cart/",
+                    {
+                        csrfmiddlewaretoken: csrftoken,
+                        product_slug: current_slug,
+                        quantity: current_quantity,
+                        atr_value: current_option
+                    },
+                    onAjaxSuccess
+                );
+                function onAjaxSuccess(data) {
+                    // Здесь мы получаем данные, отправленные сервером и выводим их на экран.
+                    $("#id_quantity"+current_id).addClass('animated bounceOutUp');
+                    $(".cart_items_menu").html(data.add_item_html);
+                    $("#total_count").html(data.global_quantity);
+                    setTimeout(function () {
+                        $("#id_quantity"+current_id).removeClass('animated bounceOutUp');
+                    }, 1000);
+                }
+            });
+
+        });
+    })(jQuery);
+{#    (function($) {#}
+{#        $(document).ready(function() {#}
+{##}
+{#            $(".clickbutton").click(function (){#}
+{#                var current_id = $(this).attr("id");#}
+{#                var current_slug = $(this).parent(".product_thumbnail").children("form").children(".inline_form").children(".slug").val();#}
+{#                var current_quantity = $(this).parent(".product_thumbnail").children("form").children(".inline_form").children(".quantity").children(".q_val").val();#}
+{#                // что бы работать с селектами нормально подключен скрипт:#}
+{#                // bootstrap-combobox https://github.com/cchantep/bootstrap-combobox#}
+{#                var current_option = $(this).parent(".product_thumbnail").children("form").children(".inline_form").children('.option_value').btComboBox('value');#}
+{#                csrftoken = $.cookie('csrftoken');#}
+{#                alert(csrftoken);#}
+{#                $.post(#}
+{#                    "/ajax-cart/",#}
+{#                    {#}
+{#                        csrfmiddlewaretoken: csrftoken,#}
+{#                        product_slug: current_slug,#}
+{#                        quantity: current_quantity,#}
+{#                        atr_value: current_option#}
+{#                    },#}
+{#                    onAjaxSuccess#}
+{#                );#}
+{#                function onAjaxSuccess(data) {#}
+{#                    // Здесь мы получаем данные, отправленные сервером и выводим их на экран.#}
+{#                    $("#id_quantity"+current_id).addClass('animated bounceOutUp');#}
+{#                    $(".cart_items_menu").html(data.add_item_html);#}
+{#                    $("#total_count").html(data.global_quantity);#}
+{#                    setTimeout(function () {#}
+{#                        $("#id_quantity"+current_id).removeClass('animated bounceOutUp');#}
+{#                    }, 1000);#}
+{#                }#}
+{#            });#}
+{##}
+{#        });#}
+{#    })(jQuery);#}
+</script>
 
 {% endblock %}

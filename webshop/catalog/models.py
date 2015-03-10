@@ -111,15 +111,11 @@ class Product(models.Model):
                             help_text=_(u'Unique value for product page URL, created from name.'))
     brand_name = models.ForeignKey(BrandName, verbose_name=u'Название бренда', blank=True, null=True)
 
-    # price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name=u'Цена')
-    # new_price = models.DecimalField(max_digits=9, decimal_places=2,
-    #                                 blank=True, default=0.00, verbose_name=u'Новая цена')
     not_available = models.BooleanField(_(u'Нет в наличии'))
-    is_bestseller = models.BooleanField(_(u'Лучшие продажи'), default=False) # Лучшие продажи
+    is_bestseller = models.BooleanField(_(u'Лучшие продажи'), default=False)
     is_aqua = models.BooleanField(verbose_name=u'Жидкость')
     is_new = models.BooleanField(verbose_name=u'Новинка')
 
-    # description = models.TextField(_(u'Description'),blank=True)
     description = RichTextField()
     meta_keywords = models.CharField(_(u'Meta keywords'), max_length=255,
                                      help_text=_(u'Comma-delimited set of SEO keywords for meta tag'), blank=True)
@@ -127,14 +123,10 @@ class Product(models.Model):
                                         help_text=_(u'Content for description meta tag'),blank=True)
     created_at = models.DateTimeField(_(u'Created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_(u'Updated at'), auto_now=True)
-    # categories = models.ForeignKey(Category, verbose_name=_(u'Categories'),
-    #                                     help_text=_(u'Categories for product'))
 
     categories = models.ManyToManyField(Category, verbose_name=_(u'Categories'),
                                         help_text=_(u'Categories for product'))
     feel = models.ManyToManyField(FeelName, verbose_name=u'Вкус', blank=True, null=True)
-    # volume = models.DecimalField(max_digits=9, decimal_places=2, verbose_name=u'Объем')
-    # weight = models.DecimalField(max_digits=9, decimal_places=2, verbose_name=u'Вес')
     itemsAttached = models.ManyToManyField('self', verbose_name=u'Выберите прилагающиеся товары')
 
     objects = models.Manager()
@@ -159,11 +151,8 @@ class Product(models.Model):
 
     @property
     def sale_price(self):
-
-        # bool = False
         sale_atr = None
         atributes = ProductVolume.objects.filter(product=self)
-
         for atr in atributes:
             if atr.new_price != 0.00:
                 sale_atr = atr
@@ -187,9 +176,6 @@ class ProductImage(models.Model):
     """Изображения продуктов"""
     image = models.FileField(_(u'Image'), upload_to='products/images/',
                              help_text='Product image')
-    # new_image = models.ImageField(_(u'Image'), upload_to='products/test/',
-    #                          help_text='Product image test')
-    # cropping = ImageRatioField('image', '300x300', size_warning=True)
 
     description = models.CharField(_(u'Description'), max_length=255, blank=True)
     product = models.ForeignKey(Product, verbose_name=_(u'Product'),
@@ -203,9 +189,6 @@ class ProductImage(models.Model):
     @property
     def url(self):
         return self.image
-
-    # def new_url(self):
-    #     return self.new_image
 
     def __unicode__(self):
         return self.product.name
@@ -249,34 +232,6 @@ class GiftPrice(models.Model):
     def __unicode__(self):
         return self.name
 
-
-class CharacteristicType(models.Model):
-    """Словарная таблица характеристик продуктов"""
-    name = models.CharField(_(u'Name'), max_length=255)
-
-    class Meta:
-        db_table = 'characteristics_type'
-        ordering = ['name']
-        verbose_name_plural = _(u'Characteristics Types')
-        unique_together = ('name',)
-
-    def __unicode__(self):
-        return self.name
-
-
-class Characteristic(models.Model):
-    """Характеристики продуктов"""
-    characteristic_type = models.ForeignKey(CharacteristicType)
-    value = models.CharField(_(u'Value'), max_length=255)
-    product = models.ForeignKey(Product, verbose_name=_(u'Product'),
-                                help_text=_(u'Referenced product'))
-
-    class Meta:
-        db_table = 'characteristics'
-        ordering = ['characteristic_type', 'value']
-        verbose_name_plural = _(u'Characteristics')
-        # составной ключ, для избежания повторения одинковых характеристик у продукта
-        unique_together = (('product', 'characteristic_type'),)
 
 
 class Cupon(models.Model):

@@ -54,7 +54,7 @@ class ProductAdmin(ImageCroppingMixin, admin.ModelAdmin):
     inlines = [ProductVolumeAdmin, ProductImageAdmin]
     # search_field = ['name', 'description', 'meta_keywords', 'meta_description']
     search_fields = ['name']
-    exclude = ('meta_keywords', 'meta_description')
+    # exclude = ('meta_keywords', 'meta_description')
     readonly_fields = ('created_at', 'updated_at',)
     # имя продукта для генерации чистой ссылки
     prepopulated_fields = {'slug': ('name',)}
@@ -99,7 +99,7 @@ class FeelNameAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(BrandName)
-admin.site.register(FeelName, FeelNameAdmin)
+# admin.site.register(FeelName, FeelNameAdmin)
 admin.site.register(GiftPrice)
 admin.site.register(Cupon)
 admin.site.register(Review)
