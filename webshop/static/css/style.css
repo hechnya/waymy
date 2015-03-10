@@ -411,6 +411,7 @@ text-transform: uppercase;
 
 .popular_products, .best_selling{
     margin-top: 30px;
+    margin-bottom: 30px;
 }
 #popular_products,#best_selling{
 background: #F7F7F7;
@@ -434,10 +435,16 @@ padding: 40px 0px 100px 0px;
 }
 #catalog .product_thumbnail {
     background: #fff;
-    padding: 30px;
+    /*padding: 30px;*/
     /*border: 1px solid #EEEEEE;*/
     border-radius: 7px;
     position: relative;
+}
+#catalog .product_thumbnail img.separator_line {
+    max-width: none;
+}
+#catalog .quantity {
+    display: inline-block;
 }
 .breadcrumb {
     margin-bottom: 5px;
@@ -463,6 +470,24 @@ padding: 40px 0px 100px 0px;
     max-width: 180px;
     border-radius: 5px 5px 0 0;
     height: auto;
+}
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
+  z-index: 2;
+  color: #fff;
+  background-color: #2ad38e;
+  border-color: #2ad38e;
+  cursor: default;
+}
+.pagination>li>a, .pagination>li>span {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  line-height: 1.42857143;
+  text-decoration: none;
+  color: #5E5E5E;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  margin-left: -1px;
 }
 #popular_products .product_thumbnail img, .best_selling .product_thumbnail img{
     border-bottom: 1px solid #E8E8E8;
@@ -1230,6 +1255,9 @@ input#order_submit {
 #product_lict h2 {
     margin-top: 0;
 }
+.tovari .selectbox .dropdown ul {
+    padding: 5px;
+}
 /*#cart .btn-success {*/
     /*background-color: #3383B8;*/
     /*border-color: #2d72a1;*/
@@ -1485,6 +1513,19 @@ input#order_submit {
     padding: 0px;
     margin: 0px;
 }
+#cart_link {
+    width: 100%;
+    background: #2ad38e;
+    color: #fff;
+}
+.tovari .quantity {
+    display: inline-block;
+}
+.tovari .quantity input {
+    padding: 5px;
+    width: 35px;
+    border:1px solid #2ad38e;
+}
 .cart_icon span{
     font-family: 'helvetica', helvetica, Arial;
     background: #2ad38e;
@@ -1597,7 +1638,17 @@ ul.menu li:hover ul.children {
     font-family:'Open Sans';
     font-weight: 100;
 }
-
+.btn {
+    background-color: #fff;
+    border-color: #e9e9e9;
+    color: #000;
+    font-family:'Open Sans';
+    font-weight: 100;
+    border-radius: 0px;
+}
+.btn span {
+    color: #000;
+}
 .btn-success {
     background-color: #fff;
     border-color: #e9e9e9;
@@ -1633,6 +1684,7 @@ ul.menu li:hover ul.children {
 .description_tovar {
     font-family:'Open Sans';
     font-weight: 100;
+    min-height: 90px;
     text-align: left;
     text-align: center;
 }

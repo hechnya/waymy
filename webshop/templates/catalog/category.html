@@ -19,6 +19,10 @@
 {% block tri_bloka %}
 {% endblock %}
 
+{% block product_js %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/animate.css">
+{% endblock %}
+
 
 {% block content %}
 
@@ -55,14 +59,49 @@
 
                         {% for p in products %}
                             <div class="col-xs-12 col-sm-6 col-md-4 col-cp-6 {% if forloop.last %}last{% endif %} popular_products">
+{#                                <div class="product_thumbnail">#}
+{#                                    <img src="/media/{{ p.image_url }}"  {% if flavour == 'mobile' %}width="100" height="100"{% endif %}>#}
+{#                                </div>#}
+{#                                <name>{{ p.name }}</name>#}
+{#                                <div class="description_tovar">{{ p.description|removetags:"img"|truncatewords:"12"|safe }}</div>#}
+{#                                {% if flavour != 'mobile' %}<img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>{% endif %}#}
+{#                                <span class="price">{{ p.volume.price }} руб.</span><a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a>#}
+{#                                {% if flavour == 'mobile' %}<img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>{% endif %}#}
+
                                 <div class="product_thumbnail">
-                                    <img src="/media/{{ p.image_url }}"  {% if flavour == 'mobile' %}width="100" height="100"{% endif %}>
+                                    <a href="{{ p.get_absolute_url }}">
+                                        <img src="/media/{{ p.image_url }}" width="150" height="150">
+                                    </a>
+
+                                    <br />
+                                    <name>{{ p.name }}</name>
+                                    <div class="description_tovar">{{ p.description|removetags:"img"|truncatewords:"20"|safe }}</div>
+
+                                    <a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a>
+                                    <span class="price">{{ p.volume.price }} руб.</span>
+
+                                    <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
+
+                                    <div class="inline_form">
+                                        <input type="hidden" class="slug" value="{{ p.slug }}" />
+
+                                        <select id="option_{{ p.slug }}" class="option_value" size="1">
+                                            {% for atr in p.atrs %}
+                                                <option value="{{ atr.id }}">{{ atr.volume }}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                        <div id="{{ p.id }}" class="quantity">
+                                            <i class="btn-mini fa fa-minus-square minus" onselectstart="return false"></i>
+                                            <input name="quantity{{ p.id }}" maxlength="2" id="id_quantity{{ p.id }}" type="text" class="q_val" value="1" size="1">
+                                            <i class="btn-mini fa fa-plus-square plus" onselectstart="return false"></i>
+                                        </div>
+
+                                        <button class="btn btn-primary clickbutton" id="{{ p.id }}">В корзину</button>
+                                    </div>
+
                                 </div>
-                                <name>{{ p.name }}</name>
-                                <div class="description_tovar">{{ p.description|removetags:"img"|truncatewords:"12"|safe }}</div>
-                                {% if flavour != 'mobile' %}<img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>{% endif %}
-                                <span class="price">{{ p.volume.price }} руб.</span><a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a>
-                                {% if flavour == 'mobile' %}<img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>{% endif %}
+
                             </div>
                         {% endfor %}
 
@@ -73,9 +112,88 @@
                        </div>
                     {% endif %}
 {#                    закончить условие "если"#}
+
+                <div class="col-xs-12" style="text-align: center">
+
+                    <ul class="pagination">
+                        {% if products.has_previous %}
+                            <li class=""><a href="?page={{ products.previous_page_number }}">&laquo;</a></li>
+                        {% endif %}
+                        {% for num in paginator.page_range %}
+                            <li {% if num == products.number %} class="active"{% endif %}><a href="?page={{ num }}" >{{ num }} <span class="sr-only">{{ num }}</span></a></li>
+                        {% endfor %}
+                        {% if products.has_next %}
+                            <li><a href="?page={{ products.next_page_number }}">&raquo;</a></li>
+                        {% endif %}
+                    </ul>
+
+                </div>
+
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block bottom_script %}
+    <script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
+
+    <script type="text/javascript">
+        //по нажатию на + или - меняем значение в поле quantity
+        (function($) {
+            $(document).ready(function() {
+                $('.plus').click(function (){
+                    var current_q = $(this).parent(".quantity").children(".q_val").val();
+                    var current_quantity = parseInt(current_q) + 1;
+                    $(this).parent(".quantity").children(".q_val").attr("value", current_quantity);
+                });
+                $('.minus').click(function (){
+                    var current_q = $(this).parent(".quantity").children(".q_val").val();
+                    if (parseInt(current_q)>1){
+                        var current_quantity = parseInt(current_q) - 1;
+                        $(this).parent(".quantity").children(".q_val").attr("value", current_quantity);
+                    }
+                });
+            });
+        })(jQuery);
+
+    </script>
+
+    <script>
+        (function($) {
+            $(document).ready(function() {
+
+                $(".clickbutton").click(function (){
+                    var current_id = $(this).attr("id");
+                    var current_slug = $(this).parent(".inline_form").children(".slug").val();
+                    var current_quantity = $(this).parent(".inline_form").children(".quantity").children(".q_val").val();
+                    // что бы работать с селектами нормально подключен скрипт:
+                    // bootstrap-combobox https://github.com/cchantep/bootstrap-combobox
+                    var current_option = $(this).parent(".inline_form").children('.option_value').btComboBox('value');
+                    csrftoken = $.cookie('csrftoken');
+                    $.post(
+                        "/ajax-cart/",
+                        {
+                            csrfmiddlewaretoken: csrftoken,
+                            product_slug: current_slug,
+                            quantity: current_quantity,
+                            atr_value: current_option
+                        },
+                        onAjaxSuccess
+                    );
+                    function onAjaxSuccess(data) {
+                        // Здесь мы получаем данные, отправленные сервером и выводим их на экран.
+                        $("#id_quantity"+current_id).addClass('animated bounceOutUp');
+                        $(".cart_items_menu").html(data.add_item_html);
+                        $("#total_count").html(data.global_quantity);
+                        setTimeout(function () {
+                            $("#id_quantity"+current_id).removeClass('animated bounceOutUp');
+                        }, 1000);
+                    }
+                });
+
+            });
+        })(jQuery);
+    </script>
 {% endblock %}
 
 

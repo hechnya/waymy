@@ -72,8 +72,10 @@ class ProductAddToCartForm(forms.Form):
     def clean(self):
         """Проверка что cookies в браузере включены"""
         if self.request:
-            if not self.request.session.test_cookie_worked():
-                raise forms.ValidationError(_(u'Cookies must be enabled.'))
+            if not self.request.session.test_cookie_worked() and 'cookie_tested' not in self.request.session:
+                # self.request.session.delete_test_cookie()
+                self.request.session['cookie_tested'] = True
+                # raise forms.ValidationError(_(u'Cookies must be enabled.'))
         return self.cleaned_data
 
 

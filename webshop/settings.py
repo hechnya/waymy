@@ -163,18 +163,19 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 	'django.contrib.messages.context_processors.messages',
 	'webshop.utils.context_processors.webshop',
     'django_mobile.context_processors.flavour',
+    'django.core.context_processors.csrf',
 )
 if DEBUG:
     TEMPLATE_CONTEXT_PROCESSORS += ('django.core.context_processors.debug',)
 
-DAJAXICE_MEDIA_PREFIX="dajaxice"
+# DAJAXICE_MEDIA_PREFIX="dajaxice"
 
-DAJAX_FUNCTIONS=(
-    'webshop.ajaxapp.onload_cart',
-    'webshop.ajaxapp.calc_delivery',
-    'webshop.ajaxapp.change_atrs',
-    'webshop.ajaxapp.addToCart',
-)
+# DAJAX_FUNCTIONS=(
+#     'webshop.ajaxapp.onload_cart',
+#     'webshop.ajaxapp.calc_delivery',
+#     'webshop.ajaxapp.change_atrs',
+#     'webshop.ajaxapp.addToCart',
+# )
 
 SOUTH_MIGRATION_MODULES = {
     'captcha': 'captcha.south_migrations',
@@ -213,8 +214,8 @@ INSTALLED_APPS = (
     'mptt',
     'bootstrap3',
     'sorl.thumbnail',
-    'dajaxice',
-    'dajax',
+    # 'dajaxice',
+    # 'dajax',
     'captcha',
     'robokassa',
     'breadcrumbs',

@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 import decimal
-
 from django.db import models
 
 from webshop.catalog.models import *
-
 
 class CartItem(models.Model):
 

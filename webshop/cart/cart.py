@@ -68,6 +68,7 @@ def add_to_cart(request):
             # Обновляем количество если найден
             cart_item.augment_quantity(quantity)
             product_in_cart = True
+            return cart_item
 
     if not product_in_cart:
         # Создаем и сохраняем новую корзину
@@ -78,19 +79,25 @@ def add_to_cart(request):
         ci.cupon = cupon
 
         ci.atributes = atributes
-
         try:
             feelProduct = get_object_or_404(FeelName, id=feel)
         except Exception:
             feelProduct = None
         ci.feel = feelProduct
 
-
         ci.save()
+        return ci
+
+
 
 def cart_distinct_item_count(request):
-    """Возвращает общее количество товаров в корзине"""
-    return get_cart_items(request).count()
+    """Возвращает общее количество товаров в корзине (количество однотипных товаров)"""
+    # return get_cart_items(request).count()
+    """возвращаем колличество всех товаров в корзине ... метод len или count не подходят потому что не считаюст quantity каждого cart_item"""
+    quantity = 0
+    for item in get_cart_items(request):
+        quantity = quantity + item.quantity
+    return quantity
 
 def get_single_item(request, item_id):
     """Получаем конкретный товар в корзине"""

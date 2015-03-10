@@ -34,10 +34,12 @@ def footer_links(request):
 
 def cart_box(context, request):
     cart_i = cart.get_cart_items(request)
+    quantity = cart.cart_distinct_item_count(request)
     device = checkDevice(request)
     return {
         'cart_i': cart_i,
         'device': device,
+        'quantity': quantity
     }
 register.inclusion_tag('tags/cart_box.html', takes_context=True)(cart_box)
 
