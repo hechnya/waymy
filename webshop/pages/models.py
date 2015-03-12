@@ -19,6 +19,21 @@ class Page(models.Model):
         return self.name
 
 
+class Article(models.Model):
+    name = models.CharField(verbose_name=u'Заголовок', max_length=100)
+    slug = AutoSlugField(default='default', editable=True)
+    text = RichTextField(verbose_name=u'Текст страницы', config_name='default')
+
+    class Meta:
+        verbose_name_plural = (u'Статьи')
+
+    def __unicode__(self):
+        return self.name
+
+    def url(self):
+        return '/articles/%s' % self.slug
+
+
 class Blog(models.Model):
     name = models.CharField(verbose_name=u'Заголовок', max_length=100)
     slug = AutoSlugField(default='default', editable=True)

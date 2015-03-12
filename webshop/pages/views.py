@@ -82,20 +82,30 @@ class BlogList(ListView):
 #     return render_to_response(template_name, locals(),context_instance=RequestContext(request))
 
 # выводим статью блога
-class BlogPost(DetailView):
-    template_name = 'pages/blog.html'
-    model = Blog
+# class BlogPost(DetailView):
+#     template_name = 'pages/blog.html'
+#     model = Blog
+#
+#     def get_object(self, queryset=None):
+#         object = super(BlogPost, self).get_object()
+#         return object
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(BlogPost, self).get_context_data(**kwargs)
+#
+#         blog = Blog.objects.get(id=self.get_object().id)
+#         self.request.breadcrumbs([(u'Мой блог', u'/blog/'), ('%s' % blog.name, self.request.path_info)])
+#         return context
 
-    def get_object(self, queryset=None):
-        object = super(BlogPost, self).get_object()
-        return object
+def articlesView(request, template_name="pages/articles.html"):
+    articles = Article.objects.all()
+    return render_to_response(template_name, locals(),context_instance=RequestContext(request))
 
-    def get_context_data(self, **kwargs):
-        context = super(BlogPost, self).get_context_data(**kwargs)
 
-        blog = Blog.objects.get(id=self.get_object().id)
-        self.request.breadcrumbs([(u'Мой блог', u'/blog/'), ('%s' % blog.name, self.request.path_info)])
-        return context
+def articleView(request, slug, template_name="pages/article.html"):
+    article = Article.objects.get(slug=slug)
+    return render_to_response(template_name, locals(),context_instance=RequestContext(request))
+
 
 def review_form_view(request, template_name="pages/review.html"):
 
