@@ -3,7 +3,10 @@
 {% endblock %}
 {% block tri_bloka %}
 {% endblock %}
-
+{% block meta %}
+    <title>{% if meta_object %}{{ meta_object.title }}{% else %}Статьи{% endif %} - {{ site_name }}</title>
+    <meta name="description" content="{% if meta_object %}{{ meta_object.description }}{% else %}{{ meta_description }}{% endif %}" />
+{% endblock %}
 {% block title %}
 {#{{ post.name }} - {{ site_name }}#}
 {% endblock %}
@@ -17,6 +20,7 @@
                 {% if articles %}
                     {% for article in articles %}
                         <h2>{{ article.name }}</h2>
+                        <img src="/media/{{ article.image }}" width="200" height="auto" align="left" style="margin-right: 20px;" alt=""/>
                         <p>{{ article.text|truncatewords:120|safe }}</p>
                         <a class="btn btn-success" href="{{ article.url }}">читать подробнее</a>
                     {% endfor %}

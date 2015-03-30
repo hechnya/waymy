@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 import os
-
 from django.utils.translation import ugettext_lazy as _
-from os.path import abspath, dirname, basename, join, split
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
 CURRPATH = os.path.abspath('.')
@@ -12,8 +10,9 @@ CURRPATH = os.path.abspath('.')
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 DEBUG = True
-
+# DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+
 
 BREADCRUMBS_AUTO_HOME = True
 
@@ -256,9 +255,9 @@ LOGGING = {
 
 # Custom settings
 ENABLE_SSL = False
-SITE_NAME = _(u'Product magazine')
-META_KEYWORDS = _(u'products, online, shop, buy')
-META_DESCRIPTION = _(u'Product magazine is an online supplier of products')
+SITE_NAME = u'waymy.ru Товары для здоровья'
+# META_KEYWORDS = _(u'products, online, shop, buy')
+META_DESCRIPTION = u'Интернет магазин полезных товаров'
 LOGIN_REDIRECT_URL = '/accounts/my_account/'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 90 # 90 дней на хранение cookies
 PRODUCTS_PER_PAGE = 300

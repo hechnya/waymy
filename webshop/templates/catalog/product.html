@@ -4,7 +4,10 @@
 {% load thumbnail %}
 {% load cropping %}
 {% load catalog_tags %}
-
+{% block meta %}
+    <title>{% if p.title %}{{ p.title }}{% else %}{{ p.name }}{% endif %} - {{ site_name }}</title>
+    <meta name="description" content="{% if p.meta_description %}{{ p.meta_description }}{% else %}{{ meta_description }}{% endif %}" />
+{% endblock %}
 {% block product_js %}
     <script src="{{ STATIC_URL }}js/slides.min.jquery.js"></script>
     <script>

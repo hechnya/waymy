@@ -97,8 +97,7 @@ class Product(models.Model):
     is_aqua = models.BooleanField(verbose_name=u'Жидкость')
     is_new = models.BooleanField(verbose_name=u'Новинка')
     description = RichTextField()
-    meta_keywords = models.CharField(_(u'Meta keywords'), max_length=255,
-                                     help_text=_(u'Comma-delimited set of SEO keywords for meta tag'), blank=True)
+    title = models.CharField(u'title', max_length=255, help_text=_(u'Тег title'), blank=True)
     meta_description = models.CharField(_(u'Meta description'), max_length=255,
                                         help_text=_(u'Content for description meta tag'),blank=True)
     created_at = models.DateTimeField(_(u'Created at'), auto_now_add=True)
