@@ -1239,6 +1239,12 @@ input#order_submit {
 }
 .review_form {
     margin-top: 60px;
+    margin-bottom: 60px;
+}
+.review_form .btn {
+    background: #2AD38E none repeat scroll 0% 0%;
+    border: 1px solid #2AD38E;
+    color: #fff;
 }
 
 .cart_items_menu a {
@@ -1858,6 +1864,13 @@ img.logo_class {
 .auth .nav.navbar-nav {
     float: right;
 }
+/*.animation {*/
+    /*-webkit-transition: background-color 0.7s, color 1s, opacity 0.5s;*/
+    /*-ms-transition: background-color 0.7s, color 1s, opacity 0.5s;*/
+    /*-o-transition: background-color 0.7s, color 1s, opacity 0.5s;*/
+    /*-moz-transition: background-color 0.7s, color 1s, opacity 0.5s;*/
+    /*transition: background-color 0.7s, color 1s, opacity 0.5s;*/
+/*}*/
 /*#cart .panel-group {*/
     /*position: absolute;*/
     /*z-index: 100;*/

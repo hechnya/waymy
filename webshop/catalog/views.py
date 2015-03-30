@@ -21,6 +21,7 @@ from webshop.news.models import News
 from webshop.pages.models import Page
 from webshop.accounts.models import UserProfile
 from webshop.checkout.models import OrderOneClick
+from webshop.pages.models import MetaInPages
 from webshop.cart.models import CartItem
 
 
@@ -48,7 +49,7 @@ def index_view(request, template_name="catalog/index.html"):
     # Для традиционных компьютеров и планшетов (iPad, Android, и т.д.)
     # return HttpResponseRedirect('/myapp/d/')
 
-    page_title = u'Internet Magazine'
+    page_title = u'Главная'
     products = Product.objects.all()
     for p in products:
         try:
@@ -109,6 +110,10 @@ def sortAndUniq(input):
 
 def category_view(request, category_slug, template_name="catalog/category.html"):
     """Представление для просмотра конкретной категории"""
+    try:
+        meta_object = MetaInPages.objects.get(link=request.path)
+    except:
+        pass
     c = get_object_or_404(Category.active, slug=category_slug)
     products = []
     if c.level == 0:
@@ -185,35 +190,27 @@ def sale_view(request, template_name="", type=""):
 
 @csrf_protect
 def product_view(request, product_slug, template_name="catalog/product.html"):
-    """представление для конкретного товара"""
-    """достаем объект, характеристики, все фотки + дефолтную"""
+    """представление для конкретного товара
+    достаем объект, характеристики, все фотки + дефолтную"""
     p = get_object_or_404(Product, slug=product_slug)
     try:
         product_image = ProductImage.objects.get(product=p, default=True)
         images = ProductImage.objects.filter(product=p)
     except Exception:
         print "Image for product #%s not found" % p.id
-
     """достаем основные атрибуты"""
     try:
         atrs_default = ProductVolume.objects.get(product=p, default=True)
         atrs = ProductVolume.objects.filter(product=p)
     except Exception:
         print  u'Основные атрибуты продукта %s не найдены' % p.name
-
     user = request.user
     try:
         profile = UserProfile.objects.get(user=user)
         user.have_profile = True
     except:
         user.have_profile = False
-
     reviews = ReviewsProduct.objects.filter(product=p)
-
-    page_title = p.name
-    meta_keywords = p.meta_keywords
-    meta_description = p.meta_description
-
     """Достаем присоединенные товары и их картинки"""
     try:
         attachedProducts = p.itemsAttached.all()
@@ -225,7 +222,6 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
                 attachedP.image_url = "/media/products/images/none.png"
     except:
         None
-
     """хлебные крошки"""
     cat = p.categories.all()
     c = get_object_or_404(Category, id=cat[0].id)
@@ -235,11 +231,9 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
         parent_cat = Category.objects.get(id=c.parent.id)
         parent_url = parent_cat.get_absolute_url()
         request.breadcrumbs([('%s' % parent_cat.name, parent_url), ('%s' % c.name, c.get_absolute_url()), ('%s' % p.name, request.path_info)])
-
     if request.method == 'POST':
         # Добавление в корзину, создаем связанную форму
         postdata = request.POST.copy()
-
         if postdata.has_key('review'):
             # form2 = ReviewProductForm(request, postdata)
             review = ReviewsProduct()
@@ -248,7 +242,6 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
             review.product = p
             review.date = datetime.date.today()
             review.save()
-
             return HttpResponseRedirect('/product/%s' % product_slug)
         elif postdata.has_key('one_click'):
             form3 = OneClickForm(request.POST)
@@ -258,34 +251,11 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
                 message = u'телефон: %s \n Продукт: %s' % (request.POST['phone'], request.POST['product_name'])
                 send_mail(subject, message, 'teamer777@gmail.com', ['teamer777@icloud.com'], fail_silently=False)
                 return HttpResponseRedirect('/product/%s' % product_slug)
-
-        # else:
-        #
-        #     form = ProductAddToCartForm(request, postdata)
-        #     if form.is_valid():
-        #         # Добавляем в корзину и делаем перенаправление на страницу с корзиной
-        #         cart.add_to_cart(request)
-        #         # Если cookies работают, читаем их
-        #         if request.session.test_cookie_worked():
-        #             request.session.delete_test_cookie()
-        #         return HttpResponseRedirect('/product/%s' % product_slug)
-        #     else:
-        #         form = ProductAddToCartForm(request, postdata)
-        #         error = form.errors
-        #         return render_to_response(template_name, locals(),
-        #                           context_instance=RequestContext(request))
-
     else:
         form = ProductAddToCartForm(request=request, label_suffix=':')
         form2 = ReviewProductForm()
         one_click_item = OrderOneClick(product_name=p.name)
         form3 = OneClickForm(instance=one_click_item)
-    # Присваиваем значению скрытого поля чистое имя продукта
-    #     form.fields['product_slug'].widget.attrs['value'] = product_slug
-
-
-    # form2.fields['product_name'].widget.attrs['value'] = p.name
-    # Устанавливаем тестовые cookies при первом GET запросе
     request.session.set_test_cookie()
     return render_to_response(template_name, locals(),
                               context_instance=RequestContext(request))
