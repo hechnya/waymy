@@ -28,7 +28,7 @@
 			filter: alpha(opacity=0);
 		}
         #example .lastText {
-			top: 20px;
+			top: 30px;
 			left: 25% !important;
 			width: 50% !important;
 			font-size: 26px;
@@ -91,7 +91,7 @@
 			filter: alpha(opacity=0);
 		}
         #example .quoteCaption {
-			top: 240px;
+			top: 100px;
 			left: 15% !important;
 			width: 70% !important;
 			font-size: 22px;
@@ -120,7 +120,7 @@
 		}
 		#example .frame {
 			width: 100%;
-			height: 600px;
+            max-height: 400px!important;
 		}
 		#example .frame .slide_element {
 			height: 100%;
@@ -193,10 +193,10 @@
 		#example .blurBackground img {
 {#			width: 100%;#}
 			height: auto;
-            margin-top: -160px;;
+            margin-top: -160px;
 		}
 		#example .quoterCaption {
-			top: 290px;
+			top: 200px;
 			left: 915px;
 			font-size: 22px;
 			font-weight: 600;
@@ -207,7 +207,7 @@
 		}
 
         #example .lastText {
-			top: 240px;
+			top: -130px;
 			left: 25% !important;
 			width: 50% !important;
 			font-size: 22px;
@@ -317,65 +317,71 @@
     <div class="frame" data-mightyslider="width:1170, height: 500">
         <!-- SLIDEELEMENT -->
         <div class="slide_element">
+
+            {% for slide in slides %}
+
+                <div class="slide" {% if device == 'mobile' %} data-mightyslider="cover: '/media/slider/slider5_1136.jpg',"{% else %}data-mightyslider="cover: '{{ slide.url }}',"{% endif %}>
+                        <div class="mSCaption blurBackground"
+                             data-msanimation="{ delay: 100, speed: 1000, style: { opacity: 0.5 } }">
+                            <div class="" style="width: 100%; height: 100%; background: #000"></div>
+                        </div>
+                    <div class="mSCaption titleCaption textShadow" data-msanimation="{ speed: 400, style: { top: 120, opacity: 1 } }, { delay: 2000, speed: 400, style: { opacity: 0 } }">
+                         {{ slide.text1 }}
+                    </div>
+                    <div class="mSCaption quoteCaption textShadow"{% if device == 'mobile' %} style="font-size: 45px;"{% endif %} data-msanimation="{ delay: 3500, speed: 1000, style: { opacity: 1 } }, { delay: 7000, speed: 500, style: { opacity: 0 } }">
+                        {{ slide.description }}
+                    </div>
+                    <div class="mSCaption quoterCaption textShadow" {% if device == 'mobile' %} style="font-size: 40px;"{% endif %} data-msanimation="{ delay: 5500, speed: 1000, style: { opacity: 1 } }, { delay: 5150, speed: 500, style: { opacity: 0 } }">
+                        {{ slide.link }}
+                    </div>
+                    <div class="mSCaption lastText textShadow" {% if device == 'mobile' %} style="font-size: 40px;" data-msanimation="{ delay: 12500, speed: 1000, style: { top: 50, opacity: 1 } }"{% else %} data-msanimation="{ delay: 12500, speed: 1000, style: { top: 10, opacity: 1 } }" {% endif %}>
+                        <img src="/static/images/logo2_2.png" />
+                        магазин для здоровья,<br/><strong>магазин для Вас</strong>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+
             <!-- SLIDES -->
-            <div class="slide" {% if device == 'mobile' %} data-mightyslider="cover: '/media/slider/slider5_1136.jpg',"{% else %}data-mightyslider="cover: '/media/slider/slider5.jpg',"{% endif %}>
-                <div class="mSCaption titleCaption textShadow" data-msanimation="{ speed: 400, style: { top: 220, opacity: 1 } }, { delay: 2000, speed: 400, style: { opacity: 0 } }">
-                     Добро пожаловать в наш магазин здоровья!
-                </div>
-{#                грузим картинку только на desktop#}
-{#                {% if device != 'mobile' and device != 'tablet' %}#}
+{#            <div class="slide" {% if device == 'mobile' %} data-mightyslider="cover: '/media/slider/slider5_1136.jpg',"{% else %}data-mightyslider="cover: '/media/slider/slider5.jpg',"{% endif %}>#}
+{#                <div class="mSCaption titleCaption textShadow" data-msanimation="{ speed: 400, style: { top: 220, opacity: 1 } }, { delay: 2000, speed: 400, style: { opacity: 0 } }">#}
+{#                     Добро пожаловать в наш магазин здоровья!#}
+{#                </div>#}
 {#                    <div class="mSCaption blurBackground"#}
-{#                         data-msanimation="{ delay: 2800, speed: 1000, style: { opacity: 1 } }"  data-mightyslider="cover: '/media/slider/slider5_fade.jpg',">#}
+{#                         data-msanimation="{ delay: 2800, speed: 1000, style: { opacity: 0.5 } }">#}
+{#                        <div class="" style="width: 100%; height: 100%; background: #000"></div>#}
 {#                    </div>#}
-{#                {% else %}#}
-                    <div class="mSCaption blurBackground"
-                         data-msanimation="{ delay: 2800, speed: 1000, style: { opacity: 0.5 } }">
-                        <div class="" style="width: 100%; height: 100%; background: #000"></div>
-                    </div>
-{#                {% endif %}#}
-                <div class="mSCaption quoteCaption textShadow"{% if device == 'mobile' %} style="font-size: 45px;"{% endif %} data-msanimation="{ delay: 3500, speed: 1000, style: { opacity: 1 } }, { delay: 7000, speed: 500, style: { opacity: 0 } }">
-                    Кто крепок телом, может терпеть и жару, и холод. Так и тот, кто здоров душевно, в состоянии перенести и гнев, и горе, и радость, и остальные чувства.
-                </div>
-                <div class="mSCaption quoterCaption textShadow" {% if device == 'mobile' %} style="font-size: 40px;"{% endif %} data-msanimation="{ delay: 5500, speed: 1000, style: { opacity: 1 } }, { delay: 5150, speed: 500, style: { opacity: 0 } }">
-                    -Эпиктет
-                </div>
-                <div class="mSCaption lastText textShadow" {% if device == 'mobile' %} style="font-size: 40px;" data-msanimation="{ delay: 12500, speed: 1000, style: { top: 50, opacity: 1 } }"{% else %} data-msanimation="{ delay: 12500, speed: 1000, style: { top: 150, opacity: 1 } }" {% endif %}>
-                    <img src="/static/images/logo2_2.png" />
-                    магазин для здоровья,<br/><strong>магазин для Вас</strong>
-                </div>
-{#                <div class="credit">#}
-{#                    © By <a href="http://www.flickr.com/photos/36081137@N05/" target="_blank">Fabius_climbing</a>#}
+{#                <div class="mSCaption quoteCaption textShadow"{% if device == 'mobile' %} style="font-size: 45px;"{% endif %} data-msanimation="{ delay: 3500, speed: 1000, style: { opacity: 1 } }, { delay: 7000, speed: 500, style: { opacity: 0 } }">#}
+{#                    Кто крепок телом, может терпеть и жару, и холод. Так и тот, кто здоров душевно, в состоянии перенести и гнев, и горе, и радость, и остальные чувства.#}
 {#                </div>#}
-            </div>
-            <div class="slide" {% if device == 'mobile' %}data-mightyslider="cover: '/media/slider/slider3_1136.jpg',"{% else %}data-mightyslider="cover: '/media/slider/slider3.jpg',"{% endif %}>
-                <div class="mSCaption titleCaption textShadow" data-msanimation="{ speed: 400, style: { top: 220, opacity: 1 } }, { delay: 2000, speed: 400, style: { opacity: 0 } }">
-                    Добро пожаловать в наш магазин здоровья!
-                </div>
-{#                грузим картинку только на desktop#}
-{#                {% if device != 'mobile' and device != 'tablet' %}#}
-{#                    <div class="mSCaption blurBackground" data-msanimation="{ delay: 2800, speed: 1000, style: { opacity: 1  } }" data-mightyslider="#}
-{#                        cover: '/media/slider/slider3_blur.jpg',#}
-{#                    "></div>#}
-{#                {% else %}#}
-                    <div class="mSCaption blurBackground"
-                         data-msanimation="{ delay: 2800, speed: 1000, style: { opacity: 0.5 } }">
-                        <div class="" style="width: 100%; height: 100%; background: #000"></div>
-                    </div>
-{#                {% endif %}#}
-                <div class="mSCaption quoteCaption  textShadow" {% if device == 'mobile' %} style="font-size: 45px;"{% endif %} data-msanimation="{ delay: 3500, speed: 1000, style: { opacity: 1 } }, { delay: 7000, speed: 500, style: { opacity: 0 } }">
-                    Кто крепок телом, может терпеть и жару, и холод. Так и тот, кто здоров душевно, в состоянии перенести и гнев, и горе, и радость, и остальные чувства.
-                </div>
-                <div class="mSCaption quoterCaption textShadow" {% if device == 'mobile' %} style="font-size: 40px;"{% endif %} data-msanimation="{ delay: 5500, speed: 1000, style: { opacity: 1 } }, { delay: 5150, speed: 500, style: { opacity: 0 } }">
-                    -Эпиктет
-                </div>
-                <div class="mSCaption lastText textShadow" {% if device == 'mobile' %} style="font-size: 40px;" data-msanimation="{ delay: 12500, speed: 1000, style: { top: 50, opacity: 1 } }"{% else %} data-msanimation="{ delay: 12500, speed: 1000, style: { top: 150, opacity: 1 } }" {% endif %}>
-                    <img src="/static/images/logo2_2.png" />
-                    магазин для здоровья,<br/><strong>магазин для Вас</strong>
-                </div>
-{#                <div class="credit">#}
-{#                    © By <a href="http://www.flickr.com/photos/azalkimista/" target="_blank">Csaba Kovacs</a>#}
+{#                <div class="mSCaption quoterCaption textShadow" {% if device == 'mobile' %} style="font-size: 40px;"{% endif %} data-msanimation="{ delay: 5500, speed: 1000, style: { opacity: 1 } }, { delay: 5150, speed: 500, style: { opacity: 0 } }">#}
+{#                    -Эпиктет#}
 {#                </div>#}
-            </div>
+{#                <div class="mSCaption lastText textShadow" {% if device == 'mobile' %} style="font-size: 40px;" data-msanimation="{ delay: 12500, speed: 1000, style: { top: 50, opacity: 1 } }"{% else %} data-msanimation="{ delay: 12500, speed: 1000, style: { top: 150, opacity: 1 } }" {% endif %}>#}
+{#                    <img src="/static/images/logo2_2.png" />#}
+{#                    магазин для здоровья,<br/><strong>магазин для Вас</strong>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="slide" {% if device == 'mobile' %}data-mightyslider="cover: '/media/slider/slider3_1136.jpg',"{% else %}data-mightyslider="cover: '/media/slider/slider3.jpg',"{% endif %}>#}
+{#                <div class="mSCaption titleCaption textShadow" data-msanimation="{ speed: 400, style: { top: 220, opacity: 1 } }, { delay: 2000, speed: 400, style: { opacity: 0 } }">#}
+{#                    Добро пожаловать в наш магазин здоровья!#}
+{#                </div>#}
+{#                    <div class="mSCaption blurBackground"#}
+{#                         data-msanimation="{ delay: 2800, speed: 1000, style: { opacity: 0.5 } }">#}
+{#                        <div class="" style="width: 100%; height: 100%; background: #000"></div>#}
+{#                    </div>#}
+{#                <div class="mSCaption quoteCaption  textShadow" {% if device == 'mobile' %} style="font-size: 45px;"{% endif %} data-msanimation="{ delay: 3500, speed: 1000, style: { opacity: 1 } }, { delay: 7000, speed: 500, style: { opacity: 0 } }">#}
+{#                    Кто крепок телом, может терпеть и жару, и холод. Так и тот, кто здоров душевно, в состоянии перенести и гнев, и горе, и радость, и остальные чувства.#}
+{#                </div>#}
+{#                <div class="mSCaption quoterCaption textShadow" {% if device == 'mobile' %} style="font-size: 40px;"{% endif %} data-msanimation="{ delay: 5500, speed: 1000, style: { opacity: 1 } }, { delay: 5150, speed: 500, style: { opacity: 0 } }">#}
+{#                    -Эпиктет#}
+{#                </div>#}
+{#                <div class="mSCaption lastText textShadow" {% if device == 'mobile' %} style="font-size: 40px;" data-msanimation="{ delay: 12500, speed: 1000, style: { top: 50, opacity: 1 } }"{% else %} data-msanimation="{ delay: 12500, speed: 1000, style: { top: 150, opacity: 1 } }" {% endif %}>#}
+{#                    <img src="/static/images/logo2_2.png" />#}
+{#                    магазин для здоровья,<br/><strong>магазин для Вас</strong>#}
+{#                </div>#}
+{#            </div>#}
             <!-- END OF SLIDES -->
         </div>
         <!-- END OF SLIDEELEMENT -->
@@ -444,14 +450,8 @@
                         swingSpeed:    0.1
                     },
 
-                    // Pages
-                    pages: {
-                        activateOn: 'click'
-                    },
-
                     // Commands
                     commands: {
-                        pages: 1,
                         buttons: 1
                     },
                     cycling: {

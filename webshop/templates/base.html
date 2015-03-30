@@ -147,7 +147,7 @@
 
         <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="{{ STATIC_URL }}mightySlider/src/css/mightyslider.css"/>
-        <link href="{{ STATIC_URL }}font/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 {#        подключаем стили в зависимости от устройства#}
         {% if flavour == 'mobile' %}
             <link href="{{ STATIC_URL }}css/mobile.css" rel="stylesheet" />
@@ -172,6 +172,7 @@
         <script type="text/javascript" src="{{ STATIC_URL }}mightySlider/assets/js/jquery.easing.1.3.js"></script>
         <script src="{{ STATIC_URL }}mightySlider/src/js/mightyslider.min.js"></script>
         <script src="{{ STATIC_URL }}js/custom.js"></script>
+        <script src="{{ STATIC_URL }}js/add-this.js"></script>
 
         {#    dajax#}
 {#        <script type="text/javascript" src="{{ STATIC_URL }}dajax/jquery.dajax.core.js"></script>#}

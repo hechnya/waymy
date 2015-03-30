@@ -9,16 +9,18 @@ import datetime
 from django.utils import simplejson
 from webshop.catalog import mobile
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.mail import send_mail, EmailMultiAlternatives
 
 from webshop.cart import cart
-from webshop.catalog.forms import ProductAddToCartForm
+from webshop.catalog.forms import ProductAddToCartForm, FormFront
+from webshop.reviews.forms import ReviewProductForm
+from webshop.checkout.forms import OneClickForm
 from webshop.catalog.models import *
 from webshop.reviews.models import ReviewsProduct
-from webshop.reviews.forms import ReviewProductForm
-from webshop.catalog.forms import FormFront
 from webshop.news.models import News
 from webshop.pages.models import Page
 from webshop.accounts.models import UserProfile
+from webshop.checkout.models import OrderOneClick
 from webshop.cart.models import CartItem
 
 
@@ -248,6 +250,14 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
             review.save()
 
             return HttpResponseRedirect('/product/%s' % product_slug)
+        elif postdata.has_key('one_click'):
+            form3 = OneClickForm(request.POST)
+            form3.product_name = p.name
+            if form3.is_valid():
+                subject = u'WayMy заявка в 2 клика'
+                message = u'телефон: %s \n Продукт: %s' % (request.POST['phone'], request.POST['product_name'])
+                send_mail(subject, message, 'teamer777@gmail.com', ['teamer777@icloud.com'], fail_silently=False)
+                return HttpResponseRedirect('/product/%s' % product_slug)
 
         # else:
         #
@@ -268,6 +278,8 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
     else:
         form = ProductAddToCartForm(request=request, label_suffix=':')
         form2 = ReviewProductForm()
+        one_click_item = OrderOneClick(product_name=p.name)
+        form3 = OneClickForm(instance=one_click_item)
     # Присваиваем значению скрытого поля чистое имя продукта
     #     form.fields['product_slug'].widget.attrs['value'] = product_slug
 

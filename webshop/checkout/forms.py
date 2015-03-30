@@ -9,7 +9,7 @@ from django.core.validators import email_re
 from django.utils.encoding import smart_unicode
 
 from webshop import settings
-from models import Order
+from models import Order, OrderOneClick
 
 # Наше поле для валидации
 # class PhoneField(forms.Field):
@@ -111,4 +111,12 @@ class DeliveryForm(forms.Form):
 
     delivery = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect(attrs={'onClick':'calc_delivery();'}))
 
+class OneClickForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(OneClickForm, self).__init__(*args, **kwargs)
+        self.fields['phone'].widget.attrs = {'placeholder':'Ваш телефон'}
+
+    product_name = forms.CharField(widget=forms.HiddenInput())
+    class Meta:
+        model = OrderOneClick
