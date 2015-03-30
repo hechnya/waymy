@@ -85,10 +85,21 @@
                                     <div class="inline_form">
                                         <input type="hidden" class="slug" value="{{ p.slug }}" />
 
+{#                                        <select id="option_{{ p.slug }}" class="option_value" size="1">#}
+{#                                            {% for atr in p.atrs %}#}
+{#                                                <option value="{{ atr.id }}">{{ atr.volume }}</option>#}
+{#                                            {% endfor %}#}
+{#                                        </select>#}
                                         <select id="option_{{ p.slug }}" class="option_value" size="1">
-                                            {% for atr in p.atrs %}
-                                                <option value="{{ atr.id }}">{{ atr.volume }}</option>
-                                            {% endfor %}
+                                            {% if p.is_aqua %}
+                                                {% for atr in p.atrs %}
+                                                    <option value="{{ atr.id }}">{{ atr.volume }} мл.</option>
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for atr in p.atrs %}
+                                                    <option value="{{ atr.id }}">{{ atr.weight }} гр.</option>
+                                                {% endfor %}
+                                            {% endif %}
                                         </select>
 
                                         <div id="{{ p.id }}" class="quantity">

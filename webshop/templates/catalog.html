@@ -33,13 +33,16 @@
                                 <p><a href="/"><span class=""></span>Главная</a></p>
                                 <p><a href="/page/akcii"><span class=""></span>О доставке</a></p>
                                 <p><a href="/review"><span class=""></span>Отзывы</a></p>
+                                <p><a href="/blog"><span class=""></span>Статьи</a></p>
                                 <p><a href="/page/kontakty"><span class=""></span>Контакты</a></p>
                             </div>
                         {% endif %}
                     </div>
 
                             {% if flavour != 'mobile' %}
-                                <div class="col-xs-2 col-md-2"></div>
+                                <div class="col-xs-2 col-md-2">
+                                    <a href="/"><img class="logo_class" src="/static/images/logo3.png" /></a>
+                                </div>
                             {% endif %}
 
                             <div class="col-xs-4 col-sm-3 col-md-3">
@@ -48,26 +51,40 @@
                                 </div>
                             </div>
                             <div class="col-xs-4 col-sm-1 col-md-2">
-                                    <div class="auth">
+                                <div class="search">
+                                    <form class="navbar-form navbar-left" method="get" action="/search/results/" role="search">
+                                        <div class="input-group">
+{#                                                <input type="text" class="form-control" name="search">#}
+                                            <input name="query" id="{{ form.auto_id }}" type="text" value=""
+                                                   class="search-query span2" placeholder="Поиск"/>
+                                            <span class="input-group-btn">
+                                                <button class="btn" type="submit"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div><!-- /input-group -->
+                                    </form>
+                                </div>
 
-                                        <ul class="nav navbar-nav">
-                                            <li class="dropdown">
-                                                <a href="{% url show_cart %}" class="dropdown-toggle" data-toggle="dropdown">
-                                                    <n style="">Кабинет</n> <i class="fa fa-user"><span >{{ cart_i.count }}</span></i>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    {% if user.is_authenticated %}
-                                                        <li><a href="{% url my_account %}"><span>Мой аккаунт</span></a></li>
-                                                        <li ><a href="{% url django.contrib.auth.views.logout %}"><span>Выйти</span></a></li>
-                                                    {% else %}
-                                                        <li style=" margin: 6px 10px 0px 0px; "><a href="{% url django.contrib.auth.views.login %}"><span>Войти</span></a></li>
-                                                        <li style=" margin-top: 6px; "> <a href="{% url register %}"><span>Регистрация</span></a></li>
-                                                    {% endif %}
-                                                </ul>
-                                            </li>
-                                        </ul>
 
-                                    </div>
+                                <div class="auth">
+                                    <ul class="nav navbar-nav">
+                                        <li class="dropdown">
+                                            <a href="{% url show_cart %}" class="dropdown-toggle" data-toggle="dropdown">
+                                                <n style="">Кабинет</n> <i class="fa fa-user"><span >{{ cart_i.count }}</span></i>
+                                            </a>
+                                            <ul class="dropdown-menu">
+                                                {% if user.is_authenticated %}
+                                                    <li><a href="{% url my_account %}"><span>Мой аккаунт</span></a></li>
+                                                    <li ><a href="{% url django.contrib.auth.views.logout %}"><span>Выйти</span></a></li>
+                                                {% else %}
+                                                    <li style=" margin: 6px 10px 0px 0px; "><a href="{% url django.contrib.auth.views.login %}"><span>Войти</span></a></li>
+                                                    <li style=" margin-top: 6px; "> <a href="{% url register %}"><span>Регистрация</span></a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <a id="add_this" href="#" onclick="return addFavorite(this);">Добавить в избранное! <i style="color: #333" class="fa fa-star"></i></a>
                             </div>
 
                 </div>

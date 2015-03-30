@@ -6,18 +6,13 @@ from django.db import models
 from webshop.catalog.models import *
 
 class CartItem(models.Model):
-
     cart_id = models.CharField(max_length=50)
     date_added = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(default=1)
     product = models.ForeignKey(Product, unique=False)
-
     atributes = models.ForeignKey(ProductVolume, unique=False)
-
     feel = models.ForeignKey(FeelName, unique=False, default=None, null=True)
-
     cupon = models.ForeignKey(Cupon, blank=True, null=True, default=2)
-
     class Meta:
         db_table = 'cart_items'
         ordering = ['date_added']

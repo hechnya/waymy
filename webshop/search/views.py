@@ -34,7 +34,7 @@ def results_view(request, template_name="search/results.html"):
         except Exception:
             p.image_url = "/media/products/images/none.png"
     # Сохраняем поисковую фразу
-    search.store(request, query)
+    # search.store(request, query)
     page_title = 'Search Results for: ' + query
     return render_to_response(template_name, locals(),
         context_instance=RequestContext(request))

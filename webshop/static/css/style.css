@@ -202,7 +202,7 @@ i.fa.fa-check-square{
     font-size:18px!important;
 }
 input.search-query.span2 {
-    width: 185px;
+    width: 100%;
           }
 .navbar-search .btn {
     padding: 1px 12px;
@@ -746,6 +746,30 @@ font-family: 'Open Sans Condensed', sans-serif;
 .btn-mini:hover {
     cursor: pointer;
 }
+.btn.btn-primary.clickbutton,
+.btn.btn-success#clickbutton,
+.btn.btn-success.cart_button{
+    background: #2ad38e;
+    border: 1px solid #2ad38e;
+    color: #fff;
+}
+.btn.btn-success#clickbutton span,
+.btn.btn-success.cart_button span{
+    color: #fff;
+}
+.btn.btn-primary.clickbutton:hover,
+.btn.btn-success#clickbutton:hover,
+.btn.btn-success.cart_button:hover{
+    border: 1px solid #000!important;
+}
+.btn.btn-success.two_click {
+    background: #fff;
+    border: 1px solid #C9302C;
+    color: #333;
+}
+.btn.btn-success.two_click a {
+    color: #333;
+}
 input#id_quantity {
     padding: 10px;
 }
@@ -1283,10 +1307,10 @@ input#order_submit {
     /*border-color: #2d72a1;*/
 /*}*/
 #price {
-    border: 1px solid #5b5b5b;
+    /*border: 1px solid #5b5b5b;*/
     padding: 10px;
-    font-size: 30px;
-    margin-top: 30px;
+    /*font-size: 30px;*/
+    /*margin-top: 30px;*/
 }
 #new_price, #old_price {
     border: 1px solid #5b5b5b;
@@ -1421,7 +1445,7 @@ input#order_submit {
     /*font-family: 'Open Sans';*/
     font-family:'Open Sans';
     font-weight: 100;
-    font-size: 20px;
+    font-size: 15px;
 }
 .menu_left p a:hover,
 .menu_right p a:hover {
@@ -1805,8 +1829,35 @@ a.brand {
     right: 0;
     padding: 10px;
 }
-
-
+img.logo_class {
+    position: absolute;
+    width: 114%;
+    left: -8%;
+    top: -38px;
+}
+.search input {
+    height: 24px;
+    padding: 0 5px 0 5px;
+}
+.search button {
+    height: 24px;
+    border-radius: 0 4px 4px 0;
+    padding: 0 5px;
+}
+.search {
+    position: absolute;
+    top: -37px;
+    background: #fff;
+    border-radius: 5px 5px 0 0;
+}
+#add_this {
+    position: absolute;
+    bottom: -57px;
+    right: 15px;
+}
+.auth .nav.navbar-nav {
+    float: right;
+}
 /*#cart .panel-group {*/
     /*position: absolute;*/
     /*z-index: 100;*/
