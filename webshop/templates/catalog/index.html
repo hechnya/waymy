@@ -19,14 +19,7 @@
                             {% for p in products %}
                                 {% if p == products.1 %}
                                     <div class="col-md-4 cat_menu">
-{#                                        <p>This is the 2 block</p>#}
                                         {% categories_tree request %}
-
-
-{#                                        <div class="cart_icon">#}
-{#                                            {% cart_box request %}#}
-{#                                        </div>#}
-
                                     </div>
                                 {% endif %}
                                 <div class="col-md-4 popular_products">
@@ -220,7 +213,7 @@
                                     <h4 style="text-align: center;">Прямо сейчас!</h4>
                                     <form action="." method="post" id="my_form">
                                         <div class="">
-                                            {% csrf_token %}
+                                            ц
                                             <p>{{ form.name }}</p>
                                             <p>{{ form.phone }}</p>
 {#                                            <input class="btn btn-default" id="" value="Отправить" onclick="send_form();" type="submit">#}
@@ -347,7 +340,6 @@
                 // bootstrap-combobox https://github.com/cchantep/bootstrap-combobox
                 var current_option = $(this).parent(".inline_form").children('.option_value').btComboBox('value');
                 csrftoken = $.cookie('csrftoken');
-{#                alert(current_slug);#}
                 $.post(
                     "/ajax-cart/",
                     {
@@ -371,41 +363,6 @@
 
         });
     })(jQuery);
-{#    (function($) {#}
-{#        $(document).ready(function() {#}
-{##}
-{#            $(".clickbutton").click(function (){#}
-{#                var current_id = $(this).attr("id");#}
-{#                var current_slug = $(this).parent(".product_thumbnail").children("form").children(".inline_form").children(".slug").val();#}
-{#                var current_quantity = $(this).parent(".product_thumbnail").children("form").children(".inline_form").children(".quantity").children(".q_val").val();#}
-{#                // что бы работать с селектами нормально подключен скрипт:#}
-{#                // bootstrap-combobox https://github.com/cchantep/bootstrap-combobox#}
-{#                var current_option = $(this).parent(".product_thumbnail").children("form").children(".inline_form").children('.option_value').btComboBox('value');#}
-{#                csrftoken = $.cookie('csrftoken');#}
-{#                alert(csrftoken);#}
-{#                $.post(#}
-{#                    "/ajax-cart/",#}
-{#                    {#}
-{#                        csrfmiddlewaretoken: csrftoken,#}
-{#                        product_slug: current_slug,#}
-{#                        quantity: current_quantity,#}
-{#                        atr_value: current_option#}
-{#                    },#}
-{#                    onAjaxSuccess#}
-{#                );#}
-{#                function onAjaxSuccess(data) {#}
-{#                    // Здесь мы получаем данные, отправленные сервером и выводим их на экран.#}
-{#                    $("#id_quantity"+current_id).addClass('animated bounceOutUp');#}
-{#                    $(".cart_items_menu").html(data.add_item_html);#}
-{#                    $("#total_count").html(data.global_quantity);#}
-{#                    setTimeout(function () {#}
-{#                        $("#id_quantity"+current_id).removeClass('animated bounceOutUp');#}
-{#                    }, 1000);#}
-{#                }#}
-{#            });#}
-{##}
-{#        });#}
-{#    })(jQuery);#}
 </script>
 
 {% endblock %}

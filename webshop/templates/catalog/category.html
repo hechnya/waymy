@@ -19,6 +19,7 @@
 {#</div>#}
 
 
+
 {% block tri_bloka %}
 {% endblock %}
 
@@ -60,6 +61,8 @@
 {#                        {% endfor %}#}
 {#                        закончить цыкл#}
 
+                    
+
                         {% for p in products %}
                             <div class="col-xs-12 col-sm-6 col-md-4 col-cp-6 {% if forloop.last %}last{% endif %} popular_products">
 {#                                <div class="product_thumbnail">#}
@@ -87,12 +90,6 @@
 
                                     <div class="inline_form">
                                         <input type="hidden" class="slug" value="{{ p.slug }}" />
-
-{#                                        <select id="option_{{ p.slug }}" class="option_value" size="1">#}
-{#                                            {% for atr in p.atrs %}#}
-{#                                                <option value="{{ atr.id }}">{{ atr.volume }}</option>#}
-{#                                            {% endfor %}#}
-{#                                        </select>#}
                                         <select id="option_{{ p.slug }}" class="option_value" size="1">
                                             {% if p.is_aqua %}
                                                 {% for atr in p.atrs %}

@@ -126,6 +126,7 @@
 {#        подключаем стили в зависимости от устройства#}
         {% if flavour == 'mobile' %}
             <link href="{{ STATIC_URL }}css/mobile.css" rel="stylesheet" />
+            <link rel="stylesheet" href="{{ STATIC_URL }}css/selectbox.css"/>
         {% else %}
             <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
             <link rel="stylesheet" href="{{ STATIC_URL }}css/selectbox.css"/>
@@ -135,15 +136,22 @@
         {% if flavour == 'mobile' %}
             <script type="text/javascript" src="{{ STATIC_URL }}mightySlider/assets/js/jquery.mobile.just-touch.js"></script>
             <script src="{{ STATIC_URL }}js/pushy.min.js"></script>
-        {% else %}
-            <script src="{{ STATIC_URL }}js/bootstrap-combobox.min.js"></script>
-            <script>$('select').btComboBox()</script>
+            <script src="{{ STATIC_URL }}js/jquery.tap.js"></script>
         {% endif %}
+        
+        <script src="{{ STATIC_URL }}js/bootstrap-combobox.min.js"></script>
+        <script>$('select').btComboBox()</script>
+        
         <script type="text/javascript" src="{{ STATIC_URL }}mightySlider/assets/js/jquery.easing.1.3.js"></script>
         <script src="{{ STATIC_URL }}mightySlider/src/js/mightyslider.min.js"></script>
         <script src="{{ STATIC_URL }}js/custom.js"></script>
         <script src="{{ STATIC_URL }}js/add-this.js"></script>
         {% block bottom_script %}
         {% endblock %}
+        <!-- BEGIN JIVOSITE CODE {literal} -->
+        <script type='text/javascript'>
+        (function(){ var widget_id = '6O34AX01GW';
+        var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();</script>
+        <!-- {/literal} END JIVOSITE CODE -->
     </body>
 </html>

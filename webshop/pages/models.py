@@ -22,7 +22,9 @@ class Page(models.Model):
 
 class Article(models.Model):
     name = models.CharField(verbose_name=u'Заголовок', max_length=100)
-    image = models.ImageField(verbose_name=u'Изображение', upload_to='articles')
+    image = models.ImageField(
+        verbose_name=u'Изображение',
+        upload_to='articles')
     slug = AutoSlugField(default='default', editable=True)
     text = RichTextField(verbose_name=u'Текст страницы', config_name='default')
 
@@ -56,13 +58,20 @@ class Menu(models.Model):
 
 
 class MetaInPages(models.Model):
-    title = models.CharField(u'Title', max_length=255,
-                             help_text=u'Содержимое для title страницы', blank=True)
-    description = models.CharField(u'Мета description', max_length=255,
-                                        help_text=u'Содержимое для мета тега description', blank=True)
-    link = models.CharField(u'Ссылка на страницу', max_length=255,
-                             help_text=u'Указывать необходимо путь относительно домена, например "/page/kontakty/", '
-                                       u'косая черта обязательна как в начале так и в конце url', blank=True)
+    title = models.CharField(
+        u'Title', max_length=255,
+        help_text=u'Содержимое для title страницы',
+        blank=True)
+    description = models.CharField(
+        u'Мета description',
+        max_length=255,
+        help_text=u'Содержимое для мета тега description',
+        blank=True)
+    link = models.CharField(
+        u'Ссылка на страницу', max_length=255,
+        help_text=u'Указывать необходимо путь относительно домена,'
+        u' например "/page/kontakty/", '
+        u'косая черта обязательна как в начале так и в конце url', blank=True)
 
     class Meta:
         verbose_name_plural = u'Настройка мета данных для страниц'
