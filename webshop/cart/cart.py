@@ -188,11 +188,6 @@ def empty_cart(request):
     user_cart = get_cart_items(request)
     user_cart.delete()
 
-
-
-
-
-
                                                     ### ДОСТАВКА ###
 # подчсет доставки
 # сохраняем доставку и возвращием во вьюху

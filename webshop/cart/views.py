@@ -11,7 +11,6 @@ from webshop.checkout import checkout
 from webshop.checkout.forms import ContactForm, DeliveryForm
 
 
-@csrf_protect
 def cart_view(request, template_name="cart/cart.html"):
     """Представление для отображения корзины"""
     page_title = _(u'Shopping cart')
@@ -34,9 +33,7 @@ def cart_view(request, template_name="cart/cart.html"):
             return HttpResponseRedirect(checkout_url)
 
     deliveryForm = DeliveryForm()
-
     request.breadcrumbs(u'Корзина', request.path_info)
-
     # Получаем список всех товаров в корзине из cookies
     #cart_item_count = cart.cart_item_count(request)
     cart_items = cart.get_cart_items(request)
@@ -45,16 +42,9 @@ def cart_view(request, template_name="cart/cart.html"):
 
     # доставка
     delivery = cart.get_delivery(request)
-    # delivery.gift = cart_gift
     delivery.save()
-
     cart_total = cart.cart_total(request)
-    # all_prices = cart.all_prices_for_delivery(request)
-    # status = cart.status_delivery_radio(request)
-
-    # test
-    # test = ['hello', 'my', 'world']
-    # test2 = ''.join(test)
 
     return render_to_response(template_name, locals(),
                               context_instance=RequestContext(request))
+

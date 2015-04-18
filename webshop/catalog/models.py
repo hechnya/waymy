@@ -1,5 +1,5 @@
-    # -*- coding: utf-8 -*-
-    #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#!/usr/bin/env python
 from django.db import models
 import decimal
 from django.db.models import permalink
@@ -172,12 +172,13 @@ class ProductVolume(models.Model):
     default = models.BooleanField(_(u'Основной набор'), default=False)
     product = models.ForeignKey(Product, verbose_name=_(u'Product'), help_text=_(u'Referenced product'))
 
+    def __unicode__(self):
+        return '%s-%s' % (self.product.name, self.volume)
+
     class Meta:
         db_table = 'product_volume'
         verbose_name_plural = _(u'Основные атрибуты')
 
-    def __unicode__(self):
-        return '%s-%s' % (self.product.name, self.volume)
 
 
 class GiftPrice(models.Model):
