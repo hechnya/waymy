@@ -41,8 +41,8 @@ def cart_view(request, template_name="cart/cart.html"):
     cart_gift = cart.cart_gift_add(request)
 
     # доставка
-    delivery = cart.get_delivery(request)
-    delivery.save()
+    # delivery = cart.get_delivery(request)
+    # delivery.save()
     cart_total = cart.cart_total(request)
 
     return render_to_response(template_name, locals(),

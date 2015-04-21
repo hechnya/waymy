@@ -15,11 +15,8 @@ class Delivery(models.Model):
         verbose_name=u'способ доставки',
         max_length=100,
         choices=(
-            ('SPSurface', 'Small Packet Surface'),
-            ('SPSAL', 'Small Packet SAL'),
-            ('SPA' ,'Small Packet Air'),
-            ('PS', 'Parcel Surface'),
-            ('EMA', 'EMA'),
+            ('russian_post', 'Почта России'),
+            ('ems', 'EMS'),
         ),
         default='',)
     weight = models.IntegerField(verbose_name=u'Вес', default=0)

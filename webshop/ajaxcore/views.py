@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.utils import simplejson
 from webshop.cart import cart
 from webshop.catalog.forms import ProductAddToCartForm
+from webshop.cart.delivery import calculate_delivery_price
 from webshop.catalog.models import *
 # from webshop.cart.models import CartItem
 
@@ -49,8 +50,15 @@ def ajaxCart(request):
 def ajaxDelivery(request):
     data = {}
     current_delivery = cart.get_delivery(request)
-    data = simplejson.dumps({"type": current_delivery.delivery_type,
-                             "weight": current_delivery.weight,
-                             "price": current_delivery.delivery_price})
+    current_delivery.delivery_price = calculate_delivery_price(request.POST['text'], current_delivery.weight)
+    current_delivery.save()
+    # text = '<h4><strong>Параметры доставки:</strong></h4><p>Город: <span id="sity">%s</span></p>' \
+    #        '<p>Вес посылки : <span id="weight_ajax">%s гр.</span></p>' \
+    #        '<p>Стоимость доставки: <span id="price_ajax">%s руб.</span></p>' % (request.POST['text'],
+    #                                                                              current_delivery.weight,
+    #                                                                              current_delivery.delivery_price)
+    data = simplejson.dumps({'city': request.POST['text'],
+                             'price': str(current_delivery.delivery_price),
+                             'weight': str(current_delivery.weight)})
 
     return HttpResponse(data, mimetype="application/json")

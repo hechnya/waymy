@@ -1543,6 +1543,9 @@ input#order_submit {
     padding: 0px;
     margin: 0px;
 }
+#rb_delivery .dropdown-menu {
+    min-width: 250px!important;
+}
 #cart_link {
     width: 100%;
     background: #2ad38e;
@@ -1864,6 +1867,7 @@ img.logo_class {
 .auth .nav.navbar-nav {
     float: right;
 }
+
 /*.animation {*/
     /*-webkit-transition: background-color 0.7s, color 1s, opacity 0.5s;*/
     /*-ms-transition: background-color 0.7s, color 1s, opacity 0.5s;*/

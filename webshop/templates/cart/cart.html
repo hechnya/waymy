@@ -207,18 +207,29 @@
             {% if cart_items %}
                 <div class="col-xs-12 col-md-7 delivery_all">
                     <div class="row">
-                        <div class="col-xs-7">
+                        <div class="col-xs-8">
                             <form action="." method="post" id="rb_delivery">
                                 {% csrf_token %}
-                                <label for="id_delivery"><i class="fa fa-plane"></i> <strong>Выберите способ доставки: </strong></label>
-                                {{ deliveryForm.delivery }}
+{#                                <div style="margin-right: 25px;" class="pull-left">#}
+{#                                    <label for="id_delivery"><i class="fa fa-plane"></i> <strong>Cпособ доставки: </strong></label>#}
+{#                                    <br/>#}
+{#                                    {{ deliveryForm.delivery }}#}
+{#                                </div>#}
+                                <div class="pull-left">
+                                    <label for="id_region"><i class="fa fa-plane"></i> <strong>Выберите регион доставки: </strong></label>
+                                    <br/>
+                                    {{ deliveryForm.region }}
+                                </div>
                             </form>
+
+                            <div id="test_text"></div>
+
                         </div>
-                        <div class="col-xs-5 current_delivery">
-                            <h4><strong>Текущий способ доставки:</strong></h4>
-                            <p>Способ доставки: <span id="type_ajax">{{ delivery.delivery_type }}</span></p>
-                            <p style="{% if delivery.is_to_big %}color: red;{% endif %}">Вес посылки {% if delivery.is_to_big %}слишком большой{% endif %}: <span id="weight_ajax">{{ delivery.weight }} гр.</span></p>
-                            <p>{% if not delivery.is_to_big %}Стоимость доставки: <span id="price_ajax">{{ delivery.delivery_price }} руб.</span> {% endif %}</p>
+                        <div class="col-xs-4 current_delivery">
+                            <h4><strong>Параметры доставки:</strong></h4>
+                            <p>Город: <span id="city"></span></p>
+                            <p style="{% if delivery.is_to_big %}color: red;{% endif %}">Вес посылки {% if delivery.is_to_big %}слишком большой{% endif %}: <span id="weight_ajax"> гр.</span></p>
+                            <p>{% if not delivery.is_to_big %}Стоимость доставки: <span id="price_ajax"> руб.</span> {% endif %}</p>
                         </div>
                     </div>
                 </div>
@@ -254,28 +265,38 @@
 <script>
     (function($) {
         $(document).ready(function() {
-            $('.calc_delivery').click(function (){
+
+            $( "select" ).change(function() {
+                var str = "";
+                $( "select option:selected" ).each(function() {
+                    str = $( this ).text();
+                });
                 csrftoken = $.cookie('csrftoken');
                 $.post(
                     "/ajax-delivery/",
                     {
                         csrfmiddlewaretoken: csrftoken,
-                        // что бы работать с селектами нормально подключен скрипт:
-                        // bootstrap-combobox https://github.com/cchantep/bootstrap-combobox
-                        delivery: $('.calc_delivery').val()
+                        text: str
                     },
                     onAjaxSuccess
                 );
                 function onAjaxSuccess(data) {
 {#                    $('#id_quantity').addClass('animated bounceOutUp');#}
 {#                    $(".cart_items_menu").html(data.add_item_html);#}
-                    $("#type_ajax").html(data.type);
+                    $("#city").html(data.city);
+                    $("#weight_ajax").html(data.weight);
+                    $("#price_ajax").html(data.price);
+
+{#                    $("#type_ajax").html(data.type);#}
 {#                    setTimeout(function () {#}
 {#                        $("#id_quantity").removeClass('animated bounceOutUp');#}
 {#                    }, 1000);#}
                 }
-            });
+            }).trigger( "change" );
         });
     })(jQuery);
 </script>
+
+{% block combobox %}
+{% endblock %}
 {% endblock %}
