@@ -38,7 +38,7 @@
 
                                         <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
 
-                                            <div class="inline_form">
+                                            <div class="inline_form">{% csrf_token %}
                                                 <input type="hidden" class="slug" value="{{ p.slug }}" />
 
                                                 <select id="option_{{ p.slug }}" class="option_value" size="1">
@@ -309,6 +309,7 @@
 <script type="text/javascript">
     //по нажатию на + или - меняем значение в поле quantity
     (function($) {
+
         $(document).ready(function() {
             $('.plus').click(function (){
                 var current_q = $(this).parent(".quantity").children(".q_val").val();

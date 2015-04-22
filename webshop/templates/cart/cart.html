@@ -272,6 +272,7 @@
                     str = $( this ).text();
                 });
                 csrftoken = $.cookie('csrftoken');
+                alert(csrftoken);
                 $.post(
                     "/ajax-delivery/",
                     {

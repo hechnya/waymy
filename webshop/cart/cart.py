@@ -13,6 +13,7 @@ from webshop.cart.delivery import calculate_delivery_price
 
 CART_ID_SESSION_KEY = 'cart_id'
 
+
 def _cart_id(request):
     """
       Получение id корзины из cookies для пользователя,
@@ -23,6 +24,7 @@ def _cart_id(request):
         request.session[CART_ID_SESSION_KEY] = _generate_cart_id()
     return request.session[CART_ID_SESSION_KEY]
 
+
 def _generate_cart_id():
     """Генерация уникального id корзины который будет хранится в cookies"""
     cart_id = ''
@@ -32,9 +34,11 @@ def _generate_cart_id():
         cart_id += characters[random.randint(0, len(characters) - 1)]
     return cart_id
 
+
 def get_cart_items(request):
     """Получение всех товаров для текущей корзины"""
     return CartItem.objects.filter(cart_id=_cart_id(request))
+
 
 def add_to_cart(request):
     """Добавление товара в корзину"""
@@ -90,7 +94,6 @@ def add_to_cart(request):
         return ci
 
 
-
 def cart_distinct_item_count(request):
     """Возвращает общее количество товаров в корзине (количество однотипных товаров)"""
     # return get_cart_items(request).count()
@@ -100,9 +103,11 @@ def cart_distinct_item_count(request):
         quantity = quantity + item.quantity
     return quantity
 
+
 def get_single_item(request, item_id):
     """Получаем конкретный товар в корзине"""
     return get_object_or_404(CartItem, id=item_id, cart_id=_cart_id(request))
+
 
 def update_cart(request):
     """Обновляет количество отдельного товара"""
@@ -118,6 +123,7 @@ def update_cart(request):
     #TODO: добавить предупреждение
     #    remove_from_cart(request)
 
+
 def update_cupon_cart(request):
     cart_products = get_cart_items(request)
     postdata = request.POST.copy()
@@ -130,6 +136,7 @@ def update_cupon_cart(request):
         cart_item.cupon = cupon_true
         cart_item.save()
 
+
 def get_cupon(request):
     cart_items = get_cart_items(request)
     cupon = Cupon.objects.get(identifier='zero')
@@ -137,6 +144,7 @@ def get_cupon(request):
         for item in cart_items:
             cupon = item.cupon
     return cupon
+
 
 def remove_from_cart(request):
     """Удаляет выбранный товар из корзины"""
@@ -146,6 +154,7 @@ def remove_from_cart(request):
     if cart_item:
         cart_item.delete()
 
+
 def cart_subtotal(request):
     """Получение суммарной стоимости всех товаров"""
     cart_total = decimal.Decimal('0.00')
@@ -154,13 +163,16 @@ def cart_subtotal(request):
         cart_total += (cart_item.price - (cart_item.price * int(cart_item.cupon.percent) / 100)) * cart_item.quantity
     return cart_total
 
+
 def cart_delivery_total(request):
     delivery = get_current_delivery(request)
     return delivery.delivery_price
 
+
 def cart_total(request):
     total = cart_subtotal(request) + cart_delivery_total(request)
     return total
+
 
 def cart_gift_add(request):
     """добавляем подарок"""

@@ -39,7 +39,7 @@ def ajaxCart(request):
             price = cart_item.price
             add_item_html = add_item_html + u"<div class='cart_items_prod'><img src='/media/%s' width='88' height='88'><div class='text_item'><p class='name_item'>%s</p><p>Цена: <i class='fa fa-rub'></i>%s</p><p id='quantity'>Колличество: %s</p></div></div>" %  (cart_item.get_default_image(), name, price, cart_item.quantity)
 
-        data = simplejson.dumps({"add_item_html":add_item_html, "global_quantity":global_quantity})
+        data = simplejson.dumps({"add_item_html": add_item_html, "global_quantity": global_quantity})
 
     else:
         form = ProductAddToCartForm(request, postdata)
@@ -52,6 +52,7 @@ def ajaxDelivery(request):
     current_delivery = cart.get_delivery(request)
     current_delivery.delivery_price = calculate_delivery_price(request.POST['text'], current_delivery.weight)
     current_delivery.save()
+    total = 0
     # text = '<h4><strong>Параметры доставки:</strong></h4><p>Город: <span id="sity">%s</span></p>' \
     #        '<p>Вес посылки : <span id="weight_ajax">%s гр.</span></p>' \
     #        '<p>Стоимость доставки: <span id="price_ajax">%s руб.</span></p>' % (request.POST['text'],
@@ -59,6 +60,7 @@ def ajaxDelivery(request):
     #                                                                              current_delivery.delivery_price)
     data = simplejson.dumps({'city': request.POST['text'],
                              'price': str(current_delivery.delivery_price),
-                             'weight': str(current_delivery.weight)})
+                             'weight': str(current_delivery.weight),
+                             'total': total})
 
     return HttpResponse(data, mimetype="application/json")
