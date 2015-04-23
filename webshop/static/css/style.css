@@ -117,7 +117,7 @@ a.cart{
     background: url("../images/menu_bg.png") center no-repeat;
     background-size: 1680px;
     height: 280px;
-    margin-top: -50px;
+    margin-top: -107px;
     position: relative;
     padding-top: 105px;
 }
@@ -170,7 +170,9 @@ a.cart{
     font-size: 17px;
     font-family: 'PT Sans Narrow', sans-serif;
 	border:none ;
-
+    /*background: url("/static/images/bg.png") 0px -50px no-repeat;*/
+    background-color: #363636;
+    background-size: 100%;
 }
 .menu_main a{
     font-family: 'PT Sans Narrow', sans-serif;
@@ -1437,6 +1439,19 @@ input#order_submit {
 
 /*new*//* waymay*/
 
+.navbar-default .navbar-nav>li>a {
+  color: #ECECEC;
+  line-height: 20px;
+  padding: 9px;;
+}
+.navbar-default .navbar-nav>li:hover>a {
+  color: #a7a7a7;
+}
+.navbar {
+  min-height: 38px;
+  height: 20px;
+}
+
 .menu_left p,
 .menu_right p {
     float: left;
@@ -1447,12 +1462,11 @@ input#order_submit {
 }
 .menu_left p a,
 .menu_right p a {
-    color: #000;
-    /*font-family: 'PT Sans Narrow', sans-serif;*/
-    /*font-family: 'Open Sans';*/
-    font-family:'Open Sans';
+    color: #717171;
+    /* font-family: 'PT Sans Narrow', sans-serif; */
+    font-family: 'Open Sans';
     font-weight: 100;
-    font-size: 15px;
+    font-size: 21px;
 }
 .menu_left p a:hover,
 .menu_right p a:hover {
