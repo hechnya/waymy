@@ -104,7 +104,7 @@ class Product(models.Model):
     updated_at = models.DateTimeField(_(u'Updated at'), auto_now=True)
     categories = models.ManyToManyField(Category, verbose_name=_(u'Categories'), help_text=_(u'Categories for product'))
     feel = models.ManyToManyField(FeelName, verbose_name=u'Вкус', blank=True, null=True)
-    itemsAttached = models.ManyToManyField('self', verbose_name=u'Выберите прилагающиеся товары')
+    itemsAttached = models.ManyToManyField('self', verbose_name=u'Выберите прилагающиеся товары', blank=True)
     objects = models.Manager()
     bestseller = BestsellerProductManager()
     aqua = AquaProductManager()
@@ -164,7 +164,7 @@ class ProductImage(models.Model):
 
 # модель для добавления основных свойств продукта
 class ProductVolume(models.Model):
-    volume = models.DecimalField(max_digits=9, decimal_places=2, verbose_name=u'Объем')
+    volume = models.DecimalField(max_digits=9, decimal_places=2, verbose_name=u'Объем', blank=True, null=True)
     weight = models.DecimalField(max_digits=9, decimal_places=2, verbose_name=u'Вес')
     price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name=u'Цена')
     new_price = models.DecimalField(max_digits=9, decimal_places=2,
