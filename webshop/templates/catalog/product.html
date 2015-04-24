@@ -165,7 +165,7 @@
                                 </div>
 
                                 <div class="col-xs-8">
-                                    <form method="post" action="." class="cart" id="addToCartForm">
+                                    <div  class="cart" id="addToCartForm">
                                         {% csrf_token %}
                                         <div class="hidden">
                                             {{ form.product_slug }}
@@ -196,7 +196,7 @@
     {#                                        <i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i><span>Добавить в корзину</span>#}
     {#                                    </button>#}
 
-                                    </form>
+                                    </div>
 
                                     <button class="btn btn-success" id="clickbutton">
                                         <i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i><span>Добавить в корзину</span>
@@ -362,8 +362,25 @@
     (function($) {
         $(document).ready(function() {
 
+            $("#option").on('change', function() {
+                var val = $('#option').btComboBox('value');
+                csrftoken = $.cookie('csrftoken');
+                $.post(
+                    "/ajax-cart/",
+                    {
+                        csrfmiddlewaretoken: csrftoken,
+                        atr_value_new: val
+                    },
+                    onAjaxSuccess
+                );
+                function onAjaxSuccess(data) {
+                    $('#old_price').html(data.price);
+                }
+            });
+
             $('#clickbutton').click(function (){
                 csrftoken = $.cookie('csrftoken');
+{#                alert(csrftoken);#}
                 $.post(
                     "/ajax-cart/",
                     {

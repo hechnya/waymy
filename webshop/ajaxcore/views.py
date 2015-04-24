@@ -5,7 +5,10 @@ from django.views.decorators.csrf import csrf_protect
 from django.utils import simplejson
 from webshop.cart import cart
 from webshop.catalog.forms import ProductAddToCartForm
+from webshop.cart.delivery import calculate_delivery_price
+from webshop.catalog.models import ProductVolume
 from webshop.catalog.models import *
+from django.core.mail import send_mail
 # from webshop.cart.models import CartItem
 
 """Вьюха для ajax работы на странице товара
@@ -23,7 +26,7 @@ def ajaxCart(request):
     # cart_item = CartItem()
     add_item_html = ''
     data = {}
-    if form.is_valid():  # тут происходит проверка на cookie в forms.py
+    if form.is_valid() and request.POST['quantity']:  # тут происходит проверка на cookie в forms.py
         # Добавляем в корзину и делаем перенаправление на страницу с корзиной
         cart.add_to_cart(request)
         # product_item = Product.objects.get(slug=request.POST['product_slug'])
@@ -38,10 +41,22 @@ def ajaxCart(request):
             price = cart_item.price
             add_item_html = add_item_html + u"<div class='cart_items_prod'><img src='/media/%s' width='88' height='88'><div class='text_item'><p class='name_item'>%s</p><p>Цена: <i class='fa fa-rub'></i>%s</p><p id='quantity'>Колличество: %s</p></div></div>" %  (cart_item.get_default_image(), name, price, cart_item.quantity)
 
-        data = simplejson.dumps({"add_item_html":add_item_html, "global_quantity":global_quantity})
-
+        data = simplejson.dumps({"add_item_html": add_item_html, "global_quantity": global_quantity})
     else:
         form = ProductAddToCartForm(request, postdata)
+    try:
+        request.POST['atr_value_new']  # TODO: поработать над безопасностью формы
+        volume = ProductVolume.objects.get(id=request.POST['atr_value_new'])
+        if volume.new_price > 0:
+            price = "Цена: %s руб." % volume.new_price
+        else:
+            price = "Цена: %s руб." % volume.price
+        data = simplejson.dumps({"price": price})
+    except:
+        request.POST['phone_user']  # TODO: поработать надо безопасностью
+        subject = u'WayMy форма'
+        message = u'телефон: %s \n Имя: %s' % (request.POST['phone_user'], request.POST['name_user'])
+        send_mail(subject, message, 'teamer777@gmail.com', ['teamer777@icloud.com'], fail_silently=False)
 
     return HttpResponse(data, mimetype="application/json")
 
@@ -49,8 +64,18 @@ def ajaxCart(request):
 def ajaxDelivery(request):
     data = {}
     current_delivery = cart.get_delivery(request)
-    data = simplejson.dumps({"type": current_delivery.delivery_type,
-                             "weight": current_delivery.weight,
-                             "price": current_delivery.delivery_price})
+    current_delivery.delivery_price = calculate_delivery_price(request.POST['text'], current_delivery.weight)
+    current_delivery.save()
+    cart_total = cart.cart_total(request)
+    total = '<span>ИТОГО: </span>%s <span>руб.</span>' % str(cart_total)
+    # text = '<h4><strong>Параметры доставки:</strong></h4><p>Город: <span id="sity">%s</span></p>' \
+    #        '<p>Вес посылки : <span id="weight_ajax">%s гр.</span></p>' \
+    #        '<p>Стоимость доставки: <span id="price_ajax">%s руб.</span></p>' % (request.POST['text'],
+    #                                                                              current_delivery.weight,
+    #                                                                              current_delivery.delivery_price)
+    data = simplejson.dumps({'city': request.POST['text'],
+                             'price': str(current_delivery.delivery_price),
+                             'weight': str(current_delivery.weight),
+                             'cart_total': total})
 
     return HttpResponse(data, mimetype="application/json")

@@ -13,7 +13,7 @@ class CartItem(models.Model):
     product = models.ForeignKey(Product, unique=False)
     atributes = models.ForeignKey(ProductVolume, unique=False)
     feel = models.ForeignKey(FeelName, unique=False, default=None, null=True)
-    cupon = models.ForeignKey(Cupon, blank=True, null=True, default=2)
+    # cupon = models.ForeignKey(Cupon, blank=True, null=True, default=2)
     class Meta:
         db_table = 'cart_items'
         ordering = ['date_added']

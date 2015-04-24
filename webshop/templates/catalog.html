@@ -10,6 +10,19 @@
 {#    <!-- Site Overlay -->#}
 {#    <div class="site-overlay"></div>#}
 
+    {% block top_menu %}
+        <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <ul class="nav navbar-nav pull-right">
+                <li><a href="/">Главная <span class="sr-only"></span></a></li>
+                <li><a href="/page/o-dostavke"><span class=""></span>О доставке</a></li>
+                <li><a href="/page/ob-oplate"><span class=""></span>Об оплате</a></li>
+            </ul>
+          </div>
+        </nav>
+    {% endblock %}
+
+
     {% block slider %}
         {% slider request %}
     {% endblock %}
@@ -31,7 +44,7 @@
                         {% else %}
                             <div class="menu_left">
                                 <p><a href="/"><span class=""></span>Главная</a></p>
-                                <p><a href="/page/o-dostavke"><span class=""></span>О доставке</a></p>
+{#                                <p><a href="/page/o-dostavke"><span class=""></span>О доставке</a></p>#}
                                 <p><a href="/review"><span class=""></span>Отзывы</a></p>
                                 <p><a href="/articles"><span class=""></span>Статьи</a></p>
                                 <p><a href="/page/kontakty"><span class=""></span>Контакты</a></p>
@@ -116,11 +129,11 @@
                         {% if flavour != 'mobile' %}
                             <div class="col-md-3">
                                 <ul class="links">
-                                    <li><a href="/review/">О нас</a></li>
-                                    <li><a href="/blog">О доставке</a></li>
-                                    <li><a href="/blog/section1">О способах оплаты</a></li>
-                                    <li><a href="/blog/section2">Оставить отзыв</a></li>
-                                    <li><a href="/blog/section3">Контакты</a></li>
+                                    <li><a href="/page/o-nas/">О нас</a></li>
+                                    <li><a href="/page/o-dostavke/">О доставке</a></li>
+                                    <li><a href="/page/sposoby-oplaty">О способах оплаты</a></li>
+                                    <li><a href="/review/">Отзывы</a></li>
+                                    <li><a href="/page/kontakty/">Контакты</a></li>
                                 </ul>
                             </div>
                         {% endif %}
