@@ -64,7 +64,7 @@ def add_to_cart(request):
 
     # Получаем товары в корзине
     cart_products = get_cart_items(request)
-    cupon = get_cupon(request)
+    # cupon = get_cupon(request)
     product_in_cart = False
 
     # Проверяем что продукт уже в корзине
@@ -81,7 +81,7 @@ def add_to_cart(request):
         ci.product = p
         ci.quantity = quantity
         ci.cart_id = _cart_id(request)
-        ci.cupon = cupon
+        # ci.cupon = cupon
 
         ci.atributes = atributes
         try:
@@ -160,7 +160,7 @@ def cart_subtotal(request):
     cart_total = decimal.Decimal('0.00')
     cart_products = get_cart_items(request)
     for cart_item in cart_products:
-        cart_total += (cart_item.price - (cart_item.price * int(cart_item.cupon.percent) / 100)) * cart_item.quantity
+        cart_total += cart_item.price * cart_item.quantity
     return cart_total
 
 

@@ -272,7 +272,6 @@
                     str = $( this ).text();
                 });
                 csrftoken = $.cookie('csrftoken');
-                alert(csrftoken);
                 $.post(
                     "/ajax-delivery/",
                     {
@@ -287,6 +286,7 @@
                     $("#city").html(data.city);
                     $("#weight_ajax").html(data.weight);
                     $("#price_ajax").html(data.price);
+                    $("#price").html(data.cart_total)
 
 {#                    $("#type_ajax").html(data.type);#}
 {#                    setTimeout(function () {#}

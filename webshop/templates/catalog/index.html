@@ -25,16 +25,18 @@
                                 <div class="col-md-4 popular_products">
                                     <div class="product_thumbnail">
                                         <a href="{{ p.get_absolute_url }}">
-                                            {% thumbnail p.image.url "150x150" crop="center" as im %}
+{#                                            <img src="/media/{{ p.im }}" >#}
+{#                                            <img src="/media/{{ p.get_image.url }}" height="200">#}
+                                            {% thumbnail p.image.url "x250" as im %}
                                                 <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
                                             {% endthumbnail %}
                                         </a>
                                         <br />
-                                        <name>{{ p.name }}</name>
+                                        <div class="name_tovar">{{ p.name }}</div>
                                         <div class="description_tovar">{{ p.description|removetags:"img"|truncatewords:"20"|safe }}</div>
 
                                         <a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a>
-                                        <span class="price">{{ p.volume.price }} руб.</span>
+                                        <span class="price">Цена: {{ p.volume.price }} руб.</span>
 
                                         <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
 
@@ -68,6 +70,8 @@
                                     </div>
                                 </div>
                             {% endfor %}
+
+                            <div id="test_text"></div>
 
                         {% else %}
                             <p>товары не найдены</p>
@@ -211,14 +215,14 @@
                                 <div class="form_container">
                                     <h4 style="text-align: center;">Получите наш подарок дня</h4>
                                     <h4 style="text-align: center;">Прямо сейчас!</h4>
-                                    <form action="." method="post" id="my_form">
+                                    <div id="my_form">{% csrf_token %}
                                         <div class="">
                                             <p>{{ form.name }}</p>
                                             <p>{{ form.phone }}</p>
 {#                                            <input class="btn btn-default" id="" value="Отправить" onclick="send_form();" type="submit">#}
-                                            <input id="" class="btn btn-default" value="Отправить" type="button" onclick="send_form();">
+                                            <input id="send_form" class="btn btn-default" value="Отправить" type="button">
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
 
@@ -237,6 +241,26 @@
         <h1>Ваше сообщение успешно отправлено!</h1>
         <input id="status" type="text" value=""/>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
 {% endblock %}
 
@@ -331,6 +355,44 @@
 <script>
     (function($) {
         $(document).ready(function() {
+
+            $("#send_form").click(function (){
+{#                alert('hello');#}
+{#                $('#message_show').removeClass('.hidden');#}
+                var name = $('#id_name').val();
+                var phone = $('#id_phone').val();
+                csrftoken = $.cookie('csrftoken');
+                $.post(
+                    "/ajax-cart/",
+                    {
+                        csrfmiddlewaretoken: csrftoken,
+                        name_user: name,
+                        phone_user: phone
+                    },
+                    onAjaxSuccess
+                );
+                function onAjaxSuccess() {
+                    $('#message_show').removeClass('.hidden');
+                }
+            });
+
+            $(".option_value").on('change', function() {
+                var val = $(this).parent(".inline_form").children('.option_value').btComboBox('value');
+                var change_price = $(this).parents('.product_thumbnail').children('.price');
+                csrftoken = $.cookie('csrftoken');
+                $.post(
+                    "/ajax-cart/",
+                    {
+                        csrfmiddlewaretoken: csrftoken,
+                        atr_value_new: val
+                    },
+                    onAjaxSuccess
+                );
+                function onAjaxSuccess(data) {
+                    change_price.html(data.price);
+                }
+
+            });
 
             $(".clickbutton").click(function (){
                 var current_id = $(this).attr("id");

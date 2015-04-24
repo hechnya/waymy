@@ -80,11 +80,11 @@
                                     </a>
 
                                     <br />
-                                    <name>{{ p.name }}</name>
+                                    <div class="name_tovar">{{ p.name }}</div>
                                     <div class="description_tovar">{{ p.description|removetags:"img"|truncatewords:"20"|safe }}</div>
 
                                     <a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a>
-                                    <span class="price">{{ p.volume.price }} руб.</span>
+                                    <span class="price">Цена: {{ p.volume.price }} руб.</span>
 
                                     <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
 
@@ -172,6 +172,24 @@
     <script>
         (function($) {
             $(document).ready(function() {
+
+                $(".option_value").on('change', function() {
+                var val = $(this).parent(".inline_form").children('.option_value').btComboBox('value');
+                var change_price = $(this).parents('.product_thumbnail').children('.price');
+                csrftoken = $.cookie('csrftoken');
+                $.post(
+                    "/ajax-cart/",
+                    {
+                        csrfmiddlewaretoken: csrftoken,
+                        atr_value_new: val
+                    },
+                    onAjaxSuccess
+                );
+                function onAjaxSuccess(data) {
+                    change_price.html(data.price);
+                }
+
+            });
 
                 $(".clickbutton").click(function (){
                     var current_id = $(this).attr("id");

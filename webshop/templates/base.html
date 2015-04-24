@@ -17,6 +17,17 @@
         <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
+        <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}mightySlider/src/css/mightyslider.css"/>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+{#        подключаем стили в зависимости от устройства#}
+        {% if flavour == 'mobile' %}
+            <link href="{{ STATIC_URL }}css/mobile.css" rel="stylesheet" />
+            <link rel="stylesheet" href="{{ STATIC_URL }}css/selectbox.css"/>
+        {% else %}
+            <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
+            <link rel="stylesheet" href="{{ STATIC_URL }}css/selectbox.css"/>
+        {% endif %}
         <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
         <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
         {% block onload_cart_script %}
@@ -120,17 +131,7 @@
             {% if flavour == 'mobile' %}
                 </div>
             {% endif %}
-        <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="{{ STATIC_URL }}mightySlider/src/css/mightyslider.css"/>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-{#        подключаем стили в зависимости от устройства#}
-        {% if flavour == 'mobile' %}
-            <link href="{{ STATIC_URL }}css/mobile.css" rel="stylesheet" />
-            <link rel="stylesheet" href="{{ STATIC_URL }}css/selectbox.css"/>
-        {% else %}
-            <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
-            <link rel="stylesheet" href="{{ STATIC_URL }}css/selectbox.css"/>
-        {% endif %}
+
 
         {#        подключаем скрипты в зависимости от устройства#}
         {% if flavour == 'mobile' %}

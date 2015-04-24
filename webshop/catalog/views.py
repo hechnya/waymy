@@ -22,6 +22,7 @@ from webshop.pages.models import Page
 from webshop.accounts.models import UserProfile
 from webshop.checkout.models import OrderOneClick
 from webshop.pages.models import MetaInPages
+from sorl.thumbnail import get_thumbnail
 from webshop.cart.models import CartItem
 
 
@@ -54,6 +55,7 @@ def index_view(request, template_name="catalog/index.html"):
     for p in products:
         try:
             p.image = ProductImage.objects.get(product=p, default=True)
+            # p.im = get_thumbnail(p.image, 'x250', quality=100)
             p.volume = ProductVolume.objects.get(product=p, default=True)
         except Exception:
             p.image = "/media/products/images/none.png"
@@ -81,7 +83,12 @@ def index_view(request, template_name="catalog/index.html"):
         # frontpage = get_object_or_404(Page, is_main='True')
         frontpage = Page.objects.get(is_main='True')
     except Exception:
-        frontpage = Page.objects.get(slug="404")
+        frontpage = Page()
+        frontpage.name = u"Главная станица"
+        frontpage.slug = "main"
+        frontpage.is_main = True
+        frontpage.save()
+            
 
     # if request.method == 'POST':
     #     form = FormFront(request.POST)
@@ -93,7 +100,7 @@ def index_view(request, template_name="catalog/index.html"):
     #     else:
     #         form = FormFront({'phone': u'Введите свой телефон',})
     # else:
-        form = FormFront()
+    form = FormFront()
 
     # Функция locals получает все поля словаря
     return render_to_response(template_name, locals(),
