@@ -23,8 +23,6 @@ from django.core.mail import send_mail
 def ajaxCart(request):
     postdata = request.POST.copy()
     form = ProductAddToCartForm(request, postdata)
-    # cart_item = CartItem()
-    add_item_html = ''
     data = {}
     if form.is_valid() and request.POST['quantity']:  # тут происходит проверка на cookie в forms.py
         # Добавляем в корзину и делаем перенаправление на страницу с корзиной
@@ -44,19 +42,24 @@ def ajaxCart(request):
         data = simplejson.dumps({"add_item_html": add_item_html, "global_quantity": global_quantity})
     else:
         form = ProductAddToCartForm(request, postdata)
-    try:
-        request.POST['atr_value_new']  # TODO: поработать над безопасностью формы
-        volume = ProductVolume.objects.get(id=request.POST['atr_value_new'])
-        if volume.new_price > 0:
-            price = "Цена: %s руб." % volume.new_price
-        else:
-            price = "Цена: %s руб." % volume.price
-        data = simplejson.dumps({"price": price})
-    except:
-        request.POST['phone_user']  # TODO: поработать надо безопасностью
-        subject = u'WayMy форма'
-        message = u'телефон: %s \n Имя: %s' % (request.POST['phone_user'], request.POST['name_user'])
-        send_mail(subject, message, 'teamer777@gmail.com', ['teamer777@icloud.com'], fail_silently=False)
+
+    """
+    Проверка ключей post ajax запроса и дальнейшая логика связаная с этим
+    либо смена объема(веса) товара либо отправка письма на почту через форму в конце главной страницы
+    проверка работает только через цыкл (почему-то).. возможно из-за QueryDict либо , из-за декоратора.
+    """
+    for key in postdata.keys():  # TODO: поработать над безопасностью
+        if key == 'atr_value_new':
+            volume = ProductVolume.objects.get(id=request.POST['atr_value_new'])
+            if volume.new_price > 0:
+                price = "Цена: %s руб." % volume.new_price
+            else:
+                price = "Цена: %s руб." % volume.price
+            data = simplejson.dumps({"price": price})
+        elif key == 'phone_user':
+            subject = u'WayMy форма'
+            message = u'телефон: %s \n Имя: %s' % (request.POST['phone_user'], request.POST['name_user'])
+            send_mail(subject, message, 'teamer777@gmail.com', ['teamer777@icloud.com'], fail_silently=False)
 
     return HttpResponse(data, mimetype="application/json")
 
