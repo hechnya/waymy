@@ -27,6 +27,7 @@ class Article(models.Model):
         upload_to='articles')
     slug = AutoSlugField(default='default', editable=True)
     text = RichTextField(verbose_name=u'Текст страницы', config_name='default')
+    old_id = models.CharField(max_length=20, verbose_name=u'id страницы со старого сайта для редиректа', blank=True)
 
     class Meta:
         verbose_name_plural = u'Статьи'

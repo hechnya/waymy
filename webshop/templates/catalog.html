@@ -4,6 +4,7 @@
 {% load search_tags %}
 {#{% load mptt_tags %}#}
 {% block site_wrapper %}
+{% load sitetree %}
 
 
 
@@ -13,13 +14,18 @@
     {% block top_menu %}
         <nav class="navbar navbar-default navbar-fixed-top">
           <div class="container">
-            <ul class="nav navbar-nav pull-right">
-                <li><a href="/">Главная <span class="sr-only"></span></a></li>
-                <li><a href="/page/o-dostavke"><span class=""></span>О доставке</a></li>
-                <li><a href="/page/ob-oplate"><span class=""></span>Об оплате</a></li>
-            </ul>
-          </div>
+        {% sitetree_menu from "top_menu" include 'trunk' %}
+        </div>
         </nav>
+{#        <nav class="navbar navbar-default navbar-fixed-top">#}
+{#          <div class="container">#}
+{#            <ul class="nav navbar-nav pull-right">#}
+{#                <li><a href="/">Главная <span class="sr-only"></span></a></li>#}
+{#                <li><a href="/page/o-dostavke"><span class=""></span>О доставке</a></li>#}
+{#                <li><a href="/page/ob-oplate"><span class=""></span>Об оплате</a></li>#}
+{#            </ul>#}
+{#          </div>#}
+{#        </nav>#}
     {% endblock %}
 
 

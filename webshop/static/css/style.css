@@ -111,6 +111,10 @@ a.cart{
 }
 
 /*навигация*/
+.navbar-default .navbar-nav>.open>a {
+    background: none;
+    color: #fff;
+}
 .main_menu {
     /*border-bottom: 1px solid #53a02d;*/
     /*border-top: 1px solid #53a02d;*/
@@ -1439,14 +1443,22 @@ input#order_submit {
 
 
 /*new*//* waymay*/
-
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
+    background: none!important;
+    color: #fff !important;
+}
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
+    background: none!important;
+    color: #fff !important;
+}
 .navbar-default .navbar-nav>li>a {
   color: #ECECEC;
   line-height: 20px;
   padding: 9px;;
 }
 .navbar-default .navbar-nav>li:hover>a {
-  color: #a7a7a7;
+    color: #fff!important;
+    background: none!important;
 }
 .navbar {
   min-height: 38px;
@@ -1730,12 +1742,16 @@ ul.menu li:hover ul.children {
     margin-left: 10px;
     font-family: 'Archive';
 }
+.popular_products .name {
+    font-size: 20px;
+    margin-top: 15px;
+}
 .description_tovar {
     font-family:'Open Sans';
     font-weight: 100;
     min-height: 90px;
     text-align: left;
-    text-align: center;
+    /*text-align: center;*/
 }
 .separetor {
     height: 1px;

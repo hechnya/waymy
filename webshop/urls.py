@@ -36,7 +36,10 @@ urlpatterns = patterns('',
     url(r'^', include('webshop.news.urls')),
     url(r'^search/', include('webshop.search.urls')),
     url(r'^review/$', include('webshop.pages.reviewurls')),
-
+    # редиректы со старого сайта
+    url(r'^index.php/', include('webshop.pages.urls_redirect')),
+    # url(r'^index.php/[.]route=information/news.news_id=', include('webshop.cart.urls')),
+    # url(r'^index.php/route', include('webshop.pages.urls_redirect')),
 
     # enable language choice
     url(r'^i18n/', include('django.conf.urls.i18n')),
@@ -49,6 +52,9 @@ urlpatterns = patterns('',
 
     )
 
+
+# def url_check(request):
+#     url = request.url
 
 # if settings.DEBUG:
 #     urlpatterns += patterns('',

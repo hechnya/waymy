@@ -213,8 +213,6 @@ INSTALLED_APPS = (
     'mptt',
     'bootstrap3',
     'sorl.thumbnail',
-    # 'dajaxice',
-    # 'dajax',
     'captcha',
     'robokassa',
     'breadcrumbs',
@@ -223,6 +221,7 @@ INSTALLED_APPS = (
     'ckeditor',
     'mptt_tree_editor',
     'django_mobile',
+    'sitetree'
 )
 
 

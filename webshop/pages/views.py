@@ -2,7 +2,7 @@
 # !/usr/bin/env python
 from django.core import urlresolvers
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from webshop.pages.forms import *
 from models import MetaInPages
@@ -94,3 +94,14 @@ def review_form_view(request, template_name="pages/review.html"):
         text = u'Вы не заполнили свой профиль'
     reviews = Review.objects.all()
     return render_to_response(template_name, locals(),context_instance=RequestContext(request))
+
+
+def redirectView(request, template_name="/pages/test.html"):
+    id = request.GET.get('news_id')
+    # message = request.GET.get('message')
+    if request.GET.get('route') == 'information/news':
+        articles = Article.objects.all()
+        for article in articles:
+            if article.old_id == id:
+                return redirect('/articles/%s/' % article.slug, permanent=True)
+    # return render_to_response(template_name, locals(),context_instance=RequestContext(request))
