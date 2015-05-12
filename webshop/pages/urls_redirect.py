@@ -6,6 +6,6 @@ from django.conf.urls import patterns, url
 urlpatterns = patterns('webshop.pages.views',
 
     url('^\w*', 'redirectView',
-         {'template_name': 'pages/test.html'}),
+         {'template_name': '404.html'}),
     # ?route=information/news.news_id=
 )

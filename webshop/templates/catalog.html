@@ -12,11 +12,18 @@
 {#    <div class="site-overlay"></div>#}
 
     {% block top_menu %}
-        <nav class="navbar navbar-default navbar-fixed-top">
-          <div class="container">
-        {% sitetree_menu from "top_menu" include 'trunk' %}
-        </div>
-        </nav>
+        {#<nav class="navbar navbar-default navbar-fixed-top">#}
+          {#<div class="container">#}
+        {#{% sitetree_menu from "top_menu" include 'trunk' %}#}
+        {#</div>#}
+        {#</nav>#}
+     
+
+
+    {#<main id="panel">#}
+
+    {#</main>#}
+     
 {#        <nav class="navbar navbar-default navbar-fixed-top">#}
 {#          <div class="container">#}
 {#            <ul class="nav navbar-nav pull-right">#}
@@ -46,7 +53,7 @@
 
 {#                        показываем меню в зависимости от устройства #}
                         {% if flavour == 'mobile' %}
-                            <div class="menu-btn">&#9776; Меню</div>
+                            <div class="toggle-button menu-btn">&#9776; Меню</div>
                         {% else %}
                             <div class="menu_left">
                                 <p><a href="/"><span class=""></span>Главная</a></p>

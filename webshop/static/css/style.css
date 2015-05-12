@@ -10,6 +10,7 @@ body{
     padding-top: 10px!important;
     margin-top: 100px;
 }
+
 h1,h2,h3,h4{
     /*font-family: 'PT Sans Narrow', sans-serif;*/
     /*font-family: 'Archive';*/
@@ -1898,6 +1899,9 @@ img.logo_class {
 }
 .auth .nav.navbar-nav {
     float: right;
+}
+.badge {
+    background-color: #29c885;
 }
 
 /*.animation {*/

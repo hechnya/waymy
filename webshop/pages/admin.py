@@ -14,9 +14,14 @@ class PageAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug':('name',)}
 
 
+#class MetaAdmin(admin.StackedInline):
+    #model = MetaInPages
+
+
 class ArticleAdmin(admin.ModelAdmin):
     model = Article
     prepopulated_fields = {'slug':('name',)}
+    #inlines = [MetaAdmin]
 
 
 admin.site.register(Page, PageAdmin)

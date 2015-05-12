@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
 from image_cropping import ImageRatioField
 from ckeditor.fields import RichTextField
+#from webshop.pages.models import MetaInPages
 
 
 class CommonActiveManager(models.Manager):
@@ -97,11 +98,16 @@ class Product(models.Model):
     is_aqua = models.BooleanField(verbose_name=u'Жидкость')
     is_new = models.BooleanField(verbose_name=u'Новинка')
     description = RichTextField()
-    title = models.CharField(u'title', max_length=255, help_text=_(u'Тег title'), blank=True)
-    meta_description = models.CharField(_(u'Meta description'), max_length=255,
-                                        help_text=_(u'Content for description meta tag'),blank=True)
+
+    old_id = models.CharField(max_length=20, verbose_name=u'id страницы со старого сайта для редиректа', blank=True)
+     
+    #meta = models.OneToOneField('webshop.pages.MetaInPages', blank=True, null=True)
+    meta_title = models.CharField(u'Meta title', max_length=255, help_text=_(u'Тег title'), blank=True)
+    meta_description = models.CharField(_(u'Meta description'), max_length=255, help_text=_(u'Content for description meta tag'),blank=True)
+
     created_at = models.DateTimeField(_(u'Created at'), auto_now_add=True)
     updated_at = models.DateTimeField(_(u'Updated at'), auto_now=True)
+
     categories = models.ManyToManyField(Category, verbose_name=_(u'Categories'), help_text=_(u'Categories for product'))
     feel = models.ManyToManyField(FeelName, verbose_name=u'Вкус', blank=True, null=True)
     itemsAttached = models.ManyToManyField('self', verbose_name=u'Выберите прилагающиеся товары', blank=True)

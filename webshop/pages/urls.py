@@ -18,4 +18,7 @@ urlpatterns = patterns('webshop.pages.views',
         {'template_name':'pages/article.html'},
         name='article'),
 
+    url(r'^404/$', 'view_404',
+        {'template_name':'404.html'},
+        name='view_404'),
 )

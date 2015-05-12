@@ -5,7 +5,9 @@
 {% load cropping %}
 {% load catalog_tags %}
 {% block meta %}
-    <title>{% if p.title %}{{ p.title }}{% else %}{{ p.name }}{% endif %} - {{ site_name }}</title>
+    {#<title>{% if p.meta %}{{ p.meta.title }}{% else %}{{ p.name }}{% endif %} - {{ site_name }}</title>#}
+    {#<meta name="description" content="{% if p.meta %}{{ p.meta_description }}{% else %}{{ meta_description }}{% endif %}" />#}
+    <title>{% if p.meta_title %}{{ p.meta_title }}{% else %}{{ p.name }}{% endif %} - {{ site_name }}</title>
     <meta name="description" content="{% if p.meta_description %}{{ p.meta_description }}{% else %}{{ meta_description }}{% endif %}" />
 {% endblock %}
 {% block product_js %}
@@ -76,7 +78,10 @@
                                 {% if images %}
                                     {% for image in images %}
                                         <div class="swiper-slide">
-                                            <img src="/media/{{ image.url }}" width="300" height="300">
+                                            <!--<img src="/media/{{ image.url }}" width="300" height="300">-->
+                                            {% thumbnail image.url "360" as im %}
+                                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                            {% endthumbnail %}
                                         </div>
                                     {% endfor %}
                                 {% endif %}
@@ -292,7 +297,10 @@
                             </div>
                             {% for attachedP in attachedProducts %}
                                 <div class="col-xs-12 col-cp-6 popular_products">
-                                    <img src="/media/{{ attachedP.image_url }}" width="100" align="left">
+                                    <!--<img src="/media/{{ attachedP.image_url }}" width="100" align="left">-->
+                                            {% thumbnail  attachedP.image_url "x250" as im %}
+                                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                            {% endthumbnail %}
                                     <p class="name">{{ attachedP.name }}</p>
                                     <div class="description_tovar">{{ attachedP.description|removetags:"img"|truncatewords:"12"|safe }}</div>
                                     <p><span class="price">{{ attachedP.volume.price }} руб.</span><a class="btn btn-success" href="{{ attachedP.get_absolute_url }}">Подробнее</a></p>

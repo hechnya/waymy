@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from webshop.pages.forms import *
 from models import MetaInPages
+from webshop.catalog.models import Product
 
 
 # def get_meta(func):
@@ -51,6 +52,7 @@ def pageView(request, slug, template_name="pages/page.html", *args):
 
 
 def articlesView(request, template_name="pages/articles.html"):
+    # :TODO не плохое решение метотэгов на основе текущего урла
     try:
         meta_object = MetaInPages.objects.get(link=request.path)
     except:
@@ -60,10 +62,10 @@ def articlesView(request, template_name="pages/articles.html"):
 
 
 def articleView(request, slug, template_name="pages/article.html"):
-    try:
-        meta_object = MetaInPages.objects.get(link=request.path)
-    except:
-        pass
+    #try:
+        #meta_object = MetaInPages.objects.get(link=request.path)
+    #except:
+        #pass
     article = Article.objects.get(slug=slug)
     return render_to_response(template_name, locals(),context_instance=RequestContext(request))
 
@@ -96,12 +98,38 @@ def review_form_view(request, template_name="pages/review.html"):
     return render_to_response(template_name, locals(),context_instance=RequestContext(request))
 
 
-def redirectView(request, template_name="/pages/test.html"):
-    id = request.GET.get('news_id')
-    # message = request.GET.get('message')
+def redirectView(request, template_name="404.html"):
+
+    # если кто-то хочет зайти на статью по старому url
     if request.GET.get('route') == 'information/news':
+        news_id = request.GET.get('news_id')
         articles = Article.objects.all()
         for article in articles:
-            if article.old_id == id:
+            if article.old_id == news_id:
                 return redirect('/articles/%s/' % article.slug, permanent=True)
-    # return render_to_response(template_name, locals(),context_instance=RequestContext(request))
+    
+    # если кто-то хочет зайти на страницу по старому url
+    elif request.GET.get('route') == 'information/information':
+        information_id = request.GET.get('information_id')
+        pages = Page.objects.all()
+        for page in pages:
+            if page.old_id == information_id:
+                return redirect('/page/%s' % page.slug, permanent=True)
+     
+    # если кто-то хочет зайти на товар по старому url
+    elif request.GET.get('route') == 'product/product':
+        product_id = request.GET.get('product_id')
+        products = Product.objects.all()
+        for product in products:
+            ids = product.old_id.split(',')
+            for id_item in ids:
+                if id_item == product_id:
+                    return redirect('/product/%s' % product.slug, permanent=True)
+    
+    return redirect('/404')
+    #return render_to_response(template_name, locals(),context_instance=RequestContext(request))
+
+
+def view_404(request, template_name="404.html"):
+    return render_to_response(template_name, locals(), context_instance=RequestContext(request))
+     

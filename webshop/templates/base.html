@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load mptt_tags %}
 {% load thumbnail %}
+{% load sitetree %}
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -24,9 +25,11 @@
         {% if flavour == 'mobile' %}
             <link href="{{ STATIC_URL }}css/mobile.css" rel="stylesheet" />
             <link rel="stylesheet" href="{{ STATIC_URL }}css/selectbox.css"/>
+            <link href="{{ STATIC_URL }}css/slideout.css" rel="stylesheet" />
         {% else %}
             <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
             <link rel="stylesheet" href="{{ STATIC_URL }}css/selectbox.css"/>
+            <link href="{{ STATIC_URL }}css/slideout.css" rel="stylesheet" />
         {% endif %}
         <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
         <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
@@ -113,12 +116,37 @@
 {#    </script>#}
 {#    -------------------------------------------#}
     </head>
+
+
     <body>
+
+
+        <nav id="menu" class="menu slideout-menu">
+            <a href="/cart">
+                <button class="btn-menu menu-header-title"><span class="badge">42</span> <i class="fa fa-shopping-cart"></i> Смотреть корзину </button>
+            </a>
+            <section class="menu-section">
+                <h3 class="menu-section-title"><span class="glyphicon glyphicon-home"></span> Основное меню</h3>
+                {% sitetree_menu from "mobile_menu" include 'trunk' template "sitetree/mobile_menu.html" %}
+            </section>
+
+            <section id="mobile_category">
+                <h3><span class="glyphicon glyphicon-th"></span> Категории</h3>
+                {% categories_tree_mobile request %}
+            </section>
+        </nav>
+         
+    <div id="panel">
+{#        <button class="toggle-button">☰</button>#}
+{#        <h2>Panel</h2>#}
+             
+         
 {#        мобильное меню#}
         {% block menu %}
             {% if flavour == 'mobile' %}
-                {% menu request %}
+                {#{% menu request %}#}
                 <!-- Site Overlay -->
+
                 <div class="site-overlay"></div>
             {% endif %}
         {% endblock %}
@@ -131,15 +159,20 @@
             {% if flavour == 'mobile' %}
                 </div>
             {% endif %}
+             
+             
+    </div> {# закрыт SLIDEOUT #}
 
 
         {#        подключаем скрипты в зависимости от устройства#}
         {% if flavour == 'mobile' %}
             <script type="text/javascript" src="{{ STATIC_URL }}mightySlider/assets/js/jquery.mobile.just-touch.js"></script>
-            <script src="{{ STATIC_URL }}js/pushy.min.js"></script>
+            <!--<script src="{{ STATIC_URL }}js/pushy.min.js"></script>-->
             <script src="{{ STATIC_URL }}js/jquery.tap.js"></script>
         {% endif %}
         
+
+             
         {% block combobox %}
             <script src="{{ STATIC_URL }}js/bootstrap-combobox.min.js"></script>
             <script>$('select').btComboBox()</script>
@@ -151,6 +184,24 @@
         <script src="{{ STATIC_URL }}js/add-this.js"></script>
         {% block bottom_script %}
         {% endblock %}
+
+    {#SLIDEOUT#}
+    <script src="{{ STATIC_URL }}js/slideout/dist/slideout.min.js"></script>
+    <script>
+        var slideout = new Slideout({
+            'panel': document.getElementById('panel'),
+            'menu': document.getElementById('menu'),
+            'padding': 256,
+            'tolerance': 70
+        });
+         
+        // jQuery
+        $('.toggle-button').on('click', function() {
+            slideout.toggle();
+        });
+    </script>
+
+
         <!-- BEGIN JIVOSITE CODE {literal} -->
 {#        <script type='text/javascript'>#}
 {#        (function(){ var widget_id = '6O34AX01GW';#}

@@ -26,7 +26,7 @@
                                     <div class="product_thumbnail">
                                         <a href="{{ p.get_absolute_url }}">
 {#                                            <img src="/media/{{ p.im }}" >#}
-{#                                            <img src="/media/{{ p.get_image.url }}" height="200">#}
+                                            <!--<img src="/media/{{ p.get_image.url }}" height="200">-->
                                             {% thumbnail p.image.url "x250" as im %}
                                                 <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
                                             {% endthumbnail %}

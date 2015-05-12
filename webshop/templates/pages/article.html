@@ -1,7 +1,7 @@
 {% extends "catalog.html" %}
 {% block meta %}
-    <title>{% if meta_object %}{{ meta_object.title }}{% else %}{{ article.name }}{% endif %} - {{ site_name }}</title>
-    <meta name="description" content="{% if meta_object %}{{ meta_object.description }}{% else %}{{ meta_description }}{% endif %}" />
+    <title>{% if article.meta_title %}{{ article.meta_title }}{% else %}{{ article.name }}{% endif %} - {{ site_name }}</title>
+    <meta name="description" content="{% if article.meta_description %}{{ article.meta_description }}{% endif %}" />
 {% endblock %}
 {% block slider %}
 {% endblock %}
