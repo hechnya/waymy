@@ -120,7 +120,7 @@
 
     <body>
 
-
+    {#мобильное меню!!! #}
         <nav id="menu" class="menu slideout-menu">
             <a href="/cart">
                 <button class="btn-menu menu-header-title"><span class="badge">42</span> <i class="fa fa-shopping-cart"></i> Смотреть корзину </button>
@@ -137,15 +137,9 @@
         </nav>
          
     <div id="panel">
-{#        <button class="toggle-button">☰</button>#}
-{#        <h2>Panel</h2>#}
-             
-         
-{#        мобильное меню#}
+
         {% block menu %}
             {% if flavour == 'mobile' %}
-                {#{% menu request %}#}
-                <!-- Site Overlay -->
 
                 <div class="site-overlay"></div>
             {% endif %}
