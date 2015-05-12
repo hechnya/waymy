@@ -12,12 +12,13 @@
 {#    <div class="site-overlay"></div>#}
 
     {% block top_menu %}
-        <nav class="navbar navbar-default navbar-fixed-top">
-          <div class="container">
-        {% sitetree_menu from "top_menu" include 'trunk' %}
-        </div>
-        </nav>
-     
+        {% if flavour != 'mobile' %}
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    {% sitetree_menu from "top_menu" include 'trunk' %}
+                </div>
+            </nav>
+        {% endif %}
 
 
     {#<main id="panel">#}
