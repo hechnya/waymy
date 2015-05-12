@@ -180,6 +180,7 @@
         {% endblock %}
 
     {#SLIDEOUT#}
+    <script src="{{ STATIC_URL }}js/jquery.tap.js"></script>
     <script src="{{ STATIC_URL }}js/slideout/dist/slideout.min.js"></script>
     <script>
         var slideout = new Slideout({
@@ -189,10 +190,13 @@
             'tolerance': 70
         });
          
-        // jQuery
-        $('.toggle-button').on('click', function() {
+        // jQuery tap библиотека что бы нажатие не тормозило ! 
+        $('.toggle-button').on('tap', function(){
             slideout.toggle();
         });
+{#        $('.toggle-button').on('click', function() {#}
+{#            slideout.toggle();#}
+{#        });#}
     </script>
 
 
