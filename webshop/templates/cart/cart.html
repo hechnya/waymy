@@ -54,7 +54,10 @@
                                                 <a href="{{ item.get_absolute_url }}" class="cart"><name>{{ item.name }}</name></a>
                                             </div>
                                             <div class="col-xs-8">
-                                                <img class="item_img" src="/media/{{ item.get_default_image }}" width="50" height="50">
+                                                {% thumbnail item.get_default_image "x100" crop="center" as im %}
+                                                    <img src="{{ im.url }}" height="{{ im.height }}">
+                                                {% endthumbnail %}
+                                                <!--<img class="item_img" src="/media/{{ item.get_default_image }}" width="50" height="50">-->
                                                 <name>{{ item.total }} руб.</name>
                                                 <div class="panel-group" id="accordion">
                                                     <div class="panel panel-default">
@@ -127,8 +130,11 @@
                                     <tr>
                                         <td>
         {#                                  {% thumbnail item.get_default_image "50x50" crop="center" as im %}#}
-                                                <img class="item_img" src="/media/{{ item.get_default_image }}" width="50" height="50">
+                                                <!--<img class="item_img" src="/media/{{ item.get_default_image }}" width="50" height="50">-->
         {#                                  {% endthumbnail %}#}
+                                                {% thumbnail item.get_default_image "x100" crop="center" as im %}
+                                                    <img src="{{ im.url }}" height="{{ im.height }}">
+                                                {% endthumbnail %}
                                             <a href="{{ item.get_absolute_url }}" class="cart">
                                             {{ item.name }}
                                             </a>

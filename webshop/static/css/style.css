@@ -475,8 +475,8 @@ padding: 40px 0px 100px 0px;
     text-align: center;
 }
 #catalog .product_thumbnail img {
-    width: 100%;
-    max-width: 180px;
+    /*width: 100%;*/
+    /*max-width: 180px;*/
     border-radius: 5px 5px 0 0;
     height: auto;
 }
@@ -1052,6 +1052,9 @@ margin-bottom: 40px;
 }
 #cart h1{
     margin-bottom: 40px;
+}
+#cart img {
+    float: left;
 }
 .overflow_wrapper {
     overflow: hidden;
