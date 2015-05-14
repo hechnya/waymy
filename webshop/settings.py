@@ -262,9 +262,9 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 90 # 90 дней на хранение cooki
 PRODUCTS_PER_PAGE = 300
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 
-ROBOKASSA_LOGIN = 'tai'
-ROBOKASSA_PASSWORD1 = 'polythai2014'
-ROBOKASSA_PASSWORD2 = 'polythai2014secondPass'
+ROBOKASSA_LOGIN = 'waymy'
+ROBOKASSA_PASSWORD1 = 'lJfs12jfsldl23jifIIgcft'
+ROBOKASSA_PASSWORD2 = 'hoifa567ASDFefj32gfg'
 ROBOKASSA_TEST_MODE = True
 
 try:
