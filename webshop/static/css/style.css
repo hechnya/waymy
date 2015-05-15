@@ -1755,7 +1755,7 @@ ul.menu li:hover ul.children {
     font-weight: 100;
     min-height: 90px;
     text-align: left;
-    height: 120px;
+    height: 90px;
     overflow: hidden;
     /*text-align: center;*/
 }
