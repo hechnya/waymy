@@ -91,29 +91,29 @@
 
 
 {#    защита контента#}
-{#    <script type="text/javascript">#}
-{#        document.ondragstart = test;#}
-{#        document.onselectstart = test;#}
-{#        document.oncontextmenu = test;#}
-{#        function test() {#}
-{#            return false;#}
-{#        }#}
-{#        document.oncontextmenu;#}
-{#        function catchControlKeys(event){#}
-{#            var code=event.keyCode ? event.keyCode : event.which ? event.which : null;#}
-{#            if (event.ctrlKey){#}
-{#                // Ctrl+U#}
-{#                if (code == 117) return false;#}
-{#                if (code == 85) return false;#}
-{#                // Ctrl+C#}
-{#                if (code == 99) return false;#}
-{#                if (code == 67) return false;#}
-{#                // Ctrl+A#}
-{#                if (code == 97) return false;#}
-{#                if (code == 65) return false;#}
-{#            }#}
-{#        }#}
-{#    </script>#}
+    <script type="text/javascript">
+        document.ondragstart = test;
+        document.onselectstart = test;
+        document.oncontextmenu = test;
+        function test() {
+            return false;
+        }
+        document.oncontextmenu;
+        function catchControlKeys(event){
+            var code=event.keyCode ? event.keyCode : event.which ? event.which : null;
+            if (event.ctrlKey){
+                // Ctrl+U
+                if (code == 117) return false;
+                if (code == 85) return false;
+                // Ctrl+C
+                if (code == 99) return false;
+                if (code == 67) return false;
+                // Ctrl+A
+                if (code == 97) return false;
+                if (code == 65) return false;
+            }
+        }
+    </script>
 {#    -------------------------------------------#}
     </head>
 
@@ -201,9 +201,9 @@
 
 
         <!-- BEGIN JIVOSITE CODE {literal} -->
-{#        <script type='text/javascript'>#}
-{#        (function(){ var widget_id = '6O34AX01GW';#}
-{#        var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();</script>#}
+        <script type='text/javascript'>
+        (function(){ var widget_id = '6O34AX01GW';
+        var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();</script>
         <!-- {/literal} END JIVOSITE CODE -->
     </body>
 </html>

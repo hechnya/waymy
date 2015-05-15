@@ -1,4 +1,7 @@
 {% load sitetree %}
+<ul class="pull-left">
+    <li style="color:#fff; margin-top: 7px;">+7 (917) 577-3322</li>
+</ul>
 <ul class="nav navbar-nav pull-right" id="mainMenu">
     {% for item in sitetree_items %}
         {% if request.get_full_path == "/" and forloop.counter != 1 %}
