@@ -26,7 +26,7 @@ from sorl.thumbnail import get_thumbnail
 from webshop.cart.models import CartItem
 
 
-def index_view(request, template_name="catalog/index.html"):
+def index_view(request, template_name="catalmg/index.html"):
     """Представление главной страницы"""
 
     # определение устройства
@@ -44,9 +44,9 @@ def index_view(request, template_name="catalog/index.html"):
             device = u'mobiled'
             template_name="mobile/catalog/index.html"
             # HttpResponseRedirect('/myapp/m/')
-        if agent.detectTierTablet():
-            device = u'tablet'
-            template_name="tablet/catalog/index.html"
+        #if agent.detectTierTablet():
+            #device = u'tablet'
+            #template_name="tablet/catalog/index.html"
     # Для традиционных компьютеров и планшетов (iPad, Android, и т.д.)
     # return HttpResponseRedirect('/myapp/d/')
 

@@ -172,8 +172,8 @@ def receipt_view(request, template_name='checkout/receipt.html'):
                               context_instance=RequestContext(request))
 
 
-"""обрабатываем сигнал оплаты от платежной системы"""
 def payment_received(sender, **kwargs):
+    """обрабатываем сигнал оплаты от платежной системы"""
     order = Order.objects.get(id=kwargs['InvId'])
     order.status = Order.PAID
 
