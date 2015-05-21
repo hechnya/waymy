@@ -132,7 +132,7 @@ def receipt_view(request, template_name='checkout/receipt.html'):
                 payment_method = u'Оплатить квитанцию'
             else:
                 payment_method = u'Оплата онлайн'
-            subject = u'polythai.ru заявка от %s' % order.shipping_name
+            subject = u'waymy.ru заявка от %s' % order.shipping_name
             message = u'Номер транзакции №: %s \n Имя: %s \n телефон: %s \n почта: %s \n id заказа: %s \n Товары: %s \n %s \n Тип доставки: %s \n Вес доставки: %s \n Адрес: %s \n Стоимость доставки: %s \n Общая стоимость: %s' % (order.transaction_id, order.shipping_name, order.phone, order.email, order.id, items, payment_method, delivery.delivery_type, delivery.weight, order.shipping_address_1, delivery.delivery_price, order.total)
             send_mail(subject, message, 'teamer777@gmail.com', [ADMIN_EMAIL], fail_silently=False)
 
@@ -190,7 +190,7 @@ def payment_received(sender, **kwargs):
     for item in order_items:
         items = items + '%s \n' % item.name
     payment_method = u'Оплата произведена'
-    subject = u'polythai.ru поступила оплата %s' % order.transaction_id
+    subject = u'waymy.ru поступила оплата %s' % order.transaction_id
     message = u'Заказ №: %s \n Имя: %s \n телефон: %s \n почта: %s \n \
     id заказа: %s \n Товары: %s' % (
         order.transaction_id, order.shipping_name,
