@@ -265,7 +265,7 @@ AUTH_PROFILE_MODULE = 'accounts.UserProfile'
 ROBOKASSA_LOGIN = 'waymy'
 ROBOKASSA_PASSWORD1 = 'GT1986Balabas'
 ROBOKASSA_PASSWORD2 = 'GT1986Balabas1986'
-ROBOKASSA_TEST_MODE = True
+ROBOKASSA_TEST_MODE = False
 
 try:
     from settings_local import *
