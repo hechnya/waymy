@@ -121,7 +121,7 @@ def receipt_view(request, template_name='checkout/receipt.html'):
 
         if order.payment_method == 2:
             form = RobokassaForm(initial={
-                   'OutSum': order.total,
+                   'OutSum': total,
                    'InvId': order.id,
                })
         else:
