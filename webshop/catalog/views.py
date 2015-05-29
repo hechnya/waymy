@@ -20,30 +20,42 @@ from webshop.checkout.models import OrderOneClick
 from webshop.pages.models import MetaInPages
 
 
-def index_view(request, template_name="catalmg/index.html"):
-    """Представление главной страницы"""
+def change_template_for_device(request, template_name):
 
     # определение устройства
     user_agent = request.META.get("HTTP_USER_AGENT")
     http_accept = request.META.get("HTTP_ACCEPT")
+    trigger_for_mobile = False
     if user_agent and http_accept:
-        agent = mobile.UAgentInfo(userAgent=user_agent, httpAccept=http_accept)
+        agent = mobile.UAgentInfo(
+            userAgent=user_agent, httpAccept=http_accept)
+
         if agent.detectTierIphone():
             """ устройство посетителя - новый смартфон
             (iPhone, Android, Windows Phone 7, и т.д.)"""
             device = u'mobile'
-            template_name = "mobile/catalog/index.html"
-        if agent.detectMobileQuick():
+            template_name = "%s/%s" % (device, template_name)
+            trigger_for_mobile = True
+
+        if agent.detectMobileQuick() and not trigger_for_mobile:
             """HttpResponseRedirect('/myapp/i/')
             устройство посетителя - старый телефон"""
-            device = u'mobiled'
-            template_name = "mobile/catalog/index.html"
-            # HttpResponseRedirect('/myapp/m/')
-        #if agent.detectTierTablet():
-            #device = u'tablet'
-            #template_name="tablet/catalog/index.html"
-    # Для традиционных компьютеров и планшетов (iPad, Android, и т.д.)
-    # return HttpResponseRedirect('/myapp/d/')
+            device = u'mobiled'            
+            template_name = "mobile/%s" % template_name
+
+        if agent.detectTierTablet():
+            device = u'tablet'
+            template_name = "%s/%s" % (device, template_name)
+
+    return template_name
+
+
+def index_view(request, template_name="catalog/index.html"):
+    """Представление главной страницы"""
+
+    # просто меняем шаблон в зависимости от устройства
+    # TODO: подумать как не вызывать в каждой вьюхе этот метод
+    template_name = change_template_for_device(request, template_name)
 
     page_title = u'Главная'
     products = Product.objects.all()
