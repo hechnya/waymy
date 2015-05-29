@@ -115,10 +115,13 @@ def receipt_view(request, template_name='checkout/receipt.html'):
         order_items = OrderItem.objects.filter(order=order)
 
         delivery = order.delivery
+        total = order.total
+        if request.user.username == 'admin':
+            total = 1
 
         if order.payment_method == 2:
             form = RobokassaForm(initial={
-                   'OutSum': order.total,
+                   'OutSum': total,
                    'InvId': order.id,
                })
         else:

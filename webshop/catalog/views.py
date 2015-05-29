@@ -1,17 +1,13 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
-from django.core import urlresolvers
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
 import datetime
-from django.utils import simplejson
 from webshop.catalog import mobile
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.mail import send_mail, EmailMultiAlternatives
-
-from webshop.cart import cart
+from django.core.mail import send_mail
 from webshop.catalog.forms import ProductAddToCartForm, FormFront
 from webshop.reviews.forms import ReviewProductForm
 from webshop.checkout.forms import OneClickForm
@@ -22,40 +18,50 @@ from webshop.pages.models import Page
 from webshop.accounts.models import UserProfile
 from webshop.checkout.models import OrderOneClick
 from webshop.pages.models import MetaInPages
-from sorl.thumbnail import get_thumbnail
-from webshop.cart.models import CartItem
 
 
-def index_view(request, template_name="catalmg/index.html"):
-    """Представление главной страницы"""
+def change_template_for_device(request, template_name):
 
     # определение устройства
     user_agent = request.META.get("HTTP_USER_AGENT")
     http_accept = request.META.get("HTTP_ACCEPT")
+    trigger_for_mobile = False
     if user_agent and http_accept:
-        agent = mobile.UAgentInfo(userAgent=user_agent, httpAccept=http_accept)
-        # устройство посетителя - новый смартфон (iPhone, Android, Windows Phone 7, и т.д.)
+        agent = mobile.UAgentInfo(
+            userAgent=user_agent, httpAccept=http_accept)
+
         if agent.detectTierIphone():
+            """ устройство посетителя - новый смартфон
+            (iPhone, Android, Windows Phone 7, и т.д.)"""
             device = u'mobile'
-            template_name="mobile/catalog/index.html"
-            # HttpResponseRedirect('/myapp/i/')
-        # устройство посетителя - старый телефон
-        if agent.detectMobileQuick():
-            device = u'mobiled'
-            template_name="mobile/catalog/index.html"
-            # HttpResponseRedirect('/myapp/m/')
-        #if agent.detectTierTablet():
-            #device = u'tablet'
-            #template_name="tablet/catalog/index.html"
-    # Для традиционных компьютеров и планшетов (iPad, Android, и т.д.)
-    # return HttpResponseRedirect('/myapp/d/')
+            template_name = "%s/%s" % (device, template_name)
+            trigger_for_mobile = True
+
+        if agent.detectMobileQuick() and not trigger_for_mobile:
+            """HttpResponseRedirect('/myapp/i/')
+            устройство посетителя - старый телефон"""
+            device = u'mobiled'            
+            template_name = "mobile/%s" % template_name
+
+        if agent.detectTierTablet():
+            device = u'tablet'
+            template_name = "%s/%s" % (device, template_name)
+
+    return template_name
+
+
+def index_view(request, template_name="catalog/index.html"):
+    """Представление главной страницы"""
+
+    # просто меняем шаблон в зависимости от устройства
+    # TODO: подумать как не вызывать в каждой вьюхе этот метод
+    template_name = change_template_for_device(request, template_name)
 
     page_title = u'Главная'
     products = Product.objects.all()
     for p in products:
         try:
             p.image = ProductImage.objects.get(product=p, default=True)
-            # p.im = get_thumbnail(p.image, 'x250', quality=100)
             p.volume = ProductVolume.objects.get(product=p, default=True)
         except Exception:
             p.image = "/media/products/images/none.png"
@@ -64,7 +70,7 @@ def index_view(request, template_name="catalmg/index.html"):
             p.atrs_default = ProductVolume.objects.get(product=p, default=True)
             p.atrs = ProductVolume.objects.filter(product=p)
         except Exception:
-            print  u'Основные атрибуты продукта %s не найдены' % p.name
+            print u'Основные атрибуты продукта %s не найдены' % p.name
 
     paginator = Paginator(products, 5)
     page = request.GET.get('page')
@@ -80,7 +86,6 @@ def index_view(request, template_name="catalmg/index.html"):
     #Далее вывод новостей
     news = News.objects.all()[:5]
     try:
-        # frontpage = get_object_or_404(Page, is_main='True')
         frontpage = Page.objects.get(is_main='True')
     except Exception:
         frontpage = Page()
@@ -88,17 +93,21 @@ def index_view(request, template_name="catalmg/index.html"):
         frontpage.slug = "main"
         frontpage.is_main = True
         frontpage.save()
-            
 
     # if request.method == 'POST':
     #     form = FormFront(request.POST)
     #     subject = u'WayMy заявка от %s' % request.POST['name']
-    #     message = u'телефон: %s \n Имя: %s' % (request.POST['phone'], request.POST['name'])
+    #     message = u'телефон: %s \n Имя: %s' % (
+    #         request.POST['phone'], request.POST['name'])
+
     #     if form.is_valid():
-    #         send_mail(subject, message, 'teamer777@gmail.com', ['teamer777@icloud.com'], fail_silently=False)
+    #         send_mail(
+    #             subject, message, 'teamer777@gmail.com',
+    #             ['teamer777@icloud.com'], fail_silently=False)
+
     #         return HttpResponseRedirect('/')
     #     else:
-    #         form = FormFront({'phone': u'Введите свой телефон',})
+    #         form = FormFront({'phone': u'Введите свой телефон', })
     # else:
     form = FormFront()
 
@@ -106,8 +115,9 @@ def index_view(request, template_name="catalmg/index.html"):
     return render_to_response(template_name, locals(),
                               context_instance=RequestContext(request))
 
-"""функция фильтрации повторяющихся позиций"""
+
 def sortAndUniq(input):
+    """функция фильтрации повторяющихся позиций"""
     output = []
     for x in input:
         if x not in output:
@@ -115,7 +125,9 @@ def sortAndUniq(input):
     output.sort()
     return output
 
-def category_view(request, category_slug, template_name="catalog/category.html"):
+
+def category_view(
+        request, category_slug, template_name="catalog/category.html"):
     """Представление для просмотра конкретной категории"""
     try:
         meta_object = MetaInPages.objects.get(link=request.path)
@@ -140,7 +152,10 @@ def category_view(request, category_slug, template_name="catalog/category.html")
         products = c.product_set.all()
         parent_cat = Category.objects.get(id=c.parent.id)
         parent_url = parent_cat.get_absolute_url()
-        request.breadcrumbs([('%s' % parent_cat.name, parent_url), ('%s' % c.name,request.path_info)])
+        request.breadcrumbs([
+            ('%s' % parent_cat.name, parent_url),
+            ('%s' % c.name, request.path_info)
+        ])
 
     for p in products:
         try:
@@ -153,7 +168,7 @@ def category_view(request, category_slug, template_name="catalog/category.html")
             p.atrs_default = ProductVolume.objects.get(product=p, default=True)
             p.atrs = ProductVolume.objects.filter(product=p)
         except Exception:
-            print  u'Основные атрибуты продукта %s не найдены' % p.name
+            print u'Основные атрибуты продукта %s не найдены' % p.name
 
     paginator = Paginator(products, 9)
     page = request.GET.get('page')
@@ -181,7 +196,7 @@ def sale_view(request, template_name="", type=""):
         for p in sale_arts:
             prod = Product.objects.get(id=p.product_id)
             products.append(prod)
-        products = list(set(products)) #удаляем повторы
+        products = list(set(products))  # удаляем повторы
 
     else:
         request.breadcrumbs(u'Новинки', request.path_info)
@@ -194,6 +209,7 @@ def sale_view(request, template_name="", type=""):
             p.image_url = "/media/products/images/none.png"
     return render_to_response(template_name, locals(),
                               context_instance=RequestContext(request))
+
 
 @csrf_protect
 def product_view(request, product_slug, template_name="catalog/product.html"):
@@ -210,7 +226,7 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
         atrs_default = ProductVolume.objects.get(product=p, default=True)
         atrs = ProductVolume.objects.filter(product=p)
     except Exception:
-        print  u'Основные атрибуты продукта %s не найдены' % p.name
+        print u'Основные атрибуты продукта %s не найдены' % p.name
     user = request.user
     try:
         profile = UserProfile.objects.get(user=user)
@@ -223,8 +239,10 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
         attachedProducts = p.itemsAttached.all()
         for attachedP in attachedProducts:
             try:
-                attachedP.image_url = ProductImage.objects.get(product=attachedP, default=True).url
-                attachedP.volume = ProductVolume.objects.get(product=attachedP, default=True)
+                attachedP.image_url = ProductImage.objects.get(
+                    product=attachedP, default=True).url
+                attachedP.volume = ProductVolume.objects.get(
+                    product=attachedP, default=True)
             except Exception:
                 attachedP.image_url = "/media/products/images/none.png"
     except:
@@ -233,15 +251,24 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
     cat = p.categories.all()
     c = get_object_or_404(Category, id=cat[0].id)
     if c.level == 0:
-        request.breadcrumbs([('%s' % c.name,request.path_info), ('%s' % p.name, request.path_info)])
+        request.breadcrumbs([
+            ('%s' % c.name, request.path_info),
+            ('%s' % p.name, request.path_info)
+        ])
+
     else:
         parent_cat = Category.objects.get(id=c.parent.id)
         parent_url = parent_cat.get_absolute_url()
-        request.breadcrumbs([('%s' % parent_cat.name, parent_url), ('%s' % c.name, c.get_absolute_url()), ('%s' % p.name, request.path_info)])
+        request.breadcrumbs([
+            ('%s' % parent_cat.name, parent_url),
+            ('%s' % c.name, c.get_absolute_url()),
+            ('%s' % p.name, request.path_info)
+        ])
+
     if request.method == 'POST':
         # Добавление в корзину, создаем связанную форму
         postdata = request.POST.copy()
-        if postdata.has_key('review'):
+        if 'review' in postdata:
             # form2 = ReviewProductForm(request, postdata)
             review = ReviewsProduct()
             review.text = postdata.get('text', '')
@@ -250,13 +277,18 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
             review.date = datetime.date.today()
             review.save()
             return HttpResponseRedirect('/product/%s' % product_slug)
-        elif postdata.has_key('one_click'):
+        elif 'one_click' in postdata:
             form3 = OneClickForm(request.POST)
             form3.product_name = p.name
             if form3.is_valid():
                 subject = u'WayMy заявка в 2 клика'
-                message = u'телефон: %s \n Продукт: %s' % (request.POST['phone'], request.POST['product_name'])
-                send_mail(subject, message, 'teamer777@gmail.com', ['teamer777@icloud.com'], fail_silently=False)
+                message = u'телефон: %s \n Продукт: %s' % (
+                    request.POST['phone'], request.POST['product_name'])
+
+                send_mail(
+                    subject, message, 'teamer777@gmail.com',
+                    ['teamer777@icloud.com'], fail_silently=False)
+
                 return HttpResponseRedirect('/product/%s' % product_slug)
     else:
         form = ProductAddToCartForm(request=request, label_suffix=':')

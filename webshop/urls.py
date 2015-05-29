@@ -2,26 +2,12 @@
 #!/usr/bin/env python
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-
 from webshop import settings
-# from dajaxice.core import dajaxice_autodiscover, dajaxice_config
-
-# dajaxice_autodiscover()
 admin.autodiscover()
 
-urlpatterns = patterns('',
-    # Examples:
-    # url(r'^webshop/', include('webshop.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
+urlpatterns = patterns(
+    '',
     url(r'^admin_tools/', include('admin_tools.urls')),
-
-    # url(dajaxice_config.dajaxice_url, include('dajaxice.urls')), #рабочий
-
-    # url(r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
-
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^captcha/', include('captcha.urls')),
@@ -38,37 +24,20 @@ urlpatterns = patterns('',
     url(r'^review/$', include('webshop.pages.reviewurls')),
     # редиректы со старого сайта
     url(r'^index.php/', include('webshop.pages.urls_redirect')),
-    # url(r'^index.php/[.]route=information/news.news_id=', include('webshop.cart.urls')),
-    # url(r'^index.php/route', include('webshop.pages.urls_redirect')),
 
     # enable language choice
     url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^set_language/$', 'django.views.i18n.set_language', name='set_language'),
+    url(r'^set_language/$', 'django.views.i18n.set_language',
+        name='set_language'),
 
-    # урл для robokassa
-    # url(r'^robokassa/', include('robokassa.urls')),
-    # url(r'^robokassa/result/', include('webshop.checkout.robokassa_urls')),
     url(r'^robokassa/', include('robokassa.urls')),
+)
 
-    )
-
-
-# def url_check(request):
-#     url = request.url
-
-# if settings.DEBUG:
-#     urlpatterns += patterns('',
-#     url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
-#         {'document_root': settings.STATIC_ROOT}),
-#         # if work then show 404 Directory indexes are not allowed here.
-#     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
-#         {'document_root': settings.MEDIA_ROOT}),
-#         )
-
-urlpatterns += patterns('',
+urlpatterns += patterns(
+    '',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT}),
-        )
+)
 
 
 handler404 = 'webshop.views.file_not_found_404'
