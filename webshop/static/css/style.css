@@ -1218,7 +1218,7 @@ input#order_submit {
     float: left;
     width: 30px;
     margin-right: 10px;
-} 
+}
 .socials a {
     background: #fff;
     color: #53a02d;
@@ -1415,7 +1415,7 @@ input#order_submit {
 }
 #cart .panel-title {
     height: 20px;
-} 
+}
 .breadcrumb {
     margin-top: 20px;
 }
@@ -1881,6 +1881,9 @@ img.logo_class {
     width: 114%;
     left: -8%;
     top: -38px;
+}
+logo_class {
+    width: 100px!important;
 }
 .search input {
     height: 24px;

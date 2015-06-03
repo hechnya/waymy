@@ -9,10 +9,12 @@ from django.views.decorators.csrf import csrf_protect
 from webshop.cart import cart
 from webshop.checkout import checkout
 from webshop.checkout.forms import ContactForm, DeliveryForm
+from webshop.catalog.views import change_template_for_device
 
 
 def cart_view(request, template_name="cart/cart.html"):
     """Представление для отображения корзины"""
+    device = change_template_for_device(request, template_name)['device']
     page_title = _(u'Shopping cart')
     if request.method == 'POST':
         postdata = request.POST.copy()
