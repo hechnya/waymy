@@ -24,7 +24,7 @@
     {#<main id="panel">#}
 
     {#</main>#}
-     
+
 {#        <nav class="navbar navbar-default navbar-fixed-top">#}
 {#          <div class="container">#}
 {#            <ul class="nav navbar-nav pull-right">#}
@@ -41,90 +41,10 @@
         {% slider request %}
     {% endblock %}
 
-
-    <div  id="menu_fixed">
-        <div class="main_menu" {% if request.path == "/" and  flavour != 'mobile' %}style="margin-top: -100px;"{% endif %} >
-        {% if flavour == 'mobile' or flavour == 'tablet' %}
-            <img class="img_menu" src="{{ STATIC_URL }}images/menu_bg_1136_2.png" alt=""/>
-        {% endif %}        
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-4 col-md-5">
-
-{#                        показываем меню в зависимости от устройства #}
-                        {% if flavour == 'mobile' %}
-                            <div class="toggle-button menu-btn">&#9776; Меню</div>
-                        {% else %}
-                            <div class="menu_left">
-                                <p><a href="/"><span class=""></span>Главная</a></p>
-{#                                <p><a href="/page/o-dostavke"><span class=""></span>О доставке</a></p>#}
-                                <p><a href="/review"><span class=""></span>Отзывы</a></p>
-                                <p><a href="/articles"><span class=""></span>Статьи</a></p>
-                                <p><a href="/page/kontakty"><span class=""></span>Контакты</a></p>
-                            </div>
-                        {% endif %}
-                    </div>
-
-                            {% if flavour != 'mobile' %}
-                                <div class="col-xs-2 col-md-2">
-                                    <a href="/"><img class="logo_class" src="/static/images/logo3.png" /></a>
-                                </div>
-                            {% endif %}
-
-                            <div class="col-xs-4 col-sm-3 col-md-3">
-                                <div class="cart_icon">
-                                    {% cart_box request %}
-                                </div>
-                            </div>
-
-                            <div class="col-xs-4 col-sm-1 col-md-2">
-                                {% if flavour != 'mobile' %}
-                                <div class="search">
-                                    <form class="navbar-form navbar-left" method="get" action="/search/results/" role="search">
-                                        <div class="input-group">
-{#                                                <input type="text" class="form-control" name="search">#}
-                                            <input name="query" id="{{ form.auto_id }}" type="text" value=""
-                                                   class="search-query span2" placeholder="Поиск"/>
-                                            <span class="input-group-btn">
-                                                <button class="btn" type="submit"><i class="fa fa-search"></i></button>
-                                            </span>
-                                        </div><!-- /input-group -->
-                                    </form>
-                                </div>
-                                {% endif %}
+    {% include 'menu.html' %}
 
 
-                                <div class="auth">
-                                    <ul class="nav navbar-nav">
-                                        <li class="dropdown">
-                                            <a href="{% url show_cart %}" class="dropdown-toggle" data-toggle="dropdown">
-                                                <n style="">Кабинет</n> <i class="fa fa-user"><span >{{ cart_i.count }}</span></i>
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                {% if user.is_authenticated %}
-                                                    <li><a href="{% url my_account %}"><span>Мой аккаунт</span></a></li>
-                                                    <li ><a href="{% url django.contrib.auth.views.logout %}"><span>Выйти</span></a></li>
-                                                {% else %}
-                                                    <li style=" margin: 6px 10px 0px 0px; "><a href="{% url django.contrib.auth.views.login %}"><span>Войти</span></a></li>
-                                                    <li style=" margin-top: 6px; "> <a href="{% url register %}"><span>Регистрация</span></a></li>
-                                                {% endif %}
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                                {% if flavour != 'mobile' %}
-                                    <a id="add_this" href="#" onclick="return addFavorite(this);">Добавить в избранное! <i style="color: #333" class="fa fa-star"></i></a>
-                                {% endif %}
-                            </div>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    {{flavour}}
+    {# {{flavour}}#}
 
     {% block tri_bloka %}
     {% endblock %}
@@ -136,104 +56,8 @@
     {% endblock %}
 
 {#        блок футер#}
-    <div id="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row">
+    {% include 'footer.html' %}
 
-                        {% if flavour != 'mobile' %}
-                            <div class="col-md-2">
-                                {% sitetree_menu from "top_menu" include 'trunk' template "sitetree/list.html" %}
-                                <!--<ul class="links">-->
-                                    <!--<li><a href="/page/o-nas/">О нас</a></li>-->
-                                    <!--<li><a href="/page/o-dostavke/">О доставке</a></li>-->
-                                    <!--<li><a href="/page/sposoby-oplaty">О способах оплаты</a></li>-->
-                                    <!--<li><a href="/review/">Отзывы</a></li>-->
-                                    <!--<li><a href="/page/kontakty/">Контакты</a></li>-->
-                                <!--</ul>-->
-                            </div>
-                        {% endif %}
-
-                        <div class="col-xs-6 col-md-4">
-                            <p>Контактный телефон по всей России: +79175773322</p>
-                            <div class="row">
-                                <div class="col-xs-6 col-md-6">
-                                    <p>Москва:</p>
-                                    <p>тел: +7(495)643-00-98</p>
-                                    <p>Метро "Вднх" Ул.Маломосковская 2</p>
-                                </div>
-                                <div class="col-xs-6 col-md-6">
-                                    <p>Казань:</p>
-                                    <p>тел: +7(843)559-04-94</p>
-                                    <p>Метро "Яшлек" Ул.Декабристов 112</p>
-                                </div>
-                            </div>
-                                
-                        </div>
-                        <div class="col-xs-6 col-md-3">
-                            <div class="socials">
-                                <img src="{{ STATIC_URL }}images/vk2.png" alt=""/>
-                                <img src="{{ STATIC_URL }}images/fb2.png" alt=""/>
-                                <img src="{{ STATIC_URL }}images/insta2.png" alt=""/>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-6 col-md-3">
-                             {# <a class="brand" href="http://forward70.ru">Создание сайтов Forward Group</a> #}
-                        </div>
-
-                        <div class="col-xs-12 col-md-6">
-                            <ul class="payment">
-                                <li><img src="{{ STATIC_URL }}images/payment/visa.png" alt=""/></li>
-                                <li><img src="{{ STATIC_URL }}images/payment/mastercard.png" alt=""/></li>
-                                <li><img src="{{ STATIC_URL }}images/payment/alfabank.png" alt=""/></li>
-                                <li><img src="{{ STATIC_URL }}images/payment/webmoney.png" alt=""/></li>
-                                <li><img src="{{ STATIC_URL }}images/payment/qiwi.png" alt=""/></li>
-                                <li><img src="{{ STATIC_URL }}images/payment/yandex-money.png" alt=""/></li>
-                                {% if flavour != 'mobile' %}
-                                    <li><img src="{{ STATIC_URL }}images/payment/mail-money.png" alt=""/></li>
-                                    <li><img src="{{ STATIC_URL }}images/payment/rbk-money.png" alt=""/></li>
-                                    <li><img src="{{ STATIC_URL }}images/payment/elecsnet.png" alt=""/></li>
-                                {% endif %}
-                            </ul>
-                        </div>
-
-                        <div class="metrika">
-                                <!-- Yandex.Metrika counter -->
-                                <script type="text/javascript">
-                                (function (d, w, c) {
-                                (w[c] = w[c] || []).push(function() {
-                                try {
-                                w.yaCounter23714320 = new Ya.Metrika({id:23714320,
-                                webvisor:true,
-                                clickmap:true,
-                                trackLinks:true,
-                                accurateTrackBounce:true});
-                                } catch(e) { }
-                                });
-
-                                var n = d.getElementsByTagName("script")[0],
-                                s = d.createElement("script"),
-                                f = function () { n.parentNode.insertBefore(s, n); };
-                                s.type = "text/javascript";
-                                s.async = true;
-                                s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
-
-                                if (w.opera == "[object Opera]") {
-                                d.addEventListener("DOMContentLoaded", f, false);
-                                } else { f(); }
-                                })(document, window, "yandex_metrika_callbacks");
-                                </script>
-                                <noscript>&lt;div&gt;&lt;img src="//mc.yandex.ru/watch/23714320" style="position:absolute; left:-9999px;" alt="" /&gt;&lt;/div&gt;</noscript>
-                                <!-- /Yandex.Metrika counter -->
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
 {#    </div>#}
 
 {% endblock %}

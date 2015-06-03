@@ -17,12 +17,13 @@ from webshop.checkout.forms import ContactForm, CheckoutForm
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from robokassa.signals import result_received
-
+from webshop.catalog.views import change_template_for_device
 
 from robokassa.forms import RobokassaForm
 
 def contact(request, template_name='checkout/checkout.html'):
 
+    device = change_template_for_device(request, template_name)['device']
     request.breadcrumbs(u'Данные получателя', request.path_info)
 
     if cart.is_empty(request):
@@ -108,6 +109,7 @@ def receipt_view(request, template_name='checkout/receipt.html'):
     """Представление отображающее сделанный заказ"""
     request.breadcrumbs(u'Подтверждение данных', request.path_info)
 
+    device = change_template_for_device(request, template_name)['device']
     order_id = request.session.get('order_id', '')
     if order_id:
         # если в cookies есть номер заказа, выводим его содержимое

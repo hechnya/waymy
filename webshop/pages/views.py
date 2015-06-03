@@ -7,7 +7,7 @@ from django.template import RequestContext
 from webshop.pages.forms import *
 from models import MetaInPages
 from webshop.catalog.models import Product
-
+from webshop.catalog.views import change_template_for_device
 
 # def get_meta(func):
 #     def tmp(request, *args, **kwargs):
@@ -21,6 +21,7 @@ from webshop.catalog.models import Product
 #
 # @get_meta
 def pageView(request, slug, template_name="pages/page.html", *args):
+    device = change_template_for_device(request, template_name)['device']
     page = Page.objects.get(slug=slug)
     try:
         meta_object = MetaInPages.objects.get(link=request.path)
@@ -53,6 +54,7 @@ def pageView(request, slug, template_name="pages/page.html", *args):
 
 def articlesView(request, template_name="pages/articles.html"):
     # :TODO не плохое решение метотэгов на основе текущего урла
+    device = change_template_for_device(request, template_name)['device']
     try:
         meta_object = MetaInPages.objects.get(link=request.path)
     except:
@@ -71,6 +73,7 @@ def articleView(request, slug, template_name="pages/article.html"):
 
 
 def review_form_view(request, template_name="pages/review.html"):
+    device = change_template_for_device(request, template_name)['device']
     try:
         meta_object = MetaInPages.objects.get(link=request.path)
     except:

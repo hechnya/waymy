@@ -26,6 +26,7 @@ def change_template_for_device(request, template_name):
     user_agent = request.META.get("HTTP_USER_AGENT")
     http_accept = request.META.get("HTTP_ACCEPT")
     trigger_for_mobile = False
+    device = ''
     if user_agent and http_accept:
         agent = mobile.UAgentInfo(
             userAgent=user_agent, httpAccept=http_accept)
@@ -33,21 +34,23 @@ def change_template_for_device(request, template_name):
         if agent.detectTierIphone():
             """ устройство посетителя - новый смартфон
             (iPhone, Android, Windows Phone 7, и т.д.)"""
-            device = u'mobile'
+            device = 'mobile'
             template_name = "%s/%s" % (device, template_name)
             trigger_for_mobile = True
 
         if agent.detectMobileQuick() and not trigger_for_mobile:
             """HttpResponseRedirect('/myapp/i/')
             устройство посетителя - старый телефон"""
-            device = u'mobiled'            
+            device = 'mobiled'
             template_name = "mobile/%s" % template_name
 
         if agent.detectTierTablet():
-            device = u'tablet'
+            device = 'tablet'
             template_name = "%s/%s" % (device, template_name)
 
-    return template_name
+    dev_info = {'template_name': template_name, 'device': device}
+
+    return dev_info
 
 
 def index_view(request, template_name="catalog/index.html"):
@@ -55,7 +58,8 @@ def index_view(request, template_name="catalog/index.html"):
 
     # просто меняем шаблон в зависимости от устройства
     # TODO: подумать как не вызывать в каждой вьюхе этот метод
-    template_name = change_template_for_device(request, template_name)
+    template_name = change_template_for_device(request, template_name)['template_name']
+    device = change_template_for_device(request, template_name)['device']
 
     page_title = u'Главная'
     products = Product.objects.all()
@@ -134,6 +138,7 @@ def category_view(
     except:
         pass
     c = get_object_or_404(Category.active, slug=category_slug)
+    device = change_template_for_device(request, template_name)['device']
     products = []
     if c.level == 0:
         loop_category = Category.objects.filter(tree_id=c.tree_id)
@@ -215,6 +220,7 @@ def sale_view(request, template_name="", type=""):
 def product_view(request, product_slug, template_name="catalog/product.html"):
     """представление для конкретного товара
     достаем объект, характеристики, все фотки + дефолтную"""
+    device = change_template_for_device(request, template_name)['device']
     p = get_object_or_404(Product, slug=product_slug)
     try:
         product_image = ProductImage.objects.get(product=p, default=True)

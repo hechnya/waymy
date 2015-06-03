@@ -241,7 +241,7 @@ h1 {
 }
 .global_mobile .cart_icon .dropdown-menu {
 width: 300px;
-left: -110px;
+left: -220px;
 }
 .global_mobile .special {
     padding: 20px 0;
@@ -437,6 +437,13 @@ img.img_menu {
 /*.button_margin .btn-success span{*/
     /*background: #2ad38e;*/
 /*}*/
+
+img.logo_class {
+    position: absolute;
+    width: 65%;
+    left: 15%;
+    top: 17px;
+}
 
 /* iPhone 5 (альбомный режим)----------- */
 @media only screen
