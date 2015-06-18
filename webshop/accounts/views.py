@@ -16,11 +16,13 @@ from django.core.mail import send_mail, EmailMultiAlternatives
 from webshop.checkout.models import Order, OrderItem
 from webshop.accounts.forms import UserProfileForm, MyRegistrationForm
 from webshop.accounts import profile
+from webshop.catalog.views import change_template_for_device
 
 
 @csrf_protect
 def register_view(request, template_name="registration/register.html"):
     """Регистрация нового пользователя"""
+    device = change_template_for_device(request, template_name)['device']
     page_title = _(u'User Registration')
     request.breadcrumbs(page_title, request.path_info)
     if request.method == 'POST':
@@ -52,6 +54,7 @@ def register_view(request, template_name="registration/register.html"):
 @login_required
 def my_account_view(request, template_name="registration/my_account.html"):
     """Страница аккаунта пользователя"""
+    device = change_template_for_device(request, template_name)['device']
     page_title = _(u'My Account')
     request.breadcrumbs(page_title, request.path_info)
     if request.user.is_superuser:
@@ -65,6 +68,7 @@ def my_account_view(request, template_name="registration/my_account.html"):
 @login_required
 def order_details_view(request, order_id, template_name="registration/order_details.html"):
     """Информация о сделанном заказе"""
+    device = change_template_for_device(request, template_name)['device']
     if request.user.is_superuser:
         order = get_object_or_404(Order, id=order_id)
     else:
@@ -86,6 +90,7 @@ def receipt_print_view(request, price, template_name="checkout/receipt_print.htm
 @login_required
 def order_info_view(request, template_name="registration/order_info.html"):
     """Представление данных профиля"""
+    device = change_template_for_device(request, template_name)['device']
     if request.method == 'POST':
         postdata = request.POST.copy()
         form = UserProfileForm(postdata)

@@ -1,40 +1,33 @@
 # -*- coding: utf-8 -*-
-#!/usr/bin/env python
-
+# !/usr/bin/env python
 from django.core import urlresolvers
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
-from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
-from django.views.generic import ListView, DetailView
-
-from webshop.pages.models import *
-from webshop.accounts import profile
-from webshop.accounts.models import UserProfile
 from webshop.pages.forms import *
+from models import MetaInPages
+from webshop.catalog.models import Product
+from webshop.catalog.views import change_template_for_device
 
-class PageView(DetailView):
-    template_name = 'pages/page.html'
-    model = Page
-
-    def get_object(self, queryset=None):
-        object = super(PageView, self).get_object()
-        return object
-
-    def get_context_data(self, **kwargs):
-        context = super(PageView, self).get_context_data(**kwargs)
-
-        p = Page.objects.get(id=self.get_object().id)
-        self.request.breadcrumbs('%s' % p.name, self.request.path_info)
-        context['form'] = PageForm()
-        return context
-
-def pageView(request, slug, template_name="pages/page.html"):
-
+# def get_meta(func):
+#     def tmp(request, *args, **kwargs):
+#         try:
+#             meta_object = MetaInPages.objects.get(link=request.path)
+#         except:
+#             pass
+#         return func(request, *args, **kwargs)
+#     return tmp
+#
+#
+# @get_meta
+def pageView(request, slug, template_name="pages/page.html", *args):
+    device = change_template_for_device(request, template_name)['device']
     page = Page.objects.get(slug=slug)
+    try:
+        meta_object = MetaInPages.objects.get(link=request.path)
+    except:
+        pass
     request.breadcrumbs('%s' % page.name, request.path_info)
-
     if request.user.is_superuser:
         try:
             if request.method == 'POST':
@@ -56,51 +49,36 @@ def pageView(request, slug, template_name="pages/page.html"):
                     form = PageForm(instance=page)
         except:
             text = u'Вы не имеете право'
-
     return render_to_response(template_name, locals(),context_instance=RequestContext(request))
 
-class BlogList(ListView):
-    queryset = Blog.objects.all()
-    context_object_name = 'blog_posts'
-    template_name = 'pages/blog_list.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(BlogList, self).get_context_data(**kwargs)
-        self.request.breadcrumbs(u'Мой блог', self.request.path_info)
-        context['request'] = self.request
-        return context
+def articlesView(request, template_name="pages/articles.html"):
+    # :TODO не плохое решение метотэгов на основе текущего урла
+    device = change_template_for_device(request, template_name)['device']
+    try:
+        meta_object = MetaInPages.objects.get(link=request.path)
+    except:
+        pass
+    articles = Article.objects.all()
+    return render_to_response(template_name, locals(),context_instance=RequestContext(request))
 
-# class BlogListSectionOne(ListView):
-#
-#     queryset = Blog.objects.filter(menu_select='section1')
-#     context_object_name = 'blog_section1'
-#     template_name = 'pages/blog_list.html'
 
-# выводим категорию блога
-# def blogSection(request, section, template_name="pages/blog_list.html"):
-#     blog_section = Blog.objects.filter(menu_select=section)
-#     return render_to_response(template_name, locals(),context_instance=RequestContext(request))
+def articleView(request, slug, template_name="pages/article.html"):
+    #try:
+        #meta_object = MetaInPages.objects.get(link=request.path)
+    #except:
+        #pass
+    article = Article.objects.get(slug=slug)
+    return render_to_response(template_name, locals(),context_instance=RequestContext(request))
 
-# выводим статью блога
-class BlogPost(DetailView):
-    template_name = 'pages/blog.html'
-    model = Blog
-
-    def get_object(self, queryset=None):
-        object = super(BlogPost, self).get_object()
-        return object
-
-    def get_context_data(self, **kwargs):
-        context = super(BlogPost, self).get_context_data(**kwargs)
-
-        blog = Blog.objects.get(id=self.get_object().id)
-        self.request.breadcrumbs([(u'Мой блог', u'/blog/'), ('%s' % blog.name, self.request.path_info)])
-        return context
 
 def review_form_view(request, template_name="pages/review.html"):
-
+    device = change_template_for_device(request, template_name)['device']
+    try:
+        meta_object = MetaInPages.objects.get(link=request.path)
+    except:
+        pass
     request.breadcrumbs(u'Отзывы', request.path_info)
-
     try:
         current_userProfile = UserProfile.objects.get(user=request.user)
         reviews = Review.objects.all()
@@ -112,17 +90,49 @@ def review_form_view(request, template_name="pages/review.html"):
                 new_review.review = postdata.get('review', '')
                 new_review.user = request.user
                 new_review.save()
-                # new_review = form.save(commit=False)
-
                 url = urlresolvers.reverse('my_account')
                 return HttpResponseRedirect(url)
         else:
             user_profile = request.user
             form = ReviewForm(instance=user_profile)
-
     except:
         text = u'Вы не заполнили свой профиль'
-
     reviews = Review.objects.all()
-
     return render_to_response(template_name, locals(),context_instance=RequestContext(request))
+
+
+def redirectView(request, template_name="404.html"):
+
+    # если кто-то хочет зайти на статью по старому url
+    if request.GET.get('route') == 'information/news':
+        news_id = request.GET.get('news_id')
+        articles = Article.objects.all()
+        for article in articles:
+            if article.old_id == news_id:
+                return redirect('/articles/%s/' % article.slug, permanent=True)
+    
+    # если кто-то хочет зайти на страницу по старому url
+    elif request.GET.get('route') == 'information/information':
+        information_id = request.GET.get('information_id')
+        pages = Page.objects.all()
+        for page in pages:
+            if page.old_id == information_id:
+                return redirect('/page/%s' % page.slug, permanent=True)
+     
+    # если кто-то хочет зайти на товар по старому url
+    elif request.GET.get('route') == 'product/product':
+        product_id = request.GET.get('product_id')
+        products = Product.objects.all()
+        for product in products:
+            ids = product.old_id.split(',')
+            for id_item in ids:
+                if id_item == product_id:
+                    return redirect('/product/%s' % product.slug, permanent=True)
+    
+    return redirect('/404')
+    #return render_to_response(template_name, locals(),context_instance=RequestContext(request))
+
+
+def view_404(request, template_name="404.html"):
+    return render_to_response(template_name, locals(), context_instance=RequestContext(request))
+     

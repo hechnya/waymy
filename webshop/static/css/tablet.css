@@ -1,0 +1,130 @@
+#footer {
+	height: 270px;
+}
+.slideout-panel {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    -webkit-box-shadow: -3px 0 6px 0px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: -3px 0 6px 0px rgba(0, 0, 0, 0.7);
+    box-shadow: -3px 0 6px 0px rgba(0, 0, 0, 0.7);
+    min-height: 600px;
+}
+#menu {
+    background: #F2F2F2;
+  /*-webkit-box-shadow: inset -10px 0 6px -9px rgba(0, 0, 0, .7);*/
+  /*-moz-box-shadow: inset -10px 0 6px -9px rgba(0, 0, 0, .7);*/
+  /*box-shadow: inset -10px 0 6px -9px rgba(0, 0, 0, .7);*/
+}
+#menu section {
+    /*padding-left: 15px;*/
+    border-bottom: 1px solid #BEBEBE;
+}
+#menu h3 {
+    margin-top: 10px;
+    padding-left: 30px;
+    text-transform: none;
+    font-size: 16px;
+}
+#mobile_category {
+    background: #fff;
+    padding-top: 8px;
+}
+#mobile_category li a {
+    color: #333;
+    font-weight: 300;
+    font-size: 15px;
+}
+#menu #mobile_category li a i {
+    color: #333;
+}
+#menu #mobile_category li a span {
+    text-transform: uppercase;
+}
+#mobile_category #accordion,
+#mobile_category .panel,
+#mobile_category .panel-heading{
+    background: none;
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none ;
+}
+.btn-mini {
+    font-size: 20px;
+    padding: 5px;
+}
+.btn-menu {
+    width: 100%;
+    height: 50px;
+    text-transform: uppercase;
+    font-size: 10px;
+    color: #333;
+    background: #fff;
+    border: 1px solid #D8D8D8;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 30px;
+}
+#menu ul a {
+    padding-left: 37px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    width: 100%;
+    display: block;
+    position: relative;
+}
+#menu ul a:hover {
+    text-decoration: none;
+}
+#menu ul a span {
+    padding: 6px;
+    margin-bottom: 6px;
+    padding-left: 20px;
+    font-weight: 300;
+      color: #525252;
+}
+#menu ul {
+    padding: 0;
+}
+#menu ul li {
+    /*list-style:square inside url("../images/greenball.gif");*/
+    list-style: none;
+}
+#menu ul li i {
+    font-size: 6px;
+    position: absolute;
+    top: 14px;
+    color: #29c885;
+}
+
+body {
+	margin-top: 0px;
+}
+.global_tablet #order_mail {
+	background: url("../images/bg2_1136.jpg") center no-repeat;
+}
+.global_tablet #order_mail h2 {
+	color: #fff;
+}
+.global_tablet .toggle-button.menu-btn {
+	font-size: 20px;
+  	margin-top: 14px;
+}
+.global_tablet img.logo_class {
+  	position: absolute;
+	width: 84%;
+  	top: -38px;
+	left: 10px;
+}
+.global_tablet .cart_icon a {
+	font-size: 18px;
+}
+.global_tablet #add_this {
+  position: absolute;
+  width: 175px;
+  bottom: -57px;
+  right: 15px;
+}
+.global_tablet .main_menu {
+	margin-top: 0px;
+}

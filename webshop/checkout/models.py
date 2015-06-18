@@ -15,11 +15,8 @@ class Delivery(models.Model):
         verbose_name=u'способ доставки',
         max_length=100,
         choices=(
-            ('SPSurface', 'Small Packet Surface'),
-            ('SPSAL', 'Small Packet SAL'),
-            ('SPA' ,'Small Packet Air'),
-            ('PS', 'Parcel Surface'),
-            ('EMA', 'EMA'),
+            ('russian_post', 'Почта России'),
+            ('ems', 'EMS'),
         ),
         default='',)
     weight = models.IntegerField(verbose_name=u'Вес', default=0)
@@ -52,6 +49,7 @@ class BaseOrderInfo(models.Model):
     shipping_country = models.CharField(max_length=50, verbose_name=(u'Страна'))
     shipping_zip = models.CharField(max_length=10, verbose_name=(u'Почтовый индекс'))
 
+
 class Order(BaseOrderInfo):
     """Класс для заказа"""
 
@@ -81,7 +79,7 @@ class Order(BaseOrderInfo):
     # def cupon_is_zero(self):
     #     return Cupon.objects.get(identifier='zero')
 
-    cupon = models.ForeignKey(Cupon, verbose_name=u'Использованый купон', blank=True, null=True)
+    # cupon = models.ForeignKey(Cupon, verbose_name=u'Использованый купон', blank=True, null=True)
 
     delivery = models.ForeignKey(Delivery, null=True)
 
@@ -107,10 +105,10 @@ class Order(BaseOrderInfo):
         return self.shipping_name
 
     # переопределяем метод сохранения что бы присвоить zero купон , если никакого другого не присваивали
-    def save(self, force_insert=False, force_update=False, using=None):
-        if not self.cupon:
-            self.cupon = Cupon.objects.get(identifier='zero')
-        return super(Order, self).save(force_insert, force_update, using)
+    # def save(self, force_insert=False, force_update=False, using=None):
+        # if not self.cupon:
+        #     self.cupon = Cupon.objects.get(identifier='zero')
+        # return super(Order, self).save(force_insert, force_update, using)
 
 
 class OrderItem(models.Model):
@@ -120,9 +118,9 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(default=1)
     price = models.DecimalField(max_digits=9, decimal_places=2)
     order = models.ForeignKey(Order)
-    # atribute = models.ForeignKey(ProductVolume, unique=False, default=None, null=False)
+    atribute = models.ForeignKey(ProductVolume, unique=False, default=None, null=False)
     # feel = models.ForeignKey(FeelName, null=True)
-    atributes = models.ForeignKey(ProductVolume)
+    # atributes = models.ForeignKey(ProductVolume)
 
 
     @property

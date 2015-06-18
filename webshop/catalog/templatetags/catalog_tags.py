@@ -18,12 +18,22 @@ from webshop.catalog import mobile
 
 register = template.Library()
 
+
 def categories_tree(context, request):
     return {
         'nodes': Category.objects.filter(is_active=True),
 
     }
 register.inclusion_tag('tags/category_list.html', takes_context=True)(categories_tree)
+
+
+def categories_tree_mobile(context, request):
+    return {
+        'nodes': Category.objects.filter(is_active=True),
+
+    }
+register.inclusion_tag('tags/category_list_mobile.html', takes_context=True)(categories_tree_mobile)
+
 
 @register.inclusion_tag("tags/footer.html")
 def footer_links(request):
