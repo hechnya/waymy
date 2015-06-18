@@ -17,12 +17,13 @@ from webshop.checkout.forms import ContactForm, CheckoutForm
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from robokassa.signals import result_received
-
+from webshop.catalog.views import change_template_for_device
 
 from robokassa.forms import RobokassaForm
 
 def contact(request, template_name='checkout/checkout.html'):
 
+    device = change_template_for_device(request, template_name)['device']
     request.breadcrumbs(u'Данные получателя', request.path_info)
 
     if cart.is_empty(request):
@@ -108,6 +109,7 @@ def receipt_view(request, template_name='checkout/receipt.html'):
     """Представление отображающее сделанный заказ"""
     request.breadcrumbs(u'Подтверждение данных', request.path_info)
 
+    device = change_template_for_device(request, template_name)['device']
     order_id = request.session.get('order_id', '')
     if order_id:
         # если в cookies есть номер заказа, выводим его содержимое
@@ -115,10 +117,13 @@ def receipt_view(request, template_name='checkout/receipt.html'):
         order_items = OrderItem.objects.filter(order=order)
 
         delivery = order.delivery
+        total = order.total
+        if request.user.username == 'admin':
+            total = 1
 
         if order.payment_method == 2:
             form = RobokassaForm(initial={
-                   'OutSum': order.total,
+                   'OutSum': total,
                    'InvId': order.id,
                })
         else:
@@ -132,7 +137,7 @@ def receipt_view(request, template_name='checkout/receipt.html'):
                 payment_method = u'Оплатить квитанцию'
             else:
                 payment_method = u'Оплата онлайн'
-            subject = u'polythai.ru заявка от %s' % order.shipping_name
+            subject = u'waymy.ru заявка от %s' % order.shipping_name
             message = u'Номер транзакции №: %s \n Имя: %s \n телефон: %s \n почта: %s \n id заказа: %s \n Товары: %s \n %s \n Тип доставки: %s \n Вес доставки: %s \n Адрес: %s \n Стоимость доставки: %s \n Общая стоимость: %s' % (order.transaction_id, order.shipping_name, order.phone, order.email, order.id, items, payment_method, delivery.delivery_type, delivery.weight, order.shipping_address_1, delivery.delivery_price, order.total)
             send_mail(subject, message, 'teamer777@gmail.com', [ADMIN_EMAIL], fail_silently=False)
 
@@ -172,17 +177,17 @@ def receipt_view(request, template_name='checkout/receipt.html'):
                               context_instance=RequestContext(request))
 
 
-"""обрабатываем сигнал оплаты от платежной системы"""
 def payment_received(sender, **kwargs):
+    """обрабатываем сигнал оплаты от платежной системы"""
     order = Order.objects.get(id=kwargs['InvId'])
     order.status = Order.PAID
 
     order.save()
 
-    # обнуляем купон при успешном его использовании
-    cupon_done = Cupon.objects.get(id=order.cupon.id)
-    cupon_done.percent = '0'
-    cupon_done.save()
+    # # обнуляем купон при успешном его использовании
+    # cupon_done = Cupon.objects.get(id=order.cupon.id)
+    # cupon_done.percent = '0'
+    # cupon_done.save()
 
     # отправляем письмо администратору
     order_items = OrderItem.objects.filter(order=order)
@@ -190,9 +195,15 @@ def payment_received(sender, **kwargs):
     for item in order_items:
         items = items + '%s \n' % item.name
     payment_method = u'Оплата произведена'
-    subject = u'polythai.ru поступила оплата %s' % order.transaction_id
-    message = u'Заказ №: %s \n Имя: %s \n телефон: %s \n почта: %s \n id заказа: %s \n Товары: %s' % (order.transaction_id, order.shipping_name, order.phone, order.email, order.id, items)
-    send_mail(subject, message, 'teamer777@gmail.com', [ADMIN_EMAIL], fail_silently=False)
+    subject = u'waymy.ru поступила оплата %s' % order.transaction_id
+    message = u'Заказ №: %s \n Имя: %s \n телефон: %s \n почта: %s \n \
+    id заказа: %s \n Товары: %s' % (
+        order.transaction_id, order.shipping_name,
+        order.phone, order.email, order.id, items)
+
+    send_mail(
+        subject, message, 'teamer777@gmail.com',
+        [ADMIN_EMAIL], fail_silently=False)
 
     context_dict = {
             'name': order.shipping_name,
@@ -203,7 +214,7 @@ def payment_received(sender, **kwargs):
         }
 
     message = render_to_string('checkout/email.html', context_dict)
-    from_email = 'polythai@mail.ru'
+    from_email = 'teamer777@gmail.com'
     to = '%s' % order.email
     msg = EmailMultiAlternatives(subject, message, from_email, [to])
     msg.content_subtype = "html"

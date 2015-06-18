@@ -44,10 +44,10 @@ def create_order(request, transaction_id):
 
     # присваиваем купон заказу по купону корзины
     cart_items = cart.get_cart_items(request)
-    cupon = Cupon()
-    for c in cart_items:
-        cupon = c.cupon
-    order.cupon = cupon
+    # cupon = Cupon()
+#     for c in cart_items:
+#         cupon = c.cupon
+#     order.cupon = cupon
 
     order.transaction_id = transaction_id
     order.ip_address = request.META.get('REMOTE_ADDR')
@@ -72,7 +72,7 @@ def create_order(request, transaction_id):
             oi.price = ci.price
             oi.product = ci.product
             oi.feel = ci.feel
-            oi.atributes = ci.atributes
+            oi.atribute = ci.atributes
             oi.save()
         # Очищаем корзину после оформления заказа
         cart.empty_cart(request)

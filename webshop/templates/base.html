@@ -1,38 +1,47 @@
-{#bootstrap#}
 {% load bootstrap3 %}
 {% load catalog_tags %}
 {% load i18n %}
 {% load mptt_tags %}
 {% load thumbnail %}
-
-{#{% load dajaxice_templatetags %}#}
-
+{% load sitetree %}
 <!DOCTYPE HTML>
 <html>
     <head>
-
         {% block print_css %}
         {% endblock %}
-
         <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
-        <title>{% block title %}{% if page_title %}{{ page_title }} - {% endif %}{{ site_name }}{% endblock %}</title>
-        <meta charset="utf-8">
-        <meta name="keywords" content="{{ meta_keywords }}" />
-        <meta name="description" content="{{ meta_description }}" />
+        {% block meta %}
+            <title>{% if page_title %}{{ page_title }} - {% endif %}{{ site_name }}</title>
+            <meta name="description" content="{{ meta_description }}" />
+        {% endblock %}
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
         <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
+        <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}mightySlider/src/css/mightyslider.css"/>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+{#        подключаем стили в зависимости от устройства#}
+        {% if flavour == 'mobile' %}
+            <link href="{{ STATIC_URL }}css/mobile.css" rel="stylesheet" />
+            <link rel="stylesheet" href="{{ STATIC_URL }}css/selectbox.css"/>
+            <link href="{{ STATIC_URL }}css/slideout.css" rel="stylesheet" />
+        {% elif device == 'tablet' %}
+            <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
+            <link href="{{ STATIC_URL }}css/tablet.css" rel="stylesheet" />
+            <link rel="stylesheet" href="{{ STATIC_URL }}css/selectbox.css"/>
+            <link href="{{ STATIC_URL }}css/slideout.css" rel="stylesheet" />
+        {% else %}
+            <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
+            <link rel="stylesheet" href="{{ STATIC_URL }}css/selectbox.css"/>
+            <link href="{{ STATIC_URL }}css/slideout.css" rel="stylesheet" />
+        {% endif %}
         <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
         <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
-
         {% block onload_cart_script %}
         {% endblock %}
-
         {% block ckeditor %}
         {% endblock %}
-
         {% block product_js %}
         {% endblock %}
 
@@ -111,97 +120,92 @@
 {#        }#}
 {#    </script>#}
 {#    -------------------------------------------#}
-
     </head>
+
+
     <body>
+    {# проверка device#}
+    
+    {#мобильное меню!!! #}
+        <nav id="menu" class="menu slideout-menu">
+            <a href="/cart">
+                <button class="btn-menu menu-header-title"><i class="fa fa-shopping-cart"></i> Смотреть корзину </button>
+            </a>
+            <section class="menu-section">
+                <h3 class="menu-section-title"><span class="glyphicon glyphicon-home"></span> Основное меню</h3>
+                {% sitetree_menu from "mobile_menu" include 'trunk' template "sitetree/mobile_menu.html" %}
+            </section>
 
-{#        {% include "common/navigation.html" %}#}
+            <section id="mobile_category">
+                <h3><span class="glyphicon glyphicon-th"></span> Категории</h3>
+                {% categories_tree_mobile request %}
+            </section>
+        </nav>
 
+    <div id="panel">
 
-{#        мобильное меню#}
         {% block menu %}
             {% if flavour == 'mobile' %}
-                {% menu request %}
-                <!-- Site Overlay -->
+
                 <div class="site-overlay"></div>
             {% endif %}
         {% endblock %}
-
-
-
         {#                содержимое в catalog.html#}
-
-            {% if flavour == 'mobile' %}
-                <div class="global_mobile">
-            {% endif %}
+        {# заварачиваем контент в классы в зависимости от устройства #}
+            <div {% if device == 'mobile' %}class="global_mobile"{%elif device == 'tablet' %}class="global_tablet"{% endif %} >
                     {% block site_wrapper %}
-                    {% endblock %}
-            {% if flavour == 'mobile' %}
-                </div>
-            {% endif %}
+                    {% endblock %}            
+            </div>            
 
+    </div> {# закрыт SLIDEOUT #}
 
-
-
-{#        подключаем стили и скрипты ПОСЛЕ загрузки контента#}
-
-        <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="{{ STATIC_URL }}mightySlider/src/css/mightyslider.css"/>
-        <link href="{{ STATIC_URL }}font/css/font-awesome.min.css" rel="stylesheet">
-{#        подключаем стили в зависимости от устройства#}
-        {% if flavour == 'mobile' %}
-            <link href="{{ STATIC_URL }}css/mobile.css" rel="stylesheet" />
-        {% else %}
-            <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" />
-            <link rel="stylesheet" href="{{ STATIC_URL }}css/selectbox.css"/>
-        {% endif %}
 
         {#        подключаем скрипты в зависимости от устройства#}
         {% if flavour == 'mobile' %}
             <script type="text/javascript" src="{{ STATIC_URL }}mightySlider/assets/js/jquery.mobile.just-touch.js"></script>
-            <script src="{{ STATIC_URL }}js/pushy.min.js"></script>
-        {% else %}
-{#            <script src="{{ STATIC_URL }}js/jquery.selectbox.min.js"></script>#}
-{#            <script>#}
-{#                (function($) { $(function() { $('select').selectbox(); });})(jQuery);#}
-{#            </script>#}
+            <!--<script src="{{ STATIC_URL }}js/pushy.min.js"></script>-->
+            <script src="{{ STATIC_URL }}js/jquery.tap.js"></script>
+        {% endif %}
+
+
+
+        {% block combobox %}
             <script src="{{ STATIC_URL }}js/bootstrap-combobox.min.js"></script>
             <script>$('select').btComboBox()</script>
-        {% endif %}
+        {% endblock %}
 
         <script type="text/javascript" src="{{ STATIC_URL }}mightySlider/assets/js/jquery.easing.1.3.js"></script>
         <script src="{{ STATIC_URL }}mightySlider/src/js/mightyslider.min.js"></script>
         <script src="{{ STATIC_URL }}js/custom.js"></script>
-
-        {#    dajax#}
-{#        <script type="text/javascript" src="{{ STATIC_URL }}dajax/jquery.dajax.core.js"></script>#}
-{#        <script type="text/javascript" charset="utf-8">#}
-{#            function send_form(){#}
-{#                Dajaxice.webshop.ajaxapp.send_form(Dajax.process,{'form':$('#my_form').serialize(true)});#}
-{#            }#}
-{#            function order_form(){#}
-{#                Dajaxice.webshop.ajaxapp.order_form(Dajax.process,{'form':$('#my_form').serialize(true)});#}
-{#            }#}
-{#            function closeMessage(){#}
-{#                $('#message_show').addClass('hidden');#}
-{#            }#}
-{#            function calc_delivery() {#}
-{#                Dajaxice.webshop.ajaxapp.calc_delivery(Dajax.process,{'form':$('#rb_delivery').serialize(true)});#}
-{#            }#}
-{#            function change_atrs() {#}
-{#                Dajaxice.webshop.ajaxapp.change_atrs(Dajax.process, {'option':this.value});#}
-{#            }#}
-{##}
-{#        </script>#}
-
-{#        <script type="text/javascript" src="{{ STATIC_URL }}dajax/dajaxice.core.js"></script>#}
-
+        <script src="{{ STATIC_URL }}js/add-this.js"></script>
         {% block bottom_script %}
         {% endblock %}
 
-        <script>
+    {#SLIDEOUT#}
+    <script src="{{ STATIC_URL }}js/jquery.tap.js"></script>
+    <script src="{{ STATIC_URL }}js/slideout/dist/slideout.min.js"></script>
+    <script>
+        var slideout = new Slideout({
+            'panel': document.getElementById('panel'),
+            'menu': document.getElementById('menu'),
+            'padding': 256,
+            'tolerance': 70
+        });
 
-        </script>
+        // jQuery tap библиотека что бы нажатие не тормозило !
+        $('.toggle-button').on('tap', function(){
+            slideout.toggle();
+        });
+{#        $('.toggle-button').on('click', function() {#}
+{#            slideout.toggle();#}
+{#        });#}
+    </script>
 
+
+        <!-- BEGIN JIVOSITE CODE {literal} -->
+        <script type='text/javascript'>
+        (function(){ var widget_id = 'N9YGkh7xqi';
+        var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();</script>
+        <!-- {/literal} END JIVOSITE CODE -->
     </body>
 </html>

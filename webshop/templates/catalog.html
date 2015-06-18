@@ -4,77 +4,47 @@
 {% load search_tags %}
 {#{% load mptt_tags %}#}
 {% block site_wrapper %}
+{% load sitetree %}
 
 
 
 {#    <!-- Site Overlay -->#}
 {#    <div class="site-overlay"></div>#}
 
+    {% block top_menu %}
+        {% if flavour != 'mobile' %}
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    {% sitetree_menu from "top_menu" include 'trunk' %}
+                </div>
+            </nav>
+        {% endif %}
+
+
+    {#<main id="panel">#}
+
+    {#</main>#}
+
+{#        <nav class="navbar navbar-default navbar-fixed-top">#}
+{#          <div class="container">#}
+{#            <ul class="nav navbar-nav pull-right">#}
+{#                <li><a href="/">Главная <span class="sr-only"></span></a></li>#}
+{#                <li><a href="/page/o-dostavke"><span class=""></span>О доставке</a></li>#}
+{#                <li><a href="/page/ob-oplate"><span class=""></span>Об оплате</a></li>#}
+{#            </ul>#}
+{#          </div>#}
+{#        </nav>#}
+    {% endblock %}
+
+
     {% block slider %}
         {% slider request %}
     {% endblock %}
 
+    {% include 'menu.html' %}
 
-    <div  id="menu_fixed">
-        <div class="main_menu" {% if request.path == "/" and  flavour != 'mobile' %}style="margin-top: -100px;"{% endif %} >
-        {% if flavour == 'mobile' %}
-            <img class="img_menu" src="{{ STATIC_URL }}images/menu_bg_1136_2.png" alt=""/>
-        {% endif %}
 
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-4 col-md-5">
-
-{#                        показываем меню в зависимости от устройства #}
-                        {% if flavour == 'mobile' %}
-                            <div class="menu-btn">&#9776; Меню</div>
-                        {% else %}
-                            <div class="menu_left">
-                                <p><a href="/"><span class=""></span>Главная</a></p>
-                                <p><a href="/page/akcii"><span class=""></span>О доставке</a></p>
-                                <p><a href="/review"><span class=""></span>Отзывы</a></p>
-                                <p><a href="/page/kontakty"><span class=""></span>Контакты</a></p>
-                            </div>
-                        {% endif %}
-                    </div>
-
-                            {% if flavour != 'mobile' %}
-                                <div class="col-xs-2 col-md-2"></div>
-                            {% endif %}
-
-                            <div class="col-xs-4 col-sm-3 col-md-3">
-                                <div class="cart_icon">
-                                    {% cart_box request %}
-                                </div>
-                            </div>
-                            <div class="col-xs-4 col-sm-1 col-md-2">
-                                    <div class="auth">
-
-                                        <ul class="nav navbar-nav">
-                                            <li class="dropdown">
-                                                <a href="{% url show_cart %}" class="dropdown-toggle" data-toggle="dropdown">
-                                                    <n style="">Кабинет</n> <i class="fa fa-user"><span >{{ cart_i.count }}</span></i>
-                                                </a>
-                                                <ul class="dropdown-menu">
-                                                    {% if user.is_authenticated %}
-                                                        <li><a href="{% url my_account %}"><span>Мой аккаунт</span></a></li>
-                                                        <li ><a href="{% url django.contrib.auth.views.logout %}"><span>Выйти</span></a></li>
-                                                    {% else %}
-                                                        <li style=" margin: 6px 10px 0px 0px; "><a href="{% url django.contrib.auth.views.login %}"><span>Войти</span></a></li>
-                                                        <li style=" margin-top: 6px; "> <a href="{% url register %}"><span>Регистрация</span></a></li>
-                                                    {% endif %}
-                                                </ul>
-                                            </li>
-                                        </ul>
-
-                                    </div>
-                            </div>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
+    {# {{flavour}}#}
 
     {% block tri_bloka %}
     {% endblock %}
@@ -86,92 +56,8 @@
     {% endblock %}
 
 {#        блок футер#}
-    <div id="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row">
+    {% include 'footer.html' %}
 
-                        {% if flavour != 'mobile' %}
-                            <div class="col-md-3">
-                                <ul class="links">
-                                    <li><a href="/review/">О нас</a></li>
-                                    <li><a href="/blog">О доставке</a></li>
-                                    <li><a href="/blog/section1">О способах оплаты</a></li>
-                                    <li><a href="/blog/section2">Оставить отзыв</a></li>
-                                    <li><a href="/blog/section3">Контакты</a></li>
-                                </ul>
-                            </div>
-                        {% endif %}
-
-                        <div class="col-xs-6 col-md-3">
-                            <p>Контакты</p>
-                            <p>+7 (913) 888 99-22</p>
-                            <p>info@waymy.ru</p>
-                        </div>
-                        <div class="col-xs-6 col-md-3">
-                            <div class="socials">
-                                <img src="{{ STATIC_URL }}images/vk2.png" alt=""/>
-                                <img src="{{ STATIC_URL }}images/fb2.png" alt=""/>
-                                <img src="{{ STATIC_URL }}images/insta2.png" alt=""/>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-6 col-md-3">
-                             <a class="brand" href="http://forward70.ru">Создание сайтов Forward Group</a>
-                        </div>
-
-                        <div class="col-xs-12 col-md-6">
-                            <ul class="payment">
-                                <li><img src="{{ STATIC_URL }}images/payment/visa.png" alt=""/></li>
-                                <li><img src="{{ STATIC_URL }}images/payment/mastercard.png" alt=""/></li>
-                                <li><img src="{{ STATIC_URL }}images/payment/alfabank.png" alt=""/></li>
-                                <li><img src="{{ STATIC_URL }}images/payment/webmoney.png" alt=""/></li>
-                                <li><img src="{{ STATIC_URL }}images/payment/qiwi.png" alt=""/></li>
-                                <li><img src="{{ STATIC_URL }}images/payment/yandex-money.png" alt=""/></li>
-                                {% if flavour != 'mobile' %}
-                                    <li><img src="{{ STATIC_URL }}images/payment/mail-money.png" alt=""/></li>
-                                    <li><img src="{{ STATIC_URL }}images/payment/rbk-money.png" alt=""/></li>
-                                    <li><img src="{{ STATIC_URL }}images/payment/elecsnet.png" alt=""/></li>
-                                {% endif %}
-                            </ul>
-                        </div>
-
-                        <div class="metrika">
-                                <!-- Yandex.Metrika counter -->
-                                <script type="text/javascript">
-                                (function (d, w, c) {
-                                    (w[c] = w[c] || []).push(function() {
-                                        try {
-                                            w.yaCounter29898264 = new Ya.Metrika({id:29898264,
-                                                    webvisor:true,
-                                                    clickmap:true,
-                                                    trackLinks:true,
-                                                    accurateTrackBounce:true});
-                                        } catch(e) { }
-                                    });
-
-                                    var n = d.getElementsByTagName("script")[0],
-                                        s = d.createElement("script"),
-                                        f = function () { n.parentNode.insertBefore(s, n); };
-                                    s.type = "text/javascript";
-                                    s.async = true;
-                                    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
-
-                                    if (w.opera == "[object Opera]") {
-                                        d.addEventListener("DOMContentLoaded", f, false);
-                                    } else { f(); }
-                                })(document, window, "yandex_metrika_callbacks");
-                                </script>
-                                <noscript><div><img src="//mc.yandex.ru/watch/29898264" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-                                <!-- /Yandex.Metrika counter -->
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
 {#    </div>#}
 
 {% endblock %}

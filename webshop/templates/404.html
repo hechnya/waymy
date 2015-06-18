@@ -1,7 +1,20 @@
 {% extends "catalog.html" %}
 {% load i18n %}
 
+{% block slider %}
+{% endblock %}
+{% block tri_bloka %}
+{% endblock %}
+
 {% block content %}
-	{% trans "Страница не найдена. Приносим Вам свои извинения." %}<br />
-	{% trans "Проверьте что вы ввели правильный адрес в строке браузера." %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12" style="margin-bottom: 60px;">
+                <p>Страница не найдена. Приносим Вам свои извинения.</p>
+                <p>Проверьте что вы ввели правильный адрес в строке браузера.</p>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

@@ -1,2 +1,23 @@
-SUCCESS
-{{ form }}
+{% extends "catalog.html" %}
+{% load i18n %}
+{% block slider %}
+{% endblock %}
+{% block tri_bloka %}
+{% endblock %}
+{% load checkout_tags %}
+{#{% load dajaxice_templatetags %}#}
+
+{% block content %}
+    <div id="checkout">
+        <div class="container">
+            <div class="row">
+
+				<div class="col-xs-12">
+				     <h1>Оплата произведена успешно</h1>
+				</div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "catalog.html" %}
+{% block meta %}
+    <title>{% if article.meta_title %}{{ article.meta_title }}{% else %}{{ article.name }}{% endif %} - {{ site_name }}</title>
+    <meta name="description" content="{% if article.meta_description %}{{ article.meta_description }}{% endif %}" />
+{% endblock %}
+{% block slider %}
+{% endblock %}
+{% block tri_bloka %}
+{% endblock %}
+{% block title %}
+{{ article.name }} - {{ site_name }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12" style="margin-bottom: 60px;">
+                <img src="/media/{{ article.image }}" alt="" align="left" width="300" height="auto" style="margin-right: 20px;"/>
+                <h1>{{ article.name }}</h1>
+                {{ article.text|safe }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

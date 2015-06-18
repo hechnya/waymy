@@ -1,20 +1,27 @@
 {% extends "catalog.html" %}
 {% load i18n %}
-
+{% block meta %}
+    <title>{% if meta_object %}{{ meta_object.title }}{% else %}Отзывы{% endif %} - {{ site_name }}</title>
+    <meta name="description" content="{% if meta_object %}{{ meta_object.description }}{% else %}{{ meta_description }}{% endif %}" />
+{% endblock %}
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-
                 <h1>Отзывы</h1>
-
                 {% if reviews %}
                     {% for review in reviews %}
-                        <h3>{{ review.user.username }}</h3>
-                        <p>{{ review.review|safe }}</p>
+                        <div class="media">
+                            <a class="pull-left" name="">
+                                <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZWVlIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMzIiIHk9IjMyIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9zdmc+" style="width: 64px; height: 64px;">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{ review.user.username }}</h4>
+                                <p>{{ review.review|safe }}</p>
+                            </div>
+                        </div>
                     {% endfor %}
                 {% endif %}
-
                 {% if text %}
                     <br/>
                     <br/>
@@ -22,25 +29,13 @@
                     <p>пожалуйста заполните свой профиль <a href="/accounts/my_account/">здесь</a></p>
                     <p>После этого Вы сможете оставить свой отзыв</p>
                 {% else %}
-
                     <form class="review_form" action="." method="post">{% csrf_token %}
                         <h3>Оставьте свой отзыв</h3>
-                        <table>
-                            {{ form.as_p }}
-                        </table>
-                        <table>
-                        <tr>
-                            <th colspan="2">
-                                <input type="submit" value="Отправить" class="submit review_button" />
-                            </th>
-                        </tr>
-                        </table>
+                        {{ form.review }}
+                        <input style="display: block;" type="submit" value="Отправить" class="submit btn btn-success" />
                     </form>
                 {% endif %}
-
             </div>
         </div>
     </div>
-
-
 {% endblock %}

@@ -4,7 +4,7 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns('webshop.pages.views',
     url(r'^$', 'review_form_view',
-		{'template_name': 'pages/review.html' },
-		name='review'),
+        {'template_name': 'pages/review.html'},
+        name='review'),
 
 )

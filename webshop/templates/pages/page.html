@@ -3,48 +3,31 @@
 {% endblock %}
 {% block tri_bloka %}
 {% endblock %}
-
-{% block title %}
-{{ page.name }} - {{ site_name }}
+{% block meta %}
+    <title>{% if page.meta_title %}{{ page.meta_title }}{% else %}{{ page.name }}{% endif %} - {{ site_name }}</title>
+    <meta name="description" content="{% if page.meta_description %}{{ page.meta_description }}{% endif %}" />
+    {#<title>{% if meta_object %}{{ meta_object.title }}{% else %}{{ page.name }}{% endif %} - {{ site_name }}</title>#}
+    {#<meta name="description" content="{% if meta_object %}{{ meta_object.description }}{% else %}{{ meta_description }}{% endif %}" />#}
 {% endblock %}
-
 {% block ckeditor %}
-{#    <script type="text/javascript" src="{{ STATIC_URL }}ckeditor/ckeditor.js"></script>#}
     <script type="text/javascript">
         window.onload = function()
         {
-{#            CKEDITOR.replace('text', {#}
-{#                toolbar: 'Basic'#}
-{#            });#}
-
             $('#myTab a').click(function (e) {
                 e.preventDefault()
                 $(this).tab('show')
             })
         };
     </script>
-
-    <!-- The best place for this one is your <HEAD> tag -->
-{#<script>UPLOADCARE_PUBLIC_KEY = "demopublickey";</script>#}
-{#<script src="https://ucarecdn.com/widget/1.4.6/uploadcare/uploadcare-1.4.6.min.js" charset="utf-8"></script>#}
-
 {% endblock %}
-
 {% block content %}
-
 
     <div id="stranica">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-
                     <h1>{{ page.name }}</h1>
-
-{#        <h2>{{ tiny }}</h2>#}
-{#        <h2>{{ static }}</h2>#}
-
                     {% if request.user.is_superuser %}
-
                         <ul id="myTab" class="nav nav-tabs">
                             <li class="active"><a href="#home" data-toggle="tab">Содержание</a></li>
                             <li class=""><a href="#edit" data-toggle="tab">Редактировать</a></li>
@@ -71,10 +54,8 @@
                             </div>
                         </div>
                     {% else %}
-
                         {{ page.text|safe }}
                     {% endif %}
-
                 </div>
             </div>
         </div>
