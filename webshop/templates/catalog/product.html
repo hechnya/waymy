@@ -5,9 +5,7 @@
 {% load cropping %}
 {% load catalog_tags %}
 {% block meta %}
-    {#<title>{% if p.meta %}{{ p.meta.title }}{% else %}{{ p.name }}{% endif %} - {{ site_name }}</title>#}
-    {#<meta name="description" content="{% if p.meta %}{{ p.meta_description }}{% else %}{{ meta_description }}{% endif %}" />#}
-    <title>{% if p.meta_title %}{{ p.meta_title }}{% else %}{{ p.name }}{% endif %} - {{ site_name }}</title>
+    <title>{% if p.meta_title %}{{ p.meta_title }}{% else %}{{ p.name }}{% endif %} | {{ site_name }}</title>
     <meta name="description" content="{% if p.meta_description %}{{ p.meta_description }}{% else %}{{ meta_description }}{% endif %}" />
 {% endblock %}
 {% block product_js %}
