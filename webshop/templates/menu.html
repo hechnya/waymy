@@ -161,8 +161,8 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             {% if user.is_authenticated %}
-                                                <li><a href="{% url my_account %}"><span>Мой аккаунт</span></a></li>
-                                                <li ><a href="{% url django.contrib.auth.views.logout %}"><span>Выйти</span></a></li>
+                                                <li><a href="{% url 'my_account' %}"><span>Мой аккаунт</span></a></li>
+                                                <li ><a href="{% url 'django.contrib.auth.views.logout' %}"><span>Выйти</span></a></li>
                                             {% else %}
                                                 <li style=" margin: 6px 10px 0px 0px; "><a href="{% url 'django.contrib.auth.views.login' %}"><span>Войти</span></a></li>
                                                 <li style=" margin-top: 6px; "> <a href="{% url 'register' %}"><span>Регистрация</span></a></li>
