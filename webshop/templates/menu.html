@@ -32,11 +32,11 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             {% if user.is_authenticated %}
-                                                <li><a href="{% url my_account %}"><span>Мой аккаунт</span></a></li>
-                                                <li ><a href="{% url django.contrib.auth.views.logout %}"><span>Выйти</span></a></li>
+                                                <li><a href="{% url 'my_account' %}"><span>Мой аккаунт</span></a></li>
+                                                <li ><a href="{% url 'django.contrib.auth.views.logout' %}"><span>Выйти</span></a></li>
                                             {% else %}
-                                                <li style=" margin: 6px 10px 0px 0px; "><a href="{% url django.contrib.auth.views.login %}"><span>Войти</span></a></li>
-                                                <li style=" margin-top: 6px; "> <a href="{% url register %}"><span>Регистрация</span></a></li>
+                                                <li style=" margin: 6px 10px 0px 0px; "><a href="{% url 'django.contrib.auth.views.login' %}"><span>Войти</span></a></li>
+                                                <li style=" margin-top: 6px; "> <a href="{% url 'register' %}"><span>Регистрация</span></a></li>
                                             {% endif %}
                                         </ul>
                                     </li>
@@ -78,16 +78,16 @@
                             <div class="auth">
                                 <ul class="nav navbar-nav">
                                     <li class="dropdown">
-                                        <a href="{% url show_cart %}" class="dropdown-toggle" data-toggle="dropdown">
+                                        <a href="{% url 'show_cart' %}" class="dropdown-toggle" data-toggle="dropdown">
                                             <n style="">Кабинет</n>
                                         </a>
                                         <ul class="dropdown-menu">
                                             {% if user.is_authenticated %}
-                                                <li><a href="{% url my_account %}"><span>Мой аккаунт</span></a></li>
-                                                <li ><a href="{% url django.contrib.auth.views.logout %}"><span>Выйти</span></a></li>
+                                                <li><a href="{% url 'my_account' %}"><span>Мой аккаунт</span></a></li>
+                                                <li ><a href="{% url 'django.contrib.auth.views.logout' %}"><span>Выйти</span></a></li>
                                             {% else %}
-                                                <li style=" margin: 6px 10px 0px 0px; "><a href="{% url django.contrib.auth.views.login %}"><span>Войти</span></a></li>
-                                                <li style=" margin-top: 6px; "> <a href="{% url register %}"><span>Регистрация</span></a></li>
+                                                <li style=" margin: 6px 10px 0px 0px; "><a href="{% url 'django.contrib.auth.views.login' %}"><span>Войти</span></a></li>
+                                                <li style=" margin-top: 6px; "> <a href="{% url 'register' %}"><span>Регистрация</span></a></li>
                                             {% endif %}
                                         </ul>
                                     </li>
