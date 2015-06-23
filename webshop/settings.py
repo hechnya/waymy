@@ -173,6 +173,7 @@ if DEBUG:
 SOUTH_MIGRATION_MODULES = {
     'captcha': 'captcha.south_migrations',
     'easy_thumbnails': 'easy_thumbnails.south_migrations',
+    'robots': 'robots.south_migrations',
 }
 
 INSTALLED_APPS = (
@@ -185,6 +186,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
@@ -215,7 +217,8 @@ INSTALLED_APPS = (
     'ckeditor',
     'mptt_tree_editor',
     'django_mobile',
-    'sitetree'
+    'sitetree',
+    'robots'
 )
 
 THUMBNAIL_DEBUG = True

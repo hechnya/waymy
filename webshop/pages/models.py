@@ -36,6 +36,9 @@ class Page(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return '/page/%s' % self.slug
+
 
 class Article(models.Model):
     name = models.CharField(verbose_name=u'Заголовок', max_length=100)
@@ -56,6 +59,9 @@ class Article(models.Model):
         return self.name
 
     def url(self):
+        return '/articles/%s' % self.slug
+
+    def get_absolute_url(self):
         return '/articles/%s' % self.slug
 
 
