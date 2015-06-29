@@ -6,11 +6,13 @@ from webshop import settings
 
 admin.autodiscover()
 
-from webshop.catalog.sitemap import ProductsSitemap, PagesSitemap, ArticlesSitemap
+from webshop.catalog.sitemap import ProductsSitemap, PagesSitemap, ArticlesSitemap, CategorySitemap, StaticViewSitemap
 sitemaps = {
     'products': ProductsSitemap,
     'pages': PagesSitemap,
-    'articles': ArticlesSitemap
+    'articles': ArticlesSitemap,
+    # 'main': StaticViewSitemap,
+    'category': CategorySitemap
 }
 
 urlpatterns = patterns(
