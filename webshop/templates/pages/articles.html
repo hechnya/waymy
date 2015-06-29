@@ -4,7 +4,7 @@
 {% block tri_bloka %}
 {% endblock %}
 {% block meta %}
-    <title>{% if meta_object %}{{ meta_object.title }}{% else %}Статьи{% endif %} - {{ site_name }}</title>
+    <title>{% if meta_object %}{{ meta_object.title }}{% else %}Статьи{% endif %} | {{ site_name }}</title>
     <meta name="description" content="{% if meta_object %}{{ meta_object.description }}{% else %}{{ meta_description }}{% endif %}" />
 {% endblock %}
 {% block title %}

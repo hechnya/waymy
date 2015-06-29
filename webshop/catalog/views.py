@@ -62,7 +62,7 @@ def index_view(request, template_name="catalog/index.html"):
     device = change_template_for_device(request, template_name)['device']
 
     page_title = u'Главная'
-    products = Product.objects.all()
+    products = Product.objects.order_by('-created_at')
     for p in products:
         try:
             p.image = ProductImage.objects.get(product=p, default=True)
@@ -115,7 +115,6 @@ def index_view(request, template_name="catalog/index.html"):
     # else:
     form = FormFront()
 
-    # Функция locals получает все поля словаря
     return render_to_response(template_name, locals(),
                               context_instance=RequestContext(request))
 
@@ -145,13 +144,14 @@ def category_view(
         request.breadcrumbs('%s' % c.name, request.path_info)
 
         for category in loop_category:
-            products_subcategory = category.product_set.all()
+            products_subcategory = category.product_set.order_by('-created_at')
+            
 
             for product in products_subcategory:
                 products.append(product)
 
         """фильтруем повторяющиеся позиции"""
-        products = sortAndUniq(products)
+        # products = sortAndUniq(products)
 
     else:
         products = c.product_set.all()

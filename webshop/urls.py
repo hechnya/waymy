@@ -3,7 +3,15 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from webshop import settings
+
 admin.autodiscover()
+
+from webshop.catalog.sitemap import ProductsSitemap, PagesSitemap, ArticlesSitemap
+sitemaps = {
+    'products': ProductsSitemap,
+    'pages': PagesSitemap,
+    'articles': ArticlesSitemap
+}
 
 urlpatterns = patterns(
     '',
@@ -31,6 +39,9 @@ urlpatterns = patterns(
         name='set_language'),
 
     url(r'^robokassa/', include('robokassa.urls')),
+
+    (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+    (r'^robots\.txt$', include('robots.urls')),
 )
 
 urlpatterns += patterns(
