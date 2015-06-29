@@ -36,12 +36,12 @@ class CategorySitemap(Sitemap):
         return Category.objects.all()
 
 
-# class StaticViewSitemap(sitemaps.Sitemap):
-#     priority = 1
-#     changefreq = 'monthly'
+class StaticViewSitemap(sitemaps.Sitemap):
+    priority = 1
+    changefreq = 'monthly'
 
-#     def items(self):
-#         return ['main',]
+    def items(self):
+        return ['main',]
 
-#     def location(self, item):
-#         return reverse(item)
+    def location(self, item):
+        return reverse(item)
