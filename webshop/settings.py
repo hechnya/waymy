@@ -8,7 +8,7 @@ CURRPATH = os.path.abspath('.')
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 DEBUG = True
-# DEBUG = False
+ALLOWED_HOSTS = ['*']
 TEMPLATE_DEBUG = DEBUG
 
 BREADCRUMBS_AUTO_HOME = True

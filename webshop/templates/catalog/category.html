@@ -1,24 +1,14 @@
 {% extends "catalog.html" %}
 {% load thumbnail %}
 {% load i18n %}
+
 {% block meta %}
-    <title>{% if c.meta_title %}{{ c.meta_title }}{% else %}{{ c.name }}{% endif %} | {{ site_name }}</title>
-    <meta name="description" content="{% if c.meta_description %}{{ c.meta_description }}{% else %}{{ meta_description }}{% endif %}" />
+    <title>{{ c.meta_title }}</title>
+    <meta name="description" content="{{ c.meta_description }}" />
 {% endblock %}
+
 {% block slider %}
 {% endblock %}
-
-{#<div class="container">#}
-{#    <div class="row">#}
-{#        <div class="col-xs-12">#}
-{#            {% for breadcrumb in request.breadcrumbs %}#}
-{#                <a href="{{ breadcrumb.url }}">{{ breadcrumb.name }}</a>{% if not forloop.last %} &raquo; {% endif %}#}
-{#            {% endfor %}#}
-{#        </div>#}
-{#    </div>#}
-{#</div>#}
-
-
 
 {% block tri_bloka %}
 {% endblock %}
@@ -38,50 +28,15 @@
                     </div>
 
                     {% if products %}
-{#                        {% for p in products %}#}
-{#                            <div class="col-xs-12 col-md-3">#}
-{#                                <div class="product_thumbnail">#}
-{#                                    <a href="{{ p.get_absolute_url }}">#}
-{#                                        <img src="/media/{{ p.image_url }}" width="100" height="100">#}
-{#                                        <h3>{{ p.name|truncatewords:15 }}</h3>#}
-{#                                    </a>#}
-{#                                    {% if p.sale_price.new_price != 0.00 %}#}
-{#                                        <div class="price_was">#}
-{#                                            {% trans "Was" %}: <span>{{ p.sale_price.price }} {% trans "руб." %}</span>#}
-{#                                        </div>#}
-{#                                        <div class="price_now">#}
-{#                                            {% trans "Now" %}:<span> {{ p.sale_price.new_price }} {% trans "руб." %} *</span>#}
-{#                                        </div>#}
-{#                                        <p>*за объем: {{ p.sale_price.volume }} мл.</p>#}
-{#                                    {% else %}#}
-{#                                        <p>{{ p.sale_price.price }} {% trans "руб." %}</p>#}
-{#                                    {% endif %}#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        {% endfor %}#}
-{#                        закончить цыкл#}
-
-                    
 
                         {% for p in products %}
                             <div class="col-xs-12 col-sm-6 col-md-4 col-cp-6 {% if forloop.last %}last{% endif %} popular_products">
-{#                                <div class="product_thumbnail">#}
-{#                                    <img src="/media/{{ p.image_url }}"  {% if flavour == 'mobile' %}width="100" height="100"{% endif %}>#}
-{#                                </div>#}
-{#                                <name>{{ p.name }}</name>#}
-{#                                <div class="description_tovar">{{ p.description|removetags:"img"|truncatewords:"12"|safe }}</div>#}
-{#                                {% if flavour != 'mobile' %}<img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>{% endif %}#}
-{#                                <span class="price">{{ p.volume.price }} руб.</span><a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a>#}
-{#                                {% if flavour == 'mobile' %}<img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>{% endif %}#}
-
                                 <div class="product_thumbnail">
                                     <a href="{{ p.get_absolute_url }}">
-                                        <!--<img src="/media/{{ p.image_url }}" width="150" height="150">-->
-                                            {% thumbnail p.image_url "x250" as im %}
-                                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-                                            {% endthumbnail %}
+                                        {% thumbnail p.image_url "x250" as im %}
+                                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                        {% endthumbnail %}
                                     </a>
-
                                     <br />
                                     <div class="name_tovar">{{ p.name }}</div>
                                     <div class="description_tovar">{{ p.description|removetags:"img"|truncatewords:"20"|safe }}</div>
@@ -227,5 +182,3 @@
         })(jQuery);
     </script>
 {% endblock %}
-
-

@@ -4,10 +4,8 @@
 {% block tri_bloka %}
 {% endblock %}
 {% block meta %}
-    <title>{% if page.meta_title %}{{ page.meta_title }}{% else %}{{ page.name }}{% endif %} - {{ site_name }}</title>
-    <meta name="description" content="{% if page.meta_description %}{{ page.meta_description }}{% endif %}" />
-    {#<title>{% if meta_object %}{{ meta_object.title }}{% else %}{{ page.name }}{% endif %} - {{ site_name }}</title>#}
-    {#<meta name="description" content="{% if meta_object %}{{ meta_object.description }}{% else %}{{ meta_description }}{% endif %}" />#}
+    <title>{% if page.meta_title %}{{ page.meta_title }}{% else %}{{ page.name }} | {{ site_name }}{% endif %}</title>
+    <meta name="description" content="{% if page.meta_description %}{{ page.meta_description }}{% else %}{{ page.text|truncatechars:150|safe|striptags }}{% endif %}" />
 {% endblock %}
 {% block ckeditor %}
     <script type="text/javascript">
