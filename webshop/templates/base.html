@@ -18,6 +18,7 @@
         <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
+        <link rel="shortcut icon" type="image/png" href="{{STATIC_URL}}/favicon.ico"/>
         <link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="{{ STATIC_URL }}mightySlider/src/css/mightyslider.css"/>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
@@ -96,6 +97,7 @@
 
 
 {#    защита контента#}
+{% if not request.user.is_staff %}
     <script type="text/javascript">
         document.ondragstart = test;
         document.onselectstart = test;
@@ -120,12 +122,13 @@
         }
     </script>
 {#    -------------------------------------------#}
+{% endif %}
     </head>
 
 
     <body>
     {# проверка device#}
-    
+
     {#мобильное меню!!! #}
         <nav id="menu" class="menu slideout-menu">
             <a href="/cart">
@@ -154,8 +157,8 @@
         {# заварачиваем контент в классы в зависимости от устройства #}
             <div {% if device == 'mobile' %}class="global_mobile"{%elif device == 'tablet' %}class="global_tablet"{% endif %} >
                     {% block site_wrapper %}
-                    {% endblock %}            
-            </div>            
+                    {% endblock %}
+            </div>
 
     </div> {# закрыт SLIDEOUT #}
 
