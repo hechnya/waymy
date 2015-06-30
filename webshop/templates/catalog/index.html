@@ -225,14 +225,14 @@
                                 <div class="form_container">
                                     <h4 style="text-align: center;">Получите наш подарок дня</h4>
                                     <h4 style="text-align: center;">Прямо сейчас!</h4>
-                                    <div id="my_form">{% csrf_token %}
+                                    <form id="my_form" method="post" action="">{% csrf_token %}
                                         <div class="">
                                             <p>{{ form.name }}</p>
                                             <p>{{ form.phone }}</p>
 {#                                            <input class="btn btn-default" id="" value="Отправить" onclick="send_form();" type="submit">#}
-                                            <input id="send_form" class="btn btn-default" value="Отправить" type="button">
+                                            <input id="send_form" class="btn btn-default" value="Отправить" type="submit">
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
 

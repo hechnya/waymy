@@ -4,10 +4,12 @@
 {% load thumbnail %}
 {% load cropping %}
 {% load catalog_tags %}
+
 {% block meta %}
-    <title>{% if p.meta_title %}{{ p.meta_title }}{% else %}{{ p.name }}{% endif %} | {{ site_name }}</title>
+    <title>{% if p.meta_title %}{{ p.meta_title }}{% else %}{{ p.name }}  | {{ site_name }}{% endif %}</title>
     <meta name="description" content="{% if p.meta_description %}{{ p.meta_description }}{% else %}{{ meta_description }}{% endif %}" />
 {% endblock %}
+
 {% block product_js %}
     <script src="{{ STATIC_URL }}js/slides.min.jquery.js"></script>
     <script>
@@ -48,7 +50,7 @@
 
 {% block content %}
 
-	
+
 
 
     <div id="product_lict">
@@ -61,8 +63,8 @@
 
 
 
-			
-				
+
+
 
             <div class="col-xs-12">
                 <div class="row">
@@ -260,7 +262,7 @@
 
                 <div class="col-xs-12 col-md-6">
                     <name class="center">Отзывы о продукте</name>
-                
+
                     {% if user.is_authenticated %}
                         <form  method="post" action="." class="border_bot">{% csrf_token %}
                             {{ form2.text }}
@@ -272,7 +274,7 @@
                         </form>
                     {% else %}
                         <span class="help-block" style="text-align: center">Что бы оставить отзыв, пожалуйста, зарегистрируйтесь и введите Ваши данные</span>
-                    {% endif %} 
+                    {% endif %}
 
                     {% for review in reviews %}
                         <div class="media">

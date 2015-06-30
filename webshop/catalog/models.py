@@ -54,7 +54,7 @@ class Category(MPTTModel):
         blank=True)
 
     meta_title = models.CharField(
-        u'Meta title', max_length=80,        
+        u'Meta title', max_length=80,
         blank=True)
 
     meta_description = models.CharField(
@@ -157,7 +157,7 @@ class Product(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return '/product/%s' % self.slug
+        return '/product/%s/' % self.slug
 
     @property
     def sale_price(self):

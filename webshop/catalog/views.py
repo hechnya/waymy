@@ -18,6 +18,7 @@ from webshop.pages.models import Page
 from webshop.accounts.models import UserProfile
 from webshop.checkout.models import OrderOneClick
 from webshop.pages.models import MetaInPages
+from webshop.settings import ADMIN_EMAIL
 
 
 def robots(request):
@@ -91,32 +92,21 @@ def index_view(request, template_name="catalog/index.html"):
 
     reviews = Review.objects.all()
 
-    #Далее вывод новостей
-    news = News.objects.all()[:5]
-    try:
-        frontpage = Page.objects.get(is_main='True')
-    except Exception:
-        frontpage = Page()
-        frontpage.name = u"Главная станица"
-        frontpage.slug = "main"
-        frontpage.is_main = True
-        frontpage.save()
+    if request.method == 'POST':
+        form = FormFront(request.POST)
+        subject = u'WayMy заявка от %s' % request.POST['name']
+        message = u'телефон: %s \n Имя: %s' % (
+            request.POST['phone'], request.POST['name'])
 
-    # if request.method == 'POST':
-    #     form = FormFront(request.POST)
-    #     subject = u'WayMy заявка от %s' % request.POST['name']
-    #     message = u'телефон: %s \n Имя: %s' % (
-    #         request.POST['phone'], request.POST['name'])
+        if form.is_valid():
+            send_mail(
+                subject, message, 'teamer777@gmail.com', [ADMIN_EMAIL],
+                fail_silently=False)
 
-    #     if form.is_valid():
-    #         send_mail(
-    #             subject, message, 'teamer777@gmail.com',
-    #             ['teamer777@icloud.com'], fail_silently=False)
+            return HttpResponseRedirect('/')
+        else:
+            form = FormFront({'phone': u'Введите свой телефон', })
 
-    #         return HttpResponseRedirect('/')
-    #     else:
-    #         form = FormFront({'phone': u'Введите свой телефон', })
-    # else:
     form = FormFront()
 
     return render_to_response(template_name, locals(),
