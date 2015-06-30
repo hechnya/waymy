@@ -11,7 +11,7 @@ sitemaps = {
     'products': ProductsSitemap,
     'pages': PagesSitemap,
     'articles': ArticlesSitemap,
-    # 'main': StaticViewSitemap,
+    'main': StaticViewSitemap,
     'category': CategorySitemap
 }
 
@@ -43,7 +43,8 @@ urlpatterns = patterns(
     url(r'^robokassa/', include('robokassa.urls')),
 
     (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
-    (r'^robots\.txt$', include('robots.urls')),
+    # (r'^robots\.txt$', include('robots.urls')),
+    (r'^robots.txt$','webshop.catalog.views.robots'),
 )
 
 urlpatterns += patterns(

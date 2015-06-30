@@ -1,0 +1,9 @@
+User-agent: Googlebot
+Allow: /test
+Disallow: /test
+Disallow: /test/*
+Crawl-delay: 0,1
+
+
+Sitemap: http://waymy.ru/sitemap.xml
+
