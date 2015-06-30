@@ -1,8 +1,24 @@
-User-agent: Googlebot
-Allow: /test
-Disallow: /test
-Disallow: /test/*
-Crawl-delay: 0.1
+User-agent: *
+Crawl-delay: 10
+Disallow: /admin/
+Disallow: /accounts/
+Disallow: /accounts/register/
+Disallow: /accounts/login/
+Disallow: /accounts/login/?next=/accounts/my_account/
+Disallow: /docs/
+Disallow: /cart/
+Disallow: /results/
 
+User-agent: Yandex
+Crawl-delay: 10
+Disallow: /admin/
+Disallow: /accounts/
+Disallow: /accounts/register/
+Disallow: /accounts/login/
+Disallow: /accounts/login/?next=/accounts/my_account/
+Disallow: /docs/
+Disallow: /cart/
+Disallow: /results/
+Host: waymy.ru
 
 Sitemap: http://waymy.ru/sitemap.xml
