@@ -44,4 +44,4 @@ class StaticViewSitemap(sitemaps.Sitemap):
         return ['main',]
 
     def location(self, item):
-        return reverse(item)
+        return '/'

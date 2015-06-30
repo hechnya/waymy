@@ -20,6 +20,10 @@ from webshop.checkout.models import OrderOneClick
 from webshop.pages.models import MetaInPages
 
 
+def robots(request):
+    return render_to_response('robots.txt', mimetype="text/plain")
+
+
 def change_template_for_device(request, template_name):
 
     # определение устройства
@@ -145,7 +149,7 @@ def category_view(
 
         for category in loop_category:
             products_subcategory = category.product_set.order_by('-created_at')
-            
+
 
             for product in products_subcategory:
                 products.append(product)
