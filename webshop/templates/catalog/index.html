@@ -4,6 +4,11 @@
 {% load catalog_tags %}
 {% load search_tags %}
 
+{% block meta %}
+    <title>Товары народной медицины! Лекарственные травы, чай, бобровая струя!</title>
+    {# <meta name="description" content="{{ meta_description }}" />#}
+{% endblock %}
+
 {% block product_js %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/animate.css">
 {% endblock %}
@@ -201,7 +206,7 @@
     </div>
 
     {% block popular_products %}
-        
+
     {% endblock %}
 
     {% block promotion_discount %}
