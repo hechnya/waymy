@@ -6,7 +6,7 @@
 
 {% block meta %}
     <title>Товары народной медицины! Лекарственные травы, чай, бобровая струя!</title>
-    {# <meta name="description" content="{{ meta_description }}" />#}
+    <meta name="description" content="Товары народной медицины из сибирских краев! Лекарственные травы, китайский чай разных сортов, медвежья желчь и жир, бобровая струя и другие полезные товары с доставкой!" />
 {% endblock %}
 
 {% block product_js %}
@@ -26,6 +26,7 @@
                             {% for p in products %}
                                 {% if p == products.1 %}
                                     <div class="col-md-4 cat_menu">
+                                        <h1>Товары народной медицины</h1>
                                         {% categories_tree request %}
                                     </div>
                                 {% endif %}
