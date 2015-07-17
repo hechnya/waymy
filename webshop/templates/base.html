@@ -46,56 +46,6 @@
         {% block product_js %}
         {% endblock %}
 
-          {#    для фиксированного меню #}
-{#            <script type="text/javascript">#}
-{#            jQuery(document).ready(function(){#}
-{#                /* функция кроссбраузерного определения отступа от верха документа к текущей позиции скроллера прокрутки */#}
-{#                function getScrollTop() {#}
-{#                           var scrOfY = 0;#}
-{#                           if( typeof( window.pageYOffset ) == "number" ) {#}
-{#                                   //Netscape compliant#}
-{#                                   scrOfY = window.pageYOffset;#}
-{#                           } else if( document.body#}
-{#                           && ( document.body.scrollLeft#}
-{#                           || document.body.scrollTop ) ) {#}
-{#                                   //DOM compliant#}
-{#                                   scrOfY = document.body.scrollTop;#}
-{#                           } else if( document.documentElement#}
-{#                           && ( document.documentElement.scrollLeft#}
-{#                            || document.documentElement.scrollTop ) ) {#}
-{#                                   //IE6 Strict#}
-{#                                   scrOfY = document.documentElement.scrollTop;#}
-{#                           }#}
-{#                           return scrOfY;#}
-{#                }#}
-{#                /* пересчитываем отступ при прокрутке экрана */#}
-{#                jQuery(window).scroll(function() {#}
-{#                    fixPaneRefresh();#}
-{#                });#}
-{##}
-{#                function fixPaneRefresh(){#}
-{#                    if (jQuery("#menu_fixed").length) {#}
-{#                        var top  = getScrollTop();#}
-{#                        if (top > 198) {#}
-{##}
-{#                            jQuery("#menu_fixed").css({#}
-{#                                top: 0,#}
-{#                                position: 'fixed',#}
-{#                                marginTop: 0,#}
-{#                                zIndex: 11000#}
-{#                            });#}
-{#                        }else {#}
-{#                            jQuery("#menu_fixed").css({#}
-{#                                position: 'static'#}
-{#                            });#}
-{#                        }#}
-{#                    }#}
-{#                }#}
-{##}
-{#            });#}
-{#            </script>#}
-
-
 {#    защита контента#}
 {% if not request.user.is_staff %}
     <script type="text/javascript">
@@ -145,20 +95,19 @@
             </section>
         </nav>
 
-    <div id="panel">
+    <div id="panel"> {# открыт slideout#}
 
         {% block menu %}
             {% if flavour == 'mobile' %}
-
                 <div class="site-overlay"></div>
             {% endif %}
         {% endblock %}
         {#                содержимое в catalog.html#}
         {# заварачиваем контент в классы в зависимости от устройства #}
-            <div {% if device == 'mobile' %}class="global_mobile"{%elif device == 'tablet' %}class="global_tablet"{% endif %} >
-                    {% block site_wrapper %}
-                    {% endblock %}
-            </div>
+        <div {% if device == 'mobile' %}class="global_mobile"{%elif device == 'tablet' %}class="global_tablet"{% endif %} >
+                {% block site_wrapper %}
+                {% endblock %}
+        </div>
 
     </div> {# закрыт SLIDEOUT #}
 
@@ -166,11 +115,8 @@
         {#        подключаем скрипты в зависимости от устройства#}
         {% if flavour == 'mobile' %}
             <script type="text/javascript" src="{{ STATIC_URL }}mightySlider/assets/js/jquery.mobile.just-touch.js"></script>
-            <!--<script src="{{ STATIC_URL }}js/pushy.min.js"></script>-->
             <script src="{{ STATIC_URL }}js/jquery.tap.js"></script>
         {% endif %}
-
-
 
         {% block combobox %}
             <script src="{{ STATIC_URL }}js/bootstrap-combobox.min.js"></script>
