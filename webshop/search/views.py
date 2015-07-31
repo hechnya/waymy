@@ -7,10 +7,12 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from webshop.catalog.models import ProductImage
 from webshop.search import search
 from webshop import settings
+from webshop.catalog.views import change_template_for_device
 
 
 def results_view(request, template_name="search/results.html"):
     """Представление для результатов поиска"""
+    device = change_template_for_device(request, template_name)['device']
     # Получаем номер текущей страницы. Устанавливаем 1 если не найдена
     try:
         page = int(request.GET.get('page', 1))

@@ -251,19 +251,15 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
     cat = p.categories.all()
     c = get_object_or_404(Category, id=cat[0].id)
     if c.level == 0:
-        request.breadcrumbs([
-            ('%s' % c.name, request.path_info),
-            ('%s' % p.name, request.path_info)
-        ])
-
-    else:
-        parent_cat = Category.objects.get(id=c.parent.id)
-        parent_url = parent_cat.get_absolute_url()
-        request.breadcrumbs([
-            ('%s' % parent_cat.name, parent_url),
-            ('%s' % c.name, c.get_absolute_url()),
-            ('%s' % p.name, request.path_info)
-        ])
+        request.breadcrumbs([(c.name, c.get_absolute_url()), (p.name, request.path_info)])
+    # else:
+    #     parent_cat = Category.objects.get(id=c.parent.id)
+    #     parent_url = parent_cat.get_absolute_url()
+    #     request.breadcrumbs([
+    #         ('%s' % parent_cat.name, parent_url),
+    #         ('%s' % c.name, c.get_absolute_url()),
+    #         ('%s' % p.name, p.get_absolute_url())
+    #     ])
 
     if request.method == 'POST':
         # Добавление в корзину, создаем связанную форму

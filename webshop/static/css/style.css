@@ -1417,7 +1417,14 @@ input#order_submit {
     height: 20px;
 }
 .breadcrumb {
-    margin-top: 20px;
+    margin-top: -90px;
+    background: none;
+}
+.breadcrumb a {
+    color: #2ad38e;
+}
+.breadcrumb a:hover {
+    color: #999;
 }
 #product_lict #price {
      border: 0px solid #5b5b5b;

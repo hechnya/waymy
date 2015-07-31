@@ -60,15 +60,13 @@ def articlesView(request, template_name="pages/articles.html"):
     except:
         pass
     articles = Article.objects.all()
+    request.breadcrumbs([("Сатьи", "")])
     return render_to_response(template_name, locals(),context_instance=RequestContext(request))
 
 
 def articleView(request, slug, template_name="pages/article.html"):
-    #try:
-        #meta_object = MetaInPages.objects.get(link=request.path)
-    #except:
-        #pass
     article = Article.objects.get(slug=slug)
+    request.breadcrumbs([("Сатьи", "/articles/"), (article.name, request.path_info)])
     return render_to_response(template_name, locals(),context_instance=RequestContext(request))
 
 
@@ -110,7 +108,7 @@ def redirectView(request, template_name="404.html"):
         for article in articles:
             if article.old_id == news_id:
                 return redirect('/articles/%s/' % article.slug, permanent=True)
-    
+
     # если кто-то хочет зайти на страницу по старому url
     elif request.GET.get('route') == 'information/information':
         information_id = request.GET.get('information_id')
@@ -118,7 +116,7 @@ def redirectView(request, template_name="404.html"):
         for page in pages:
             if page.old_id == information_id:
                 return redirect('/page/%s' % page.slug, permanent=True)
-     
+
     # если кто-то хочет зайти на товар по старому url
     elif request.GET.get('route') == 'product/product':
         product_id = request.GET.get('product_id')
@@ -128,11 +126,10 @@ def redirectView(request, template_name="404.html"):
             for id_item in ids:
                 if id_item == product_id:
                     return redirect('/product/%s' % product.slug, permanent=True)
-    
+
     return redirect('/404')
     #return render_to_response(template_name, locals(),context_instance=RequestContext(request))
 
 
 def view_404(request, template_name="404.html"):
     return render_to_response(template_name, locals(), context_instance=RequestContext(request))
-     
