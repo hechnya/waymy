@@ -26,6 +26,7 @@ urlpatterns = patterns(
         name='catalog_product'),
 )
 
+
 urlpatterns += patterns(
     'webshop.ajaxcore.views',
     url(r'^ajax-cart/', 'ajaxCart',
