@@ -53,8 +53,12 @@ class Category(MPTTModel):
         help_text=u'Comma-delimited set of SEO keywords for meta tag',
         blank=True)
 
+    meta_title = models.CharField(
+        u'Meta title', max_length=80,
+        blank=True)
+
     meta_description = models.CharField(
-        u'Meta description', max_length=255,
+        u'Meta description', max_length=200,
         help_text=_(u'Content for description meta tags'), blank=True)
 
     created_at = models.DateTimeField(u'Created at', auto_now_add=True)
@@ -153,7 +157,7 @@ class Product(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return '/product/%s' % self.slug
+        return '/product/%s/' % self.slug
 
     @property
     def sale_price(self):

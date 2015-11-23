@@ -1,8 +1,8 @@
 {% extends "catalog.html" %}
 {% load i18n %}
 {% block meta %}
-    <title>{% if meta_object %}{{ meta_object.title }}{% else %}Отзывы{% endif %} - {{ site_name }}</title>
-    <meta name="description" content="{% if meta_object %}{{ meta_object.description }}{% else %}{{ meta_description }}{% endif %}" />
+    <title>Отзывы | {{ site_name }}</title>
+    <meta name="description" content="Отзывы наших клиентов о работе с нами" />
 {% endblock %}
 {% block content %}
     <div class="container">

@@ -4,6 +4,11 @@
 {% load catalog_tags %}
 {% load search_tags %}
 
+{% block meta %}
+    <title>Товары народной медицины! Лекарственные травы, чай, бобровая струя!</title>
+    <meta name="description" content="Товары народной медицины из сибирских краев! Лекарственные травы, китайский чай разных сортов, медвежья желчь и жир, бобровая струя и другие полезные товары с доставкой!" />
+{% endblock %}
+
 {% block product_js %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/animate.css">
 {% endblock %}
@@ -21,6 +26,7 @@
                             {% for p in products %}
                                 {% if p == products.1 %}
                                     <div class="col-md-4 cat_menu">
+                                        <h1>Товары народной медицины</h1>
                                         {% categories_tree request %}
                                     </div>
                                 {% endif %}
@@ -103,7 +109,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <h1>Наше специальное предложение</h1>
+                    <h2>Наше специальное предложение</h2>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="big_text spesial_text">
@@ -124,7 +130,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="center">О нас говорят</h1>
+                    <h2 class="center">О нас говорят</h2>
 
                     <style>
                         body {
@@ -201,7 +207,7 @@
     </div>
 
     {% block popular_products %}
-        
+
     {% endblock %}
 
     {% block promotion_discount %}
@@ -220,14 +226,14 @@
                                 <div class="form_container">
                                     <h4 style="text-align: center;">Получите наш подарок дня</h4>
                                     <h4 style="text-align: center;">Прямо сейчас!</h4>
-                                    <div id="my_form">{% csrf_token %}
+                                    <form id="my_form" method="post" action="">{% csrf_token %}
                                         <div class="">
                                             <p>{{ form.name }}</p>
                                             <p>{{ form.phone }}</p>
 {#                                            <input class="btn btn-default" id="" value="Отправить" onclick="send_form();" type="submit">#}
-                                            <input id="send_form" class="btn btn-default" value="Отправить" type="button">
+                                            <input id="send_form" class="btn btn-default" value="Отправить" type="submit">
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
 
@@ -243,7 +249,7 @@
     </div>
 
     <div id="message_show" class="hidden">
-        <h1>Ваше сообщение успешно отправлено!</h1>
+        <h3>Ваше сообщение успешно отправлено!</h3>
         <input id="status" type="text" value=""/>
     </div>
 

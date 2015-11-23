@@ -53,7 +53,7 @@
 	float:left;
      margin-left: 0px;
 	/*background:#f9f9f9;*/
-}  
+}
 #products .pagination>li>a {
     background: none;
 }
@@ -67,7 +67,7 @@ a:link,a:visited {
 	text-decoration:none;
 }
 
-a:hover,a:active {
+/*a:hover,a:active {
 	color:#599100;
 	text-decoration:underline;
-}
+}*/

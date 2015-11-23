@@ -58,7 +58,7 @@
                                                     <img src="{{ im.url }}" height="{{ im.height }}">
                                                 {% endthumbnail %}
                                                 <!--<img class="item_img" src="/media/{{ item.get_default_image }}" width="50" height="50">-->
-                                                <name>{{ item.total }} руб.</name>
+                                                <name>{{ item.price }} <i class="fa fa-rub"></i></name>
                                                 <div class="panel-group" id="accordion">
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
@@ -213,7 +213,7 @@
             {% if cart_items %}
                 <div class="col-xs-12 col-md-7 delivery_all">
                     <div class="row">
-                        <div class="col-xs-8">
+                        <div class="col-xs-12 col-md-8">
                             <form action="." method="post" id="rb_delivery">
                                 {% csrf_token %}
 {#                                <div style="margin-right: 25px;" class="pull-left">#}
@@ -231,7 +231,7 @@
                             <div id="test_text"></div>
 
                         </div>
-                        <div class="col-xs-4 current_delivery">
+                        <div class="col-xs-12 col-md-4 current_delivery">
                             <h4><strong>Параметры доставки:</strong></h4>
                             <p>Город: <span id="city"></span></p>
                             <p style="{% if delivery.is_to_big %}color: red;{% endif %}">Вес посылки {% if delivery.is_to_big %}слишком большой{% endif %}: <span id="weight_ajax"> гр.</span></p>

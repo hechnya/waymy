@@ -8,7 +8,7 @@ CURRPATH = os.path.abspath('.')
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 DEBUG = True
-# DEBUG = False
+ALLOWED_HOSTS = ['*']
 TEMPLATE_DEBUG = DEBUG
 
 BREADCRUMBS_AUTO_HOME = True
@@ -173,6 +173,7 @@ if DEBUG:
 SOUTH_MIGRATION_MODULES = {
     'captcha': 'captcha.south_migrations',
     'easy_thumbnails': 'easy_thumbnails.south_migrations',
+    'robots': 'robots.south_migrations',
 }
 
 INSTALLED_APPS = (
@@ -185,6 +186,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
@@ -215,7 +217,8 @@ INSTALLED_APPS = (
     'ckeditor',
     'mptt_tree_editor',
     'django_mobile',
-    'sitetree'
+    'sitetree',
+    'robots'
 )
 
 THUMBNAIL_DEBUG = True
@@ -247,11 +250,6 @@ LOGIN_REDIRECT_URL = '/accounts/my_account/'
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 90  # 90 дней на хранение cookies
 PRODUCTS_PER_PAGE = 300
 AUTH_PROFILE_MODULE = 'accounts.UserProfile'
-
-ROBOKASSA_LOGIN = 'waymy'
-ROBOKASSA_PASSWORD1 = 'GT1986Balabas'
-ROBOKASSA_PASSWORD2 = 'GT1986Balabas1986'
-ROBOKASSA_TEST_MODE = False
 
 try:
     from settings_local import *
