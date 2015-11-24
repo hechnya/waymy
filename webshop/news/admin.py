@@ -23,4 +23,4 @@ class NewsAdmin(admin.ModelAdmin):
         obj.save()
 
 # Регистрирация модели в админке
-admin.site.register(News, NewsAdmin)
+# admin.site.register(News, NewsAdmin)

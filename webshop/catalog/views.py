@@ -18,6 +18,11 @@ from webshop.pages.models import Page
 from webshop.accounts.models import UserProfile
 from webshop.checkout.models import OrderOneClick
 from webshop.pages.models import MetaInPages
+from webshop.settings import ADMIN_EMAIL
+
+
+def robots(request):
+    return render_to_response('robots.txt', mimetype="text/plain")
 
 
 def change_template_for_device(request, template_name):
@@ -62,7 +67,7 @@ def index_view(request, template_name="catalog/index.html"):
     device = change_template_for_device(request, template_name)['device']
 
     page_title = u'Главная'
-    products = Product.objects.all()
+    products = Product.objects.order_by('-created_at')
     for p in products:
         try:
             p.image = ProductImage.objects.get(product=p, default=True)
@@ -87,35 +92,23 @@ def index_view(request, template_name="catalog/index.html"):
 
     reviews = Review.objects.all()
 
-    #Далее вывод новостей
-    news = News.objects.all()[:5]
-    try:
-        frontpage = Page.objects.get(is_main='True')
-    except Exception:
-        frontpage = Page()
-        frontpage.name = u"Главная станица"
-        frontpage.slug = "main"
-        frontpage.is_main = True
-        frontpage.save()
+    if request.method == 'POST':
+        form = FormFront(request.POST)
+        subject = u'WayMy заявка от %s' % request.POST['name']
+        message = u'телефон: %s \n Имя: %s' % (
+            request.POST['phone'], request.POST['name'])
 
-    # if request.method == 'POST':
-    #     form = FormFront(request.POST)
-    #     subject = u'WayMy заявка от %s' % request.POST['name']
-    #     message = u'телефон: %s \n Имя: %s' % (
-    #         request.POST['phone'], request.POST['name'])
+        if form.is_valid():
+            send_mail(
+                subject, message, 'teamer777@gmail.com', [ADMIN_EMAIL],
+                fail_silently=False)
 
-    #     if form.is_valid():
-    #         send_mail(
-    #             subject, message, 'teamer777@gmail.com',
-    #             ['teamer777@icloud.com'], fail_silently=False)
+            return HttpResponseRedirect('/')
+        else:
+            form = FormFront({'phone': u'Введите свой телефон', })
 
-    #         return HttpResponseRedirect('/')
-    #     else:
-    #         form = FormFront({'phone': u'Введите свой телефон', })
-    # else:
     form = FormFront()
 
-    # Функция locals получает все поля словаря
     return render_to_response(template_name, locals(),
                               context_instance=RequestContext(request))
 
@@ -145,13 +138,14 @@ def category_view(
         request.breadcrumbs('%s' % c.name, request.path_info)
 
         for category in loop_category:
-            products_subcategory = category.product_set.all()
+            products_subcategory = category.product_set.order_by('-created_at')
+
 
             for product in products_subcategory:
                 products.append(product)
 
         """фильтруем повторяющиеся позиции"""
-        products = sortAndUniq(products)
+        # products = sortAndUniq(products)
 
     else:
         products = c.product_set.all()
@@ -257,19 +251,15 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
     cat = p.categories.all()
     c = get_object_or_404(Category, id=cat[0].id)
     if c.level == 0:
-        request.breadcrumbs([
-            ('%s' % c.name, request.path_info),
-            ('%s' % p.name, request.path_info)
-        ])
-
-    else:
-        parent_cat = Category.objects.get(id=c.parent.id)
-        parent_url = parent_cat.get_absolute_url()
-        request.breadcrumbs([
-            ('%s' % parent_cat.name, parent_url),
-            ('%s' % c.name, c.get_absolute_url()),
-            ('%s' % p.name, request.path_info)
-        ])
+        request.breadcrumbs([(c.name, c.get_absolute_url()), (p.name, request.path_info)])
+    # else:
+    #     parent_cat = Category.objects.get(id=c.parent.id)
+    #     parent_url = parent_cat.get_absolute_url()
+    #     request.breadcrumbs([
+    #         ('%s' % parent_cat.name, parent_url),
+    #         ('%s' % c.name, c.get_absolute_url()),
+    #         ('%s' % p.name, p.get_absolute_url())
+    #     ])
 
     if request.method == 'POST':
         # Добавление в корзину, создаем связанную форму
