@@ -5,6 +5,8 @@
 *.pyc
 *.pyo
 
+
+
 # Common IDEs
 *.swp
 .idea/
