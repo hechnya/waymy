@@ -39,7 +39,7 @@ def register_view(request, template_name="registration/register.html"):
                 # отправляем e-mail о регистрации нового пользователя
                 subject = u'waymy.ru регистрация %s' % new_user.username
                 message = u' Зарегистрирован новый пользователь %s' % (new_user.username)
-                send_mail(subject, message, 'teamer777@gmail.com', [ADMIN_EMAIL], fail_silently=False)
+                send_mail(subject, message, 'halturin77@gmail.com', [ADMIN_EMAIL], fail_silently=False)
 
                 login(request, new_user)
                 # Редирект на url с именем my_account
