@@ -62,9 +62,9 @@ def contact(request, template_name='checkout/checkout.html'):
                     'password': password,
                 }
 
-                subject = u'Регистрация на сайте www.polythai.ru'
+                subject = u'Регистрация на сайте www.waymy.ru'
                 message = render_to_string('checkout/reg_email.html', context_dict)
-                from_email = 'polythai@mail.ru'
+                from_email = 'waymy@list.ru'
                 to = new_user.email
                 msg = EmailMultiAlternatives(subject, message, from_email, [to])
                 msg.content_subtype = "html"
