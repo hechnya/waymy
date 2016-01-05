@@ -3,6 +3,8 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from webshop import settings
+from django.conf.urls import handler404 
+from webshop import views
 
 admin.autodiscover()
 
@@ -54,4 +56,5 @@ urlpatterns += patterns(
 )
 
 
-handler404 = 'webshop.views.file_not_found_404'
+# handler404 = 'webshop.views.file_not_found_404'
+handler404 = views.error404
