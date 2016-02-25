@@ -16,7 +16,7 @@
 
                             {% for p in products %}
                                 {% if forloop.counter < 5 %}
-                                    <div class="col-xs-12 col-cp-6 {% if forloop.counter == 4 %}last{% endif %} popular_products">
+                                    <div class="col-xs-12 {% if forloop.counter == 4 %}last{% endif %} popular_products">
                                         <div class="product_thumbnail">
                                             {% thumbnail p.image.url "100x100" crop="center" as im %}
                                                 <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
@@ -27,7 +27,7 @@
                                         <span class="price">{{ p.volume.price }} руб.</span>
                                         <a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a>
                                         <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
-                                        
+
                                         <div class="inline_form">
                                             <input type="hidden" class="slug" value="{{ p.slug }}" />
 
@@ -42,7 +42,7 @@
                                                     {% endfor %}
                                                 {% endif %}
                                             </select>
-                                            
+
                                             <div id="{{ p.id }}" class="quantity">
                                                 <i class="btn-mini fa fa-minus-square minus" onselectstart="return false"></i>
                                                 <input name="quantity{{ p.id }}" maxlength="2" id="id_quantity{{ p.id }}" type="text" class="q_val" value="1" size="1">
@@ -58,6 +58,20 @@
                         {% else %}
                             <p>товары не найдены</p>
                         {% endif %}
+
+                        <div class="col-xs-12" style="text-align: center">
+                            <ul class="pagination">
+                                {% if products.has_previous %}
+                                    <li class=""><a href="?page={{ products.previous_page_number }}">&laquo;</a></li>
+                                {% endif %}
+                                {% for num in paginator.page_range %}
+                                    <li {% if num == products.number %} class="active"{% endif %}><a href="?page={{ num }}" >{{ num }} <span class="sr-only">{{ num }}</span></a></li>
+                                {% endfor %}
+                                {% if products.has_next %}
+                                    <li><a href="?page={{ products.next_page_number }}">&raquo;</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
 
             </div>
         </div>
@@ -314,7 +328,7 @@
                 // bootstrap-combobox https://github.com/cchantep/bootstrap-combobox
                 var current_option = $(this).parent(".inline_form").children('.option_value').btComboBox('value');
                 csrftoken = $.cookie('csrftoken');
-                
+
                 $.post(
                     "/ajax-cart/",
                     {
