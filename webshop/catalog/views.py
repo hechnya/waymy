@@ -126,6 +126,8 @@ def sortAndUniq(input):
 def category_view(
         request, category_slug, template_name="catalog/category.html"):
     """Представление для просмотра конкретной категории"""
+    template_name = change_template_for_device(request, template_name)['template_name']
+    device = change_template_for_device(request, template_name)['device']
     try:
         meta_object = MetaInPages.objects.get(link=request.path)
     except:
