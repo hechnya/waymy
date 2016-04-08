@@ -30,7 +30,7 @@
                     {% if products %}
 
                         {% for p in products %}
-                            <div class="col-xs-12 col-sm-6 col-md-4 col-cp-6 {% if forloop.last %}last{% endif %} popular_products">
+                            <div class="col-xs-12 col-sm-6 col-md-4 {% if forloop.last %}last{% endif %} popular_products">
                                 <div class="product_thumbnail">
                                     <a href="{{ p.get_absolute_url }}">
                                         {% thumbnail p.image_url "x250" as im %}
