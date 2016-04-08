@@ -260,6 +260,8 @@ left: -220px;
 }
 .global_mobile .product_thumbnail img {
     float: left;
+}
+.global_mobile .catalog .product_thumbnail img {
     width: 100%;
 }
 .global_mobile .product_thumbnail p {
