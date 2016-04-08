@@ -260,6 +260,7 @@ left: -220px;
 }
 .global_mobile .product_thumbnail img {
     float: left;
+    width: 100%;
 }
 .global_mobile .product_thumbnail p {
     font-size: 12px;
