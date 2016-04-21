@@ -20,7 +20,7 @@
 
 {% block content %}
 
-    <div id="catalog">
+    <div id="catalog" class="tovari">
         <div class="container">
             <div class="row">
                     <div class="col-xs-12">
@@ -30,11 +30,11 @@
                     {% if products %}
 
                         {% for p in products %}
-                            <div class="col-xs-12 col-sm-6 col-md-4 {% if forloop.last %}last{% endif %} popular_products">
+                            <div class="col-xs-12 {% if forloop.last %}last{% endif %} popular_products">
                                 <div class="product_thumbnail">
                                     <a href="{{ p.get_absolute_url }}">
-                                        {% thumbnail p.image_url "x250" as im %}
-                                            <img src="{{ im.url }}">
+                                        {% thumbnail p.image_url "100x100" crop="center" as im %}
+                                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
                                         {% endthumbnail %}
                                     </a>
                                     <br />
