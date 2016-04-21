@@ -284,8 +284,8 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
                     request.POST['phone'], request.POST['product_name'])
 
                 send_mail(
-                    subject, message, 'teamer777@gmail.com',
-                    ['teamer777@icloud.com'], fail_silently=False)
+                    subject, message, 'halturin77@gmail.com',
+                    [ADMIN_EMAIL], fail_silently=False)
 
                 return HttpResponseRedirect('/product/%s' % product_slug)
     else:
