@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block product_js %}
-    <script src="{{ STATIC_URL }}js/slides.min.jquery.js"></script>
+    <script src="/static/js/slides.min.jquery.js"></script>
     <script>
 		$(function(){
 			$('#products').slides({
@@ -26,9 +26,9 @@
 			});
 		});
 	</script>
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/product.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}Swiper/dist/css/swiper.min.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/animate.css">
+    <link rel="stylesheet" href="/static/css/product.css">
+    <link rel="stylesheet" href="/static/Swiper/dist/css/swiper.min.css">
+    <link rel="stylesheet" href="/static/css/animate.css">
 
     <style>
         .swiper-container {
@@ -79,9 +79,7 @@
                                     {% for image in images %}
                                         <div class="swiper-slide">
                                             <!--<img src="/media/{{ image.url }}" width="300" height="300">-->
-                                            {% thumbnail image.url "360" as im %}
-                                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-                                            {% endthumbnail %}
+                                            <img src="{{ image.image|thumbnail_url:'medium' }}" alt="" />
                                         </div>
                                     {% endfor %}
                                 {% endif %}
@@ -252,7 +250,7 @@
 
 
                 {% if flavour == 'mobile' %}
-                    <div class="col-xs-12"><img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/></div>
+                    <div class="col-xs-12"><img src="/static/images/separator.jpg" class="separator_line" alt=""/></div>
                 {% endif %}
 {#                <div class="col-md-12">#}
 {#                    <h4>Описание:</h4>#}
@@ -298,13 +296,11 @@
                             {% for attachedP in attachedProducts %}
                                 <div class="col-xs-12 col-cp-6 popular_products">
                                     <!--<img src="/media/{{ attachedP.image_url }}" width="100" align="left">-->
-                                            {% thumbnail  attachedP.image_url "x250" as im %}
-                                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-                                            {% endthumbnail %}
+                                    <img src="{{ attachedP.get_image.image|thumbnail_url:'medium' }}" alt="" />
                                     <p class="name">{{ attachedP.name }}</p>
                                     <div class="description_tovar">{{ attachedP.description|removetags:"img"|truncatewords:"12"|safe }}</div>
                                     <p><span class="price">{{ attachedP.volume.price }} руб.</span><a class="btn btn-success" href="{{ attachedP.get_absolute_url }}">Подробнее</a></p>
-                                    <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
+                                    <img src="/static/images/separator.jpg" class="separator_line" alt=""/>
                                 </div>
                             {% endfor %}
                         </div>
@@ -332,8 +328,8 @@
 {#подключаем скрипт blueimp только на этой странице что бы не засорять код#}
 {% block bottom_script %}
 
-    <script src="{{ STATIC_URL }}Swiper/dist/js/swiper.min.js"></script>
-    <script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
+    <script src="/static/Swiper/dist/js/swiper.min.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
 
 <script>
     var mySwiper = new Swiper ('.swiper-container', {

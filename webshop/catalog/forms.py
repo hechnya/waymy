@@ -11,6 +11,7 @@ from webshop.checkout.models import OrderOneClick
 class ProductAdminForm(forms.ModelForm):
     class Meta:
         model = Product
+        exclude = ()
 
     def clean_price(self):
         """Проверка поля цена"""
@@ -84,7 +85,7 @@ class ProductOneClickForm(forms.ModelForm):
     # product_slug = forms.CharField(widget=forms.HiddenInput())
     class Meta:
         model = OrderOneClick
-        # exclude = ('product_name')
+        exclude = ()
         # widgets = {
         #     'phone': forms.TextInput(attrs={'placeholder': "Ваш телефон"}),
         #     'description': forms.Textarea(

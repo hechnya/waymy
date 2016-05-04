@@ -183,8 +183,7 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     """Изображения продуктов"""
-    image = models.FileField(
-        u'Image', upload_to='products/images/', help_text='Product image')
+    image = models.ImageField(upload_to='products/images/', help_text='Product image')
 
     description = models.CharField(u'Description', max_length=255, blank=True)
     product = models.ForeignKey(

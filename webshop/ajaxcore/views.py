@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
-from django.utils import simplejson
+import json as simplejson
 from webshop.cart import cart
 from webshop.catalog.forms import ProductAddToCartForm
 from webshop.cart.delivery import calculate_delivery_price
@@ -61,7 +61,7 @@ def ajaxCart(request):
             message = u'телефон: %s \n Имя: %s' % (request.POST['phone_user'], request.POST['name_user'])
             send_mail(subject, message, 'teamer777@gmail.com', ['teamer777@icloud.com'], fail_silently=False)
 
-    return HttpResponse(data, mimetype="application/json")
+    return HttpResponse(data, content_type="application/json")
 
 
 def ajaxDelivery(request):
@@ -81,4 +81,4 @@ def ajaxDelivery(request):
                              'weight': str(current_delivery.weight),
                              'cart_total': total})
 
-    return HttpResponse(data, mimetype="application/json")
+    return HttpResponse(data, content_type="application/json")

@@ -67,3 +67,4 @@ class OneClickForm(forms.ModelForm):
 
     class Meta:
         model = OrderOneClick
+        exclude = ()

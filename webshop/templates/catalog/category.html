@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block product_js %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/animate.css">
+    <link rel="stylesheet" href="/static/css/animate.css">
 {% endblock %}
 
 
@@ -33,9 +33,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-4 {% if forloop.last %}last{% endif %} popular_products">
                                 <div class="product_thumbnail">
                                     <a href="{{ p.get_absolute_url }}">
-                                        {% thumbnail p.image_url "x250" as im %}
-                                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-                                        {% endthumbnail %}
+                                        <img src="{{ p.get_image.image|thumbnail_url:'medium' }}" alt="" />
                                     </a>
                                     <br />
                                     <div class="name_tovar">{{ p.name }}</div>
@@ -44,7 +42,7 @@
                                     <a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a>
                                     <span class="price">Цена: {{ p.volume.price }} руб.</span>
 
-                                    <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
+                                    <img src="/static/images/separator.jpg" class="separator_line" alt=""/>
 
                                     <div class="inline_form">
                                         <input type="hidden" class="slug" value="{{ p.slug }}" />
@@ -104,7 +102,7 @@
 {% endblock %}
 
 {% block bottom_script %}
-    <script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
 
     <script type="text/javascript">
         //по нажатию на + или - меняем значение в поле quantity

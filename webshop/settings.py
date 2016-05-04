@@ -4,7 +4,7 @@ import os
 from easy_thumbnails.conf import Settings as thumbnail_settings
 
 CURRPATH = os.path.abspath('.')
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 DEBUG = True
@@ -59,63 +59,36 @@ LANGUAGES = (
 )
 
 SITE_ID = 1
-
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
 USE_I18N = True
-
-# If you set this to False, Django will not format dates, numbers and
-# calendars according to the current locale
 USE_L10N = True
 
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-# MEDIA_ROOT = 'C:/webmagazinedjango/webshop/static/media/'
-# MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media').replace('\\', '/')
-MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = '/media/'
-
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
-# STATIC_ROOT = ''
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
+STATIC_ROOT = ''
 
-# URL prefix for admin static files -- CSS, JavaScript and images.
-# Make sure to use a trailing slash.
-# Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = '/static/admin/'
-
-# Additional locations of static files
-# STATICFILES_DIRS = (
-#     # Put strings here, like "/home/html/static" or "C:/www/django/static".
-#     # Always use forward slashes, even on Windows.
-#     # Don't forget to use absolute paths, not relative paths.
-#     os.path.join(PROJECT_PATH, 'static').replace('\\', '/'),
-#     os.path.join(PROJECT_PATH, 'static/media').replace('\\', '/'),
-# )
-
-DIR_FILE = os.path.dirname(os.path.abspath(__file__))
-STATICFILES_DIRS = (
-    os.path.join(DIR_FILE, 'static', ),
-)
-STATIC_ROOT = os.path.join(os.path.dirname(DIR_FILE), 'static', )
+MEDIA_ROOT = '%s/webshop/media' % BASE_DIR
+MEDIA_URL = '/media/'
 
 # List of finder classes that know how to find static files in
 # various locations.
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'dajaxice.finders.DajaxiceFinder',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(BASE_DIR, 'webshop/templates'),
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                # allauth
+                'django.template.context_processors.request',
+            ],
+        },
+    },
+]
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'rs!w229&m79-)f3ohat)gd=u7q)^3#3(*1)k4-)*qwc^4zgom9'
@@ -176,18 +149,19 @@ if DEBUG:
 #     'webshop.ajaxapp.addToCart',
 # )
 
-SOUTH_MIGRATION_MODULES = {
-    'captcha': 'captcha.south_migrations',
-    'easy_thumbnails': 'easy_thumbnails.south_migrations',
-    'robots': 'robots.south_migrations',
-}
+# SOUTH_MIGRATION_MODULES = {
+#     'captcha': 'captcha.south_migrations',
+#     'easy_thumbnails': 'easy_thumbnails.south_migrations',
+#     'robots': 'robots.south_migrations',
+# }
 
 INSTALLED_APPS = (
 
-    'admin_tools',
-    'admin_tools.theming',
-    'admin_tools.menu',
-    'admin_tools.dashboard',
+    # 'admin_tools',
+    # 'admin_tools.theming',
+    # 'admin_tools.menu',
+    # 'admin_tools.dashboard',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -197,8 +171,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
     # Uncomment the next line to enable the admin:
-    'django.contrib.admin',
-    'south',
+    
+    # 'south',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     # Custom modules
@@ -214,12 +188,12 @@ INSTALLED_APPS = (
     'webshop.reviews',
     'mptt',
     'bootstrap3',
-    'sorl.thumbnail',
+    # 'sorl.thumbnail',
+    'easy_thumbnails',
+    'image_cropping',
     'captcha',
     'robokassa',
     'breadcrumbs',
-    'easy_thumbnails',
-    'image_cropping',
     'ckeditor',
     'mptt_tree_editor',
     'django_mobile',
@@ -228,6 +202,12 @@ INSTALLED_APPS = (
 )
 
 THUMBNAIL_DEBUG = True
+THUMBNAIL_ALIASES = {
+    '': {
+        'small': {'size': (100, 100), 'crop': True},
+        'medium': {'size': (360, 360), 'crop': True},
+    },
+}
 
 LOGGING = {
     'version': 1,
