@@ -17,10 +17,7 @@
             {% if cart_i %}
                 {% for item in cart_i %}
                     <div class="cart_items_prod">
-                        {% thumbnail item.product.get_image.url "x100" crop="center" as im %}
-                            <img src="{{ im.url }}" height="{{ im.height }}">
-                        {% endthumbnail %}
-
+                        <img src="{{ item.product.get_image.image|thumbnail_url:'small' }}" alt="" />
                         <div class="text_item">
                             <p class="name_item">{{ item.product.name }}</p>
                             <p>Цена: <i class="fa fa-rub"></i>{% if item.product.get_atributes.new_price != 0.00 %}{{ item.atributes.new_price }}{% else %}{{ item.atributes.price }}{%  endif %}</p>
@@ -55,9 +52,7 @@
             {% if cart_i %}
                 {% for item in cart_i %}
                     <div class="cart_items_prod">
-                        {% thumbnail item.product.get_image.url "x100" crop="center" as im %}
-                            <img src="{{ im.url }}" height="{{ im.height }}">
-                        {% endthumbnail %}
+                        <img src="{{ item.product.get_image.image|thumbnail_url:'small' }}" alt="" />
 
                         <div class="text_item">
                             <p class="name_item">{{ item.product.name }}</p>
@@ -95,9 +90,7 @@
             {% if cart_i %}
                 {% for item in cart_i %}
                     <div class="cart_items_prod">
-                        {% thumbnail item.product.get_image.url "x100" crop="center" as im %}
-                            <img src="{{ im.url }}" height="{{ im.height }}">
-                        {% endthumbnail %}
+                        <img src="{{ item.product.get_image.image|thumbnail_url:'small' }}" alt="" />
 
                         <div class="text_item">
                             <p class="name_item">{{ item.product.name }}</p>

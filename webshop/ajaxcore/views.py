@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
-from django.utils import simplejson
+import json as simplejson
 from webshop.cart import cart
 from webshop.catalog.forms import ProductAddToCartForm
 from webshop.cart.delivery import calculate_delivery_price
