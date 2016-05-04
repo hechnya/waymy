@@ -54,9 +54,7 @@
                                                 <a href="{{ item.get_absolute_url }}" class="cart"><name>{{ item.name }}</name></a>
                                             </div>
                                             <div class="col-xs-8">
-                                                {% thumbnail item.get_default_image "x100" crop="center" as im %}
-                                                    <img src="{{ im.url }}" height="{{ im.height }}">
-                                                {% endthumbnail %}
+                                                <img src="{{ item.image|thumbnail_url:'small' }}" alt="" />
                                                 <!--<img class="item_img" src="/media/{{ item.get_default_image }}" width="50" height="50">-->
                                                 <name>{{ item.price }} <i class="fa fa-rub"></i></name>
                                                 <div class="panel-group" id="accordion">
@@ -128,13 +126,9 @@
                                     {% if cart_items %}
                                         {% for item in cart_items %}
                                     <tr>
-                                        <td>
-        {#                                  {% thumbnail item.get_default_image "50x50" crop="center" as im %}#}
-                                                <!--<img class="item_img" src="/media/{{ item.get_default_image }}" width="50" height="50">-->
-        {#                                  {% endthumbnail %}#}
-                                                {% thumbnail item.get_default_image "x100" crop="center" as im %}
-                                                    <img src="{{ im.url }}" height="{{ im.height }}">
-                                                {% endthumbnail %}
+                                        <td>                      
+
+                                                <img src="{{ item.image|thumbnail_url:'small' }}" alt="" />
                                             <a href="{{ item.get_absolute_url }}" class="cart">
                                             {{ item.name }}
                                             </a>
@@ -245,9 +239,7 @@
                         <div class="gift_in_cart">
                             <h4><strong>Для Вас есть подарок!</strong></h4>
                                 <div style="">
-                                    {% thumbnail cart_gift.url "100x100" crop="center" as im %}
-                                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" align="left">
-                                    {% endthumbnail %}
+                                    <img src="{{ item.image|thumbnail_url:'small' }}" alt="" />
                                     <p>{{ cart_gift.name  }}</p>
                                     <p>{{ cart_gift.description|truncatewords:100|safe }}</p>
                                 </div>
