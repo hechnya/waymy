@@ -22,7 +22,7 @@ from webshop.settings import ADMIN_EMAIL
 
 
 def robots(request):
-    return render_to_response('robots.txt', mimetype="text/plain")
+    return render_to_response('robots.txt', content_type="text/plain")
 
 
 def change_template_for_device(request, template_name):
