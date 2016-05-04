@@ -161,6 +161,7 @@ INSTALLED_APPS = (
     # 'admin_tools.theming',
     # 'admin_tools.menu',
     # 'admin_tools.dashboard',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -170,7 +171,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.flatpages',
     # Uncomment the next line to enable the admin:
-    'django.contrib.admin',
+    
     # 'south',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',

@@ -61,7 +61,7 @@ def ajaxCart(request):
             message = u'телефон: %s \n Имя: %s' % (request.POST['phone_user'], request.POST['name_user'])
             send_mail(subject, message, 'teamer777@gmail.com', ['teamer777@icloud.com'], fail_silently=False)
 
-    return HttpResponse(data, mimetype="application/json")
+    return HttpResponse(data, content_type="application/json")
 
 
 def ajaxDelivery(request):
@@ -81,4 +81,4 @@ def ajaxDelivery(request):
                              'weight': str(current_delivery.weight),
                              'cart_total': total})
 
-    return HttpResponse(data, mimetype="application/json")
+    return HttpResponse(data, content_type="application/json")
