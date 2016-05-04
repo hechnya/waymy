@@ -4,7 +4,7 @@
     <div  id="menu_fixed">
         {# {{device}}#}
         <div class="main_menu"  >
-                <img class="img_menu" src="{{ STATIC_URL }}images/menu_bg_1136_2.png" alt=""/>
+                <img class="img_menu" src="/static/images/menu_bg_1136_2.png" alt=""/>
                 <div class="container">
                     <div class="row">
 
@@ -120,7 +120,7 @@
     <div  id="menu_fixed">
         <div class="main_menu" {% if request.path == "/" and  flavour != 'mobile' %}style="margin-top: -100px;"{% endif %} >
             {% if flavour == 'mobile' or flavour == 'tablet' %}
-                <img class="img_menu" src="{{ STATIC_URL }}images/menu_bg_1136_2.png" alt=""/>
+                <img class="img_menu" src="/static/images/menu_bg_1136_2.png" alt=""/>
             {% endif %}
 
                 <div class="container">

@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block product_js %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/animate.css">
+    <link rel="stylesheet" href="/static/css/animate.css">
 {% endblock %}
 
 {% block content %}
@@ -33,11 +33,7 @@
                                 <div class="col-md-4 col-sm-6 popular_products">
                                     <div class="product_thumbnail">
                                         <a href="{{ p.get_absolute_url }}">
-{#                                            <img src="/media/{{ p.im }}" >#}
-                                            <!--<img src="/media/{{ p.get_image.url }}" height="200">-->
-                                            {% thumbnail p.image.url "x250" as im %}
-                                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-                                            {% endthumbnail %}
+                                            <img src="{{ p.image.image|thumbnail_url:'small' }}" alt="" />
                                         </a>
                                         <br />
                                         <div class="name_tovar">{{ p.name }}</div>
@@ -46,7 +42,7 @@
                                         <a class="btn btn-success" href="{{ p.get_absolute_url }}">Подробнее</a>
                                         <span class="price">Цена: {{ p.volume.price }} руб.</span>
 
-                                        <img src="{{ STATIC_URL }}images/separator.jpg" class="separator_line" alt=""/>
+                                        <img src="/static/images/separator.jpg" class="separator_line" alt=""/>
 
                                             <div class="inline_form">{% csrf_token %}
                                                 <input type="hidden" class="slug" value="{{ p.slug }}" />
@@ -118,7 +114,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <img src="{{ STATIC_URL }}images/med600.jpg" alt=""/>
+                            <img src="/static/images/med600.jpg" alt=""/>
                         </div>
                     </div>
                 </div>
@@ -186,10 +182,10 @@
                             <ul class="slide_element">
 
                                 {% for review in reviews %}
-{#                                    <li class="slide" data-mightyslider="cover:'{{ MEDIA_URL }}{{ review.photo }}', link: { url: '{{ MEDIA_URL }}{{ review.photo }}', 'data-caption': '&lt;strong&gt;Blossom&lt;/strong&gt; by &lt;b&gt;Christopher Wesser&lt;/b&gt;' }">#}
+{#                                    <li class="slide" data-mightyslider="cover:'/media/{{ review.photo }}', link: { url: '/media/{{ review.photo }}', 'data-caption': '&lt;strong&gt;Blossom&lt;/strong&gt; by &lt;b&gt;Christopher Wesser&lt;/b&gt;' }">#}
                                     <li class="slide">
                                         <div class="details">
-                                            <img src="{{ MEDIA_URL }}{{ review.photo }}" alt=""/>
+                                            <img src="/media/{{ review.photo }}" alt=""/>
                                             <strong>{{ review.name }}</strong>
                                             <div style="width:90%">{{ review.review }}</div>
                                         </div>
@@ -279,7 +275,7 @@
 
 {% block bottom_script %}
 
-    <script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
 
     <script type="text/javascript">
         jQuery(document).ready(function($){
@@ -368,6 +364,7 @@
         $(document).ready(function() {
 
             $("#send_form").click(function (){
+                console.log("satrt send_form in index")
 {#                alert('hello');#}
 {#                $('#message_show').removeClass('.hidden');#}
                 var name = $('#id_name').val();
@@ -413,6 +410,12 @@
                 // bootstrap-combobox https://github.com/cchantep/bootstrap-combobox
                 var current_option = $(this).parent(".inline_form").children('.option_value').btComboBox('value');
                 csrftoken = $.cookie('csrftoken');
+                console.log("index clickbutton start data:", {
+                        csrfmiddlewaretoken: csrftoken,
+                        product_slug: current_slug,
+                        quantity: current_quantity,
+                        atr_value: current_option
+                    })
                 $.post(
                     "/ajax-cart/",
                     {
