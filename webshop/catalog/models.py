@@ -138,7 +138,7 @@ class Product(models.Model):
         help_text=u'Categories for product')
 
     feel = models.ManyToManyField(
-        FeelName, verbose_name=u'Вкус', blank=True, null=True)
+        FeelName, verbose_name=u'Вкус', blank=True)
 
     itemsAttached = models.ManyToManyField(
         'self', verbose_name=u'Выберите прилагающиеся товары', blank=True)
