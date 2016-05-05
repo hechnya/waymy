@@ -2,12 +2,13 @@
 #!/usr/bin/env python
 from webshop.accounts.models import UserProfile
 from webshop.accounts.forms import UserProfileForm
+# from django.contrib.auth import User
 
 
 def retrieve(request):
     """Возвращает экземпляр класса форма профиля пользователя"""
     try:
-        profile = request.user.get_profile()
+        profile = UserProfile.objects.get(user=request.user)
     # если у пользователя не было профиля, то создаем его
     except UserProfile.DoesNotExist:
         profile = UserProfile(user=request.user)
