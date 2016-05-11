@@ -33,7 +33,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-4 {% if forloop.last %}last{% endif %} popular_products">
                                 <div class="product_thumbnail">
                                     <a href="{{ p.get_absolute_url }}">
-                                        <img src="{{ p.get_image.image|thumbnail_url:'medium' }}" alt="" />
+                                        <img src="{{ p.get_image.image|thumbnail_url:'small' }}" alt="" />
                                     </a>
                                     <br />
                                     <div class="name_tovar">{{ p.name }}</div>
