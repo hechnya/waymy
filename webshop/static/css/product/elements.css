@@ -1,0 +1,10 @@
+.btn.btn-primary.clickbutton, .btn.btn-success#clickbutton, .btn.btn-success.cart_button {
+	background: #2ad38e; 
+	border: none; 
+	color: #fff; 
+}
+
+.btn.btn-primary.clickbutton:hover, .btn.btn-success#clickbutton:hover, .btn.btn-success.cart_button:hover {
+     border: none!important; 
+     background: #29C787;
+}

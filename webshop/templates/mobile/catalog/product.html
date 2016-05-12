@@ -22,12 +22,10 @@
 		<link rel="stylesheet" href="/static/css/selectbox.css"/>
 		<link href="/static/css/slideout.css" rel="stylesheet" />
 	{% else %}
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link rel="stylesheet" href="/static/bmd/dist/css/bootstrap-material-design.min.css"/>
 		<link rel="stylesheet" href="/static/bmd/dist/css/ripples.min.css"/>
 		<link href="/static/css/style.css" rel="stylesheet" />
 		<link href="/static/css/product/addtocart.css" rel="stylesheet" />
-		<link href="/static/css/product/elements.css" rel="stylesheet" />
 		<link rel="stylesheet" href="/static/css/selectbox.css"/>
 		<link href="/static/css/slideout.css" rel="stylesheet" />
 	{% endif %}
@@ -149,6 +147,38 @@
 											<div class="separator"></div>
 											<h2>Описание:</h2>
 											<div class="tab-pane" id="description">{{ p.description|safe }}</div>
+											<br/>
+											
+											<div class="row">
+												{% if not p.is_aqua %}
+													<div class="col-xs-12" style="height: 40px;">
+														<div class="row">
+															<div class="col-xs-6"><i class="fa fa-database"></i> Вес:</div>
+															<div class="col-xs-6">
+																<select id="option" size="1">
+																	{% for atr in atrs %}
+																		<option value="{{ atr.id }}">{{ atr.weight }} гр.</option>
+																	{% endfor %}
+																</select>
+															</div>
+														</div>
+													</div>
+												{% else %}
+													<div class="col-xs-12" style="height: 40px;">
+														<div class="row">
+															<div class="col-xs-6"><i class="fa fa-tint"></i> Объем:</div>
+															<div class="col-xs-6">
+																<select id="option" size="1">
+																	{% for atr in atrs %}
+																		<option value="{{ atr.id }}">{{ atr.volume }} мл.</option>
+																	{% endfor %}
+																</select>
+															</div>
+														</div>
+													</div>
+												{% endif %}
+											</div>
+											<div class="separator"></div>
 										</div>
 									</div>
 								</div>
@@ -181,6 +211,7 @@
 												<p>Выберите разновидность:</p> <br/>
 											{% endif %}
 												
+											<div class="col-xs-8">
 												<div class="cart" id="addToCartForm">
 													{% csrf_token %}
 													<div class="hidden">
@@ -202,15 +233,15 @@
 														</div>
 													{% endif %}
 													<div class="quantity">
-														<i id="id_minus" class="material-icons" onselectstart="return false">remove</i>
+														<i id="id_minus" class="btn-mini fa fa-minus-square" onselectstart="return false"></i>
 														{{ form.quantity }}
-														<i id="id_plus" class="material-icons" onselectstart="return false">add</i>
+														<i id="id_plus" class="btn-mini fa fa-plus-square" onselectstart="return false"></i>
 													</div>
 
 
 												</div>
 
-												<button class="btn btn-success btn-raised" id="clickbutton">
+												<button class="btn btn-success" id="clickbutton">
 													<i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i><span>Добавить в корзину</span>
 												</button>
 
@@ -247,7 +278,7 @@
 													</div>
 												</div>
 
-
+											</div>
 										</div>
 								  </div>
 								</div>
@@ -305,7 +336,7 @@
 									<img src="{{ attachedP.get_image.image|thumbnail_url:'medium' }}" alt="" />
 									<p class="name">{{ attachedP.name }}</p>
 									<div class="description_tovar">{{ attachedP.description|removetags:"img"|truncatewords:"12"|safe }}</div>
-									<p><span class="price">{{ attachedP.volume.price }} руб.</span><a class="btn btn-success " href="{{ attachedP.get_absolute_url }}">Подробнее</a></p>
+									<p><span class="price">{{ attachedP.volume.price }} руб.</span><a class="btn btn-success" href="{{ attachedP.get_absolute_url }}">Подробнее</a></p>
 									<img src="/static/images/separator.jpg" class="separator_line" alt=""/>
 								</div>
 							{% endfor %}
