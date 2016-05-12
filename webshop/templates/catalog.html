@@ -12,7 +12,7 @@
 {#    <div class="site-overlay"></div>#}
 
     {% block top_menu %}
-        {% if flavour != 'mobile' %}
+        {% if device != 'mobile' %}
             <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container">
                     {% sitetree_menu from "top_menu" include 'trunk' %}

@@ -18,9 +18,9 @@
                                 {% if forloop.counter < 5 %}
                                     <div class="col-xs-6 col-cp-6 {% if forloop.counter == 4 %}last{% endif %} popular_products">
                                         <div class="product_thumbnail">
-                                            {% thumbnail p.image.url "100x100" crop="center" as im %}
-                                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-                                            {% endthumbnail %}
+                                            <a href="{{ p.get_absolute_url }}">
+                                            <img src="{{ p.image.image|thumbnail_url:'small' }}" alt="" />
+                                        </a>
                                         </div>
                                         <name>{{ p.name }}</name>
                                         <div class="description_tovar">{{ p.description|removetags:"img"|truncatewords:"12"|safe }}</div>
@@ -58,6 +58,19 @@
                         {% else %}
                             <p>товары не найдены</p>
                         {% endif %}
+                        <div class="col-xs-12" style="text-align: center">
+                            <ul class="pagination">
+                                {% if products.has_previous %}
+                                    <li class=""><a href="?page={{ products.previous_page_number }}">&laquo;</a></li>
+                                {% endif %}
+                                {% for num in paginator.page_range %}
+                                    <li {% if num == products.number %} class="active"{% endif %}><a href="?page={{ num }}" >{{ num }} <span class="sr-only">{{ num }}</span></a></li>
+                                {% endfor %}
+                                {% if products.has_next %}
+                                    <li><a href="?page={{ products.next_page_number }}">&raquo;</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
 
             </div>
         </div>

@@ -201,7 +201,7 @@ INSTALLED_APPS = (
     'robots'
 )
 
-THUMBNAIL_DEBUG = True
+THUMBNAIL_DEBUG = False
 THUMBNAIL_ALIASES = {
     '': {
         'small': {'size': (100, 100), 'crop': True},
