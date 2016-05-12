@@ -102,6 +102,13 @@ thead th{
 tfoot th{
 	 height:40px;
 }
+.separator {
+    height: 1px;
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid #E8E8E8;
+    margin: 20px 0;
+}
 a.cart{
     color:#2b5b84;
     font-size: 18px;
@@ -703,14 +710,17 @@ font-family: 'Open Sans Condensed', sans-serif;
     height: 100%;
     overflow: hidden;
 }
+#product_list {
+    background: #F6F7FB;
+}
 #product_lict,#oplata, #cart,#stranica{
     /*border-top: 1px solid #E8E8E8;*/
     padding-bottom: 60px;
 }
 .price_cart{
-    border-top: 1px solid #E8E8E8;
+    /*border-top: 1px solid #E8E8E8;*/
     margin-top: 20px;
-    border-bottom: 1px solid #E8E8E8;
+    /*border-bottom: 1px solid #E8E8E8;*/
     /*overflow: hidden;*/
     height: 175px;
     padding: 16px 0px 14px 0px;

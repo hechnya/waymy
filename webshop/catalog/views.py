@@ -216,6 +216,7 @@ def sale_view(request, template_name="", type=""):
 def product_view(request, product_slug, template_name="catalog/product.html"):
     """представление для конкретного товара
     достаем объект, характеристики, все фотки + дефолтную"""
+    template_name = change_template_for_device(request, template_name)['template_name']
     device = change_template_for_device(request, template_name)['device']
     p = get_object_or_404(Product, slug=product_slug)
     try:
