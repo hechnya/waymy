@@ -8,3 +8,13 @@
      border: none!important; 
      background: #29C787;
 }
+
+.label, .label.label-default {
+    background: none; 
+}
+
+.btn-group-raised .btn.btn-success, .btn-group-raised .input-group-btn .btn.btn-success, .btn.btn-fab.btn-success, .btn.btn-raised.btn-success, .input-group-btn .btn.btn-fab.btn-success, .input-group-btn .btn.btn-raised.btn-success {
+    background: #2ad38e; 
+	border: none; 
+	color: #fff; 
+}
