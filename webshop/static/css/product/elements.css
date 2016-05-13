@@ -1,0 +1,37 @@
+
+.btn.btn-primary.clickbutton, .btn.btn-success#clickbutton, .btn.btn-success.cart_button {
+	background: #2ad38e; 
+	border: none; 
+	color: #fff; 
+}
+
+.btn.btn-primary.clickbutton:hover, .btn.btn-success#clickbutton:hover, .btn.btn-success.cart_button:hover {
+     border: none!important; 
+     background: #29C787;
+}
+
+.label, .label.label-default {
+    background: none; 
+}
+
+.btn-group-raised .btn.btn-success, .btn-group-raised .input-group-btn .btn.btn-success, .btn.btn-fab.btn-success, .btn.btn-raised.btn-success, .input-group-btn .btn.btn-fab.btn-success, .input-group-btn .btn.btn-raised.btn-success {
+  background: #2ad38e; 
+	border: none; 
+	color: #fff; 
+}
+
+.btn:not(.btn-raised).btn-primary, .input-group-btn .btn:not(.btn-raised).btn-primary {
+    color: #FFFFFF;
+}
+.btn.btn-primary.two_click {
+    background: #F56859;
+    border: none;
+}
+
+.btn-group-raised .btn:not(.btn-link).active.btn-primary, .btn-group-raised .btn:not(.btn-link):active.btn-primary, .btn-group-raised .btn:not(.btn-link):focus.btn-primary, .btn-group-raised .btn:not(.btn-link):hover.btn-primary, .btn-group-raised .input-group-btn .btn:not(.btn-link).active.btn-primary, .btn-group-raised .input-group-btn .btn:not(.btn-link):active.btn-primary, .btn-group-raised .input-group-btn .btn:not(.btn-link):focus.btn-primary, .btn-group-raised .input-group-btn .btn:not(.btn-link):hover.btn-primary, .btn.btn-raised:not(.btn-link).active.btn-primary, .btn.btn-raised:not(.btn-link):active.btn-primary, .btn.btn-raised:not(.btn-link):focus.btn-primary, .btn.btn-raised:not(.btn-link):hover.btn-primary, .input-group-btn .btn.btn-raised:not(.btn-link).active.btn-primary, .input-group-btn .btn.btn-raised:not(.btn-link):active.btn-primary, .input-group-btn .btn.btn-raised:not(.btn-link):focus.btn-primary, .input-group-btn .btn.btn-raised:not(.btn-link):hover.btn-primary {
+    background-color: #DB6053;
+    border: none!important;
+}
+.btn-group-raised .btn:not(.btn-link).active.btn-success, .btn-group-raised .btn:not(.btn-link):active.btn-success, .btn-group-raised .btn:not(.btn-link):focus.btn-success, .btn-group-raised .btn:not(.btn-link):hover.btn-success, .btn-group-raised .input-group-btn .btn:not(.btn-link).active.btn-success, .btn-group-raised .input-group-btn .btn:not(.btn-link):active.btn-success, .btn-group-raised .input-group-btn .btn:not(.btn-link):focus.btn-success, .btn-group-raised .input-group-btn .btn:not(.btn-link):hover.btn-success, .btn.btn-raised:not(.btn-link).active.btn-success, .btn.btn-raised:not(.btn-link):active.btn-success, .btn.btn-raised:not(.btn-link):focus.btn-success, .btn.btn-raised:not(.btn-link):hover.btn-success, .input-group-btn .btn.btn-raised:not(.btn-link).active.btn-success, .input-group-btn .btn.btn-raised:not(.btn-link):active.btn-success, .input-group-btn .btn.btn-raised:not(.btn-link):focus.btn-success, .input-group-btn .btn.btn-raised:not(.btn-link):hover.btn-success {
+    background-color: #29C787;
+}

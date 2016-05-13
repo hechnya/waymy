@@ -23,8 +23,10 @@
         <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="/static/mightySlider/src/css/mightyslider.css"/>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
 {#        подключаем стили в зависимости от устройства#}
-        {% if flavour == 'mobile' %}
+    {% block target_css %}
+        {% if device == 'mobile' %}
             <link href="/static/css/mobile.css" rel="stylesheet" />
             <link rel="stylesheet" href="/static/css/selectbox.css"/>
             <link href="/static/css/slideout.css" rel="stylesheet" />
@@ -38,6 +40,8 @@
             <link rel="stylesheet" href="/static/css/selectbox.css"/>
             <link href="/static/css/slideout.css" rel="stylesheet" />
         {% endif %}
+    {% endblock target_css %}
+        
         <script src="/static/js/jquery.min.js"></script>
         <script src="/static/bootstrap/js/bootstrap.min.js"></script>
         {% block onload_cart_script %}
@@ -149,12 +153,5 @@
 {#            slideout.toggle();#}
 {#        });#}
     </script>
-
-
-        <!-- BEGIN JIVOSITE CODE {literal} -->
-        <script type='text/javascript'>
-        (function(){ var widget_id = 'N9YGkh7xqi';
-        var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);})();</script>
-        <!-- {/literal} END JIVOSITE CODE -->
     </body>
 </html>

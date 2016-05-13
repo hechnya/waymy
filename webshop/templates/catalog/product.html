@@ -6,13 +6,37 @@
 {% load catalog_tags %}
 
 {% block meta %}
-    <title>{% if p.meta_title %}{{ p.meta_title }}{% else %}{{ p.name }}  | {{ site_name }}{% endif %}</title>
-    <meta name="description" content="{% if p.meta_description %}{{ p.meta_description }}{% else %}{{ meta_description }}{% endif %}" />
+	<title>{% if p.meta_title %}{{ p.meta_title }}{% else %}{{ p.name }}  | {{ site_name }}{% endif %}</title>
+	<meta name="description" content="{% if p.meta_description %}{{ p.meta_description }}{% else %}{{ meta_description }}{% endif %}" />
 {% endblock %}
 
+
+{% block target_css %}
+	{% if device == 'mobile' %}
+		<link href="/static/css/mobile.css" rel="stylesheet" />
+		<link rel="stylesheet" href="/static/css/selectbox.css"/>
+		<link href="/static/css/slideout.css" rel="stylesheet" />
+	{% elif device == 'tablet' %}
+		<link href="/static/css/style.css" rel="stylesheet" />
+		<link href="/static/css/tablet.css" rel="stylesheet" />
+		<link rel="stylesheet" href="/static/css/selectbox.css"/>
+		<link href="/static/css/slideout.css" rel="stylesheet" />
+	{% else %}
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="/static/bmd/dist/css/bootstrap-material-design.min.css"/>
+		<link rel="stylesheet" href="/static/bmd/dist/css/ripples.min.css"/>
+		<link href="/static/css/style.css" rel="stylesheet" />
+		<link href="/static/css/product/layout.css" rel="stylesheet" />
+		<link href="/static/css/product/addtocart.css" rel="stylesheet" />
+		<link href="/static/css/product/elements.css" rel="stylesheet" />
+		<link rel="stylesheet" href="/static/css/selectbox.css"/>
+		<link href="/static/css/slideout.css" rel="stylesheet" />
+	{% endif %}
+{% endblock target_css %}
+
 {% block product_js %}
-    <script src="/static/js/slides.min.jquery.js"></script>
-    <script>
+	<script src="/static/js/slides.min.jquery.js"></script>
+	<script>
 		$(function(){
 			$('#products').slides({
 				preload: true,
@@ -26,20 +50,20 @@
 			});
 		});
 	</script>
-    <link rel="stylesheet" href="/static/css/product.css">
-    <link rel="stylesheet" href="/static/Swiper/dist/css/swiper.min.css">
-    <link rel="stylesheet" href="/static/css/animate.css">
+	<link rel="stylesheet" href="/static/css/product.css">
+	<link rel="stylesheet" href="/static/Swiper/dist/css/swiper.min.css">
+	<link rel="stylesheet" href="/static/css/animate.css">
 
-    <style>
-        .swiper-container {
-            width: 100%;
-            min-height: 320px;
-        }
-    .swiper-container img {
-        width: 100%;
-        height: auto;
-    }
-    </style>
+	<style>
+		.swiper-container {
+			width: 100%;
+			min-height: 320px;
+		}
+	.swiper-container img {
+		width: 100%;
+		height: auto;
+	}
+	</style>
 
 {% endblock %}
 
@@ -53,362 +77,369 @@
 
 
 
-    <div id="product_lict">
-        <div class="container">
-            <div class="row row-fluid">
+	<div id="product_lict">
+		<div class="container">
+			<div class="row row-fluid">
 
-                <div class="col-xs-12 product_text">
-                    <h1>{{ p.name }}</h1>
-                </div>
+				
 
+				<div class="col-xs-12">
+					<div class="row">
 
+						<div class="col-xs-12 col-md-9">
+							<!-- левый блок карточки товара (инфо) -->
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-xs-12 col-md-4">
+											<!-- слайдер картинки -->
+											<div id="slider" class="swiper-container">
+												<!-- Additional required wrapper -->
+												<div class="swiper-wrapper">
+													<!-- Slides -->
+													{% if images %}
+														{% for image in images %}
+															<div class="swiper-slide">
+																<!--<img src="/media/{{ image.url }}" width="300" height="300">-->
+																<img src="{{ image.image|thumbnail_url:'medium' }}" alt="" />
+															</div>
+														{% endfor %}
+													{% endif %}
+												</div>
+												<!-- If we need pagination -->
+												<div class="swiper-pagination"></div>
 
+												<!-- If we need navigation buttons -->
+												{# <div class="swiper-button-prev"></div> #}
+												{# <div class="swiper-button-next"></div> #}
+											</div>
+										</div>
+										<div class="col-xs-12 col-md-8">
+											<div class="product_text">
+												<h1>{{ p.name }}</h1>
+											</div>
+											
+											<div class="separator"></div>
+											<h2>Описание:</h2>
+											<div class="tab-pane" id="description">{{ p.description|safe }}</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-xs-12 col-md-3">
+							<div class="row">
+								<div class="panel panel-default">
 
+									<div class="panel-heading">
+										<div id="super_price" class="{% if p.get_atributes.new_price == 0.00 %}hidden{% endif %}">
+											<div class="price_was">
+												<span id="price">{{ atrs_default.price }} {% trans "руб." %}</span>
+											</div>
+											<br/>
+											<div class="price_now">
+												<span id="new_price">{{ atrs_default.new_price }} руб.</span>
+											</div>
+										</div>
+										<div id="old_price" class="{% if p.get_atributes.new_price != 0.00 %}hidden{% endif %}">
+											<span id="price_old">{{ atrs_default.price }} {% trans "руб." %} </span>
+										</div>
+									</div>
 
+								  <div class="panel-body">
+										<div class="cart-weight">
+											{% if not p.is_aqua %}
+												<div>
+													<div class="pull-left weight-label">
+														<i class="fa fa-database"></i> Вес:
+													</div>
+													<div class="pull-left">
+														<select id="option" size="1">
+															{% for atr in atrs %}
+																<option value="{{ atr.id }}">{{ atr.weight }} гр.</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
 
-            <div class="col-xs-12">
-                <div class="row">
+										{% else %}
+											<div class="col-xs-12" style="height: 40px;">
+												<div class="row">
+													<div class="col-xs-6"><i class="fa fa-tint"></i> Объем:</div>
+													<div class="col-xs-6">
+														<select id="option" size="1">
+															{% for atr in atrs %}
+																<option value="{{ atr.id }}">{{ atr.volume }} мл.</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+											</div>
+										{% endif %}
+									</div>
 
-                    <div class="col-xs-12 col-md-4">
-                    <!-- Slider main container -->
-                        <div id="slider" class="swiper-container">
-                            <!-- Additional required wrapper -->
-                            <div class="swiper-wrapper">
-                                <!-- Slides -->
-                                {% if images %}
-                                    {% for image in images %}
-                                        <div class="swiper-slide">
-                                            <!--<img src="/media/{{ image.url }}" width="300" height="300">-->
-                                            <img src="{{ image.image|thumbnail_url:'medium' }}" alt="" />
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
-                            <!-- If we need pagination -->
-                            <div class="swiper-pagination"></div>
+								    <div class="price_cart">
 
-                            <!-- If we need navigation buttons -->
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-button-next"></div>
-
-                            <!-- If we need scrollbar -->
-    {#                        <div class="swiper-scrollbar"></div>#}
-                        </div>
-
-                    </div>
-
-
-                    <div class="col-xs-12 col-md-8">
-
-                        <h2>Описание:</h2>
-                        <div class="tab-pane" id="description">{{ p.description|safe }}</div>
-                        <br/>
-                        <div class="row">
-
-                            {% if not p.is_aqua %}
-    {#                            <div class="col-xs-12" style="height: 40px;">#}
-    {#                                <div class="row">#}
-    {#                                    <div class="col-xs-6">Вес:</div>#}
-    {#                                    <div class="col-xs-6"><span id="weight">{{ atrs_default.weight }} гр.</span></div>#}
-    {#                                </div>#}
-    {#                            </div>#}
-                                <div class="col-xs-12" style="height: 40px;">
-                                    <div class="row">
-                                        <div class="col-xs-6"><i class="fa fa-database"></i> Вес:</div>
-                                        <div class="col-xs-6">
-                                            <select id="option" size="1">
-                                                {% for atr in atrs %}
-                                                    <option value="{{ atr.id }}">{{ atr.weight }} гр.</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% else %}
-                                <div class="col-xs-12" style="height: 40px;">
-                                    <div class="row">
-                                        <div class="col-xs-6"><i class="fa fa-tint"></i> Объем:</div>
-                                        <div class="col-xs-6">
-                                            <select id="option" size="1">
-                                                {% for atr in atrs %}
-                                                    <option value="{{ atr.id }}">{{ atr.volume }} мл.</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="col-xs-12 col-md-8">
-                        <div class="row">
-                            <div class="price_cart">
-                                <div class="col-xs-4">
-                                    {% if p.feel.count > 0 %}
-                                        <p>Выберите разновидность:</p> <br/>
-                                    {% endif %}
-
-                                    <div id="super_price" class="{% if p.get_atributes.new_price == 0.00 %}hidden{% endif %}">
-                                        <div class="price_was">
-                                            {% trans "Was" %}: <span id="price">{{ atrs_default.price }} {% trans "руб." %}</span>
-                                        </div>
-                                        <br/>
-                                        <div class="price_now">
-                                            <span id="new_price">{% trans "Now" %}: {{ atrs_default.new_price }} руб.</span>
-                                        </div>
-                                    </div>
-                                    <div id="old_price" class="{% if p.get_atributes.new_price != 0.00 %}hidden{% endif %}">
-                                        <span id="price_old">{% trans "Цена" %}: {{ atrs_default.price }} {% trans "руб." %} </span>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-xs-8">
-                                    <div  class="cart" id="addToCartForm">
-                                        {% csrf_token %}
-                                        <div class="hidden">
-                                            {{ form.product_slug }}
-                                        </div>
-                                        <div class="hidden">
-                                            <input id="atr_value" name="atr_value" type="hidden" value="{{ atrs.0.id }}"/>
-                                        </div>
-                                        {% if p.feel.count > 0 %}
-                                            <div class="feel">
-                                                {% if error.feel %}{{ error.feel }}<div class="error">{% endif %}
-                                                <label for="id_feel">Выберите вкус:</label>
-                                                <select name="feel" id="id_feel">
-                                                    {% for feel in p.feel.all %}
-                                                        <option value="{{ feel.id }}">{{ feel.name }}</option>
-                                                    {% endfor %}
-                                                </select>
-                                                {% if error.feel %}</div>{% endif %}
-                                            </div>
-                                        {% endif %}
-                                        <div class="quantity">
-                                            <br/><label for="id_quantity">Количество:</label>
-                                            <i id="id_minus" class="btn-mini fa fa-minus-square" onselectstart="return false"></i>
-                                            {{ form.quantity }}
-                                            <i id="id_plus" class="btn-mini fa fa-plus-square" onselectstart="return false"></i>
-                                        </div>
-
-    {#                                    <button class="btn btn-success" type="submit" name="submit">#}
-    {#                                        <i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i><span>Добавить в корзину</span>#}
-    {#                                    </button>#}
-
-                                    </div>
-
-                                    <button class="btn btn-success" id="clickbutton">
-                                        <i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i><span>Добавить в корзину</span>
-                                    </button>
-
-                                    <!-- Button trigger modal -->
-                                    <button class="btn btn-success two_click" data-toggle="modal" data-target="#myModal2">
-                                        Заказать в 2 клика
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                    <h4 class="modal-title" id="myModalLabel">Отправить заявку на товар:
-                                                        <br/> {{ p.name }}</h4>
-                                                </div>
-                                                <form action="." method="post">{% csrf_token %}
-                                                    <div class="modal-body">
-
-                                                            <div class="hidden">
-                                                                <input id="atr_value" name="atr_value" type="hidden" value="{{ atrs.0.id }}"/>
-                                                                {{ form3.product_name }}
-                                                            </div>
-                                                            {{ form3.phone }}
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
-                                                        <button type="submit" name="one_click" class="btn btn-primary clickbutton">Заказать</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+											{% if p.feel.count > 0 %}
+												<p>Выберите разновидность:</p> <br/>
+											{% endif %}
 
 
+													
+												
+												<div class="cart" id="addToCartForm">
+													{% csrf_token %}
+													<div class="hidden">
+														{{ form.product_slug }}
+													</div>
+													<div class="hidden">
+														<input id="atr_value" name="atr_value" type="hidden" value="{{ atrs.0.id }}"/>
+													</div>
+													{% if p.feel.count > 0 %}
+														<div class="feel">
+															{% if error.feel %}{{ error.feel }}<div class="error">{% endif %}
+															<label for="id_feel">Выберите вкус:</label>
+															<select name="feel" id="id_feel">
+																{% for feel in p.feel.all %}
+																	<option value="{{ feel.id }}">{{ feel.name }}</option>
+																{% endfor %}
+															</select>
+															{% if error.feel %}</div>{% endif %}
+														</div>
+													{% endif %}
+													<div class="quantity">
+														<i id="id_minus" class="material-icons" onselectstart="return false">remove</i>
+														{{ form.quantity }}
+														<i id="id_plus" class="material-icons" onselectstart="return false">add</i>
+													</div>
 
 
-                {% if flavour == 'mobile' %}
-                    <div class="col-xs-12"><img src="/static/images/separator.jpg" class="separator_line" alt=""/></div>
-                {% endif %}
-{#                <div class="col-md-12">#}
-{#                    <h4>Описание:</h4>#}
-{#                    <div class="tab-pane border_bot" id="description">{{ p.description|safe }}</div>#}
-{#                </div>#}
+												</div>
+
+												<button class="btn btn-success btn-raised full-width" id="clickbutton">
+													<i class="icon-shopping-cart icon-white" style="margin-right: 5px;"></i><span>Добавить в корзину</span>
+												</button>
+
+												<!-- Button trigger modal -->
+												<button class="btn btn-primary btn-raised two_click full-width" data-toggle="modal" data-target="#myModal2">
+													Заказать в 2 клика
+												</button>
+
+												<!-- Modal -->
+												<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																<h4 class="modal-title" id="myModalLabel">Отправить заявку на товар:
+																	<br/> {{ p.name }}</h4>
+															</div>
+															<form action="." method="post">{% csrf_token %}
+																<div class="modal-body">
+
+																		<div class="hidden">
+																			<input id="atr_value" name="atr_value" type="hidden" value="{{ atrs.0.id }}"/>
+																			{{ form3.product_name }}
+																		</div>
+																		{{ form3.phone }}
+
+																</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+																	<button type="submit" name="one_click" class="btn btn-primary clickbutton">Заказать</button>
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>
 
 
-                <div class="col-xs-12 col-md-6">
-                    <name class="center">Отзывы о продукте</name>
+										</div>
+								  </div>
+								</div>
 
-                    {% if user.is_authenticated %}
-                        <form  method="post" action="." class="border_bot">{% csrf_token %}
-                            {{ form2.text }}
-                            {% if user.have_profile %}
-                                <input class="btn btn-primary" name="review" style="margin-top: 20px; display: block;" type="submit" value="Сохранить"/>
-                            {% else %}
-                                <input class="btn btn-primary disabled" name="review" style="margin-top: 20px; display: block;" type="submit" value="Сохранить"/> <span class="help-block">Что бы оставить отзыв заполните пожалуйста Ваши данные в личном аккаунте</span>
-                            {% endif %}
-                        </form>
-                    {% else %}
-                        <span class="help-block" style="text-align: center">Что бы оставить отзыв, пожалуйста, зарегистрируйтесь и введите Ваши данные</span>
-                    {% endif %}
+								
 
-                    {% for review in reviews %}
-                        <div class="media">
-                            <a class="pull-left" href="#">
-                                <img class="media-object" alt="64x64" {% if review.userProfile.icon %}src="/media/{{ review.userProfile.icon }}" {% else %} src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZWVlIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMzIiIHk9IjMyIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9zdmc+" {% endif %} style="width: 64px; height: 64px;">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading">{{ review.userProfile.shipping_name }} <span style="font-size: 12px; color: #333; font-family: 'Archive';">{{ review.date }}</span></h4>
-                                {{ review.text|safe }}
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-                {% if attachedProducts %}
+							</div>
+						</div>
 
-                    <div class="col-xs-12 col-md-6">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <h3>С товаром {{ p.name }} покупают:</h3>
-                            </div>
-                            {% for attachedP in attachedProducts %}
-                                <div class="col-xs-12 col-cp-6 popular_products">
-                                    <!--<img src="/media/{{ attachedP.image_url }}" width="100" align="left">-->
-                                    <img src="{{ attachedP.get_image.image|thumbnail_url:'medium' }}" alt="" />
-                                    <p class="name">{{ attachedP.name }}</p>
-                                    <div class="description_tovar">{{ attachedP.description|removetags:"img"|truncatewords:"12"|safe }}</div>
-                                    <p><span class="price">{{ attachedP.volume.price }} руб.</span><a class="btn btn-success" href="{{ attachedP.get_absolute_url }}">Подробнее</a></p>
-                                    <img src="/static/images/separator.jpg" class="separator_line" alt=""/>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
+					</div>
+				</div>
 
-                {% endif %}
+				{% if flavour == 'mobile' %}
+					<div class="col-xs-12"><img src="/static/images/separator.jpg" class="separator_line" alt=""/></div>
+				{% endif %}
 
-            </div>
+				<div class="col-xs-12 col-md-6">
+					<div class="panel panel-default reviews">
+						<div class="panel panel-heading">
+							<name class="center">Отзывы о продукте</name>
+						</div>
+						<div class="panel-body">
+
+							{% for review in reviews %}
+								<div class="media">
+									<a class="pull-left" href="#">
+										<img class="media-object" alt="64x64" {% if review.photo %}src="/media/{{ review.photo }}" {% else %} src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZWVlIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMzIiIHk9IjMyIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9zdmc+" {% endif %} style="width: 64px; height: 64px;">
+									</a>
+									<div class="media-body">
+										<h4 class="media-heading">{{ review.name }} <span style="font-size: 12px; color: #333; font-family: 'Archive';">{{ review.date }}</span></h4>
+										{{ review.review|safe }}
+									</div>
+								</div>
+							{% endfor %}
+
+							
+
+						</div>
+						<div class="panel panel-footer">
+							<h4>Оставить отзыв</h4>
+							{% if user.is_authenticated %}
+								<form  method="post" action="." id="product-review" class="border_bot">{% csrf_token %}
+									<label>ваш отзыв: </label>
+									{{ form2.text }}
+									{% if user.have_profile %}
+										<input class="btn btn-success btn-raised" name="review" style="margin-top: 20px; display: block;" type="submit" value="Добавить"/>
+									{% else %}
+										<input class="btn btn-success btn-raised disabled" name="review" style="margin-top: 20px; display: block;" type="submit" value="Добавить"/> 
+										<span class="help-block">Что бы оставить отзыв заполните пожалуйста Ваши данные в личном аккаунте</span>
+									{% endif %}
+								</form>
+							{% else %}
+								<span class="help-block" style="text-align: center">Что бы оставить отзыв, пожалуйста, зарегистрируйтесь и введите Ваши данные</span>
+							{% endif %}
+						</div>
+					</div>
+
+					
+				</div>
+
+				{% if attachedProducts %}
+					<div class="col-xs-12 col-md-6">
+						<div class="row">
+							<div class="col-xs-12">
+								<h3>С товаром {{ p.name }} покупают:</h3>
+							</div>
+							{% for attachedP in attachedProducts %}
+								<div class="col-xs-12 col-cp-6 popular_products">
+									<div class="panel panel-default reviews">
+										<div class="panel-body">
+											<!--<img src="/media/{{ attachedP.image_url }}" width="100" align="left">-->
+											<img class="product-image" src="{{ attachedP.get_image.image|thumbnail_url:'medium' }}" alt="" />
+											<p class="name">{{ attachedP.name }}</p>
+											<div class="description_tovar">{{ attachedP.description|removetags:"img"|truncatewords:"12"|safe }}</div>
+											<div class="price">
+												<div>{{ attachedP.volume.price }} руб.</div>
+												<a class="btn btn-success btn-raised" href="{{ attachedP.get_absolute_url }}">Подробнее</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				{% endif %}
+
+			</div>
+
+		</div>
+	</div>
+
+	<div id="message_show" class="hidden">
+		<div class="message_inner">
+			<h6>Спасибо!</h6>
+			<p>В ближайшее время наш менеджер свяжется с Вами</p>
+			<button  class="btn btn-primary" onclick="closeMessage();">Закрыть</button>
+		</div>
+	</div>
+
+	{% endblock %}
+
+	{#подключаем скрипт blueimp только на этой странице что бы не засорять код#}
+	{% block bottom_script %}
+
+		<script src="/static/Swiper/dist/js/swiper.min.js"></script>
+		<script src="/static/js/jquery.cookie.js"></script>
+
+	<script>
+		var mySwiper = new Swiper ('.swiper-container', {
+			// Optional parameters
+			direction: 'horizontal',
+			loop: true,
+			// If we need pagination
+			pagination: '.swiper-pagination',
+			// Navigation arrows
+			// nextButton: '.swiper-button-next',
+			// prevButton: '.swiper-button-prev'
+		})
+	</script>
 
 
+	<script type="text/javascript">
+		// меняем quantity по нажатию на + или -
 
-        </div>
-    </div>
+		document.getElementById('id_plus').onclick = function (plus) {
+			var quantity = document.getElementById('id_quantity').value;
+			quantity = parseInt(quantity)+1;
+			$('#id_quantity').val(quantity);
+		};
+		document.getElementById('id_minus').onclick = function (plus) {
+			var quantity = document.getElementById('id_quantity').value;
+			if (parseInt(quantity) > 1) {
+				quantity = parseInt(quantity)-1;
+				$('#id_quantity').val(quantity);
+			}
+		};
+	</script>
 
-<div id="message_show" class="hidden">
-    <div class="message_inner">
-        <h6>Спасибо!</h6>
-        <p>В ближайшее время наш менеджер свяжется с Вами</p>
-        <button  class="btn btn-primary" onclick="closeMessage();">Закрыть</button>
-    </div>
-</div>
+	<script>
+		(function($) {
+			$(document).ready(function() {
 
-{% endblock %}
+				$("#option").on('change', function() {
+					var val = $('#option').btComboBox('value');
+					csrftoken = $.cookie('csrftoken');
+					$.post(
+						"/ajax-cart/",
+						{
+							csrfmiddlewaretoken: csrftoken,
+							atr_value_new: val
+						},
+						onAjaxSuccess
+					);
+					function onAjaxSuccess(data) {
+						$('#old_price').html(data.price);
+					}
+				});
 
-{#подключаем скрипт blueimp только на этой странице что бы не засорять код#}
-{% block bottom_script %}
+				$('#clickbutton').click(function (){
+					csrftoken = $.cookie('csrftoken');
+					$.post(
+						"/ajax-cart/",
+						{
+							csrfmiddlewaretoken: csrftoken,
+							product_slug: '{{ product_slug }}',
+							quantity: $('#id_quantity').val(),
+							// что бы работать с селектами нормально подключен скрипт:
+							// bootstrap-combobox https://github.com/cchantep/bootstrap-combobox
+							atr_value: $('#option').btComboBox('value')
+						},
+						onAjaxSuccess
+					);
+					function onAjaxSuccess(data) {
+						$('#id_quantity').addClass('animated bounceOutUp');
+						$(".cart_items_menu").html(data.add_item_html);
+						$("#total_count").html(data.global_quantity);
+						setTimeout(function () {
+							$("#id_quantity").removeClass('animated bounceOutUp');
+						}, 1000);
+					}
+				});
 
-    <script src="/static/Swiper/dist/js/swiper.min.js"></script>
-    <script src="/static/js/jquery.cookie.js"></script>
-
-<script>
-    var mySwiper = new Swiper ('.swiper-container', {
-        // Optional parameters
-        direction: 'horizontal',
-        loop: true,
-        // If we need pagination
-        pagination: '.swiper-pagination',
-        // Navigation arrows
-        nextButton: '.swiper-button-next',
-        prevButton: '.swiper-button-prev'
-    })
-</script>
-
-
-<script type="text/javascript">
-    // меняем quantity по нажатию на + или -
-
-    document.getElementById('id_plus').onclick = function (plus) {
-        var quantity = document.getElementById('id_quantity').value;
-        quantity = parseInt(quantity)+1;
-        $('#id_quantity').val(quantity);
-    };
-    document.getElementById('id_minus').onclick = function (plus) {
-        var quantity = document.getElementById('id_quantity').value;
-        if (parseInt(quantity) > 1) {
-            quantity = parseInt(quantity)-1;
-            $('#id_quantity').val(quantity);
-        }
-    };
-</script>
-
-<script>
-    (function($) {
-        $(document).ready(function() {
-
-            $("#option").on('change', function() {
-                var val = $('#option').btComboBox('value');
-                csrftoken = $.cookie('csrftoken');
-                $.post(
-                    "/ajax-cart/",
-                    {
-                        csrfmiddlewaretoken: csrftoken,
-                        atr_value_new: val
-                    },
-                    onAjaxSuccess
-                );
-                function onAjaxSuccess(data) {
-                    $('#old_price').html(data.price);
-                }
-            });
-
-            $('#clickbutton').click(function (){
-                csrftoken = $.cookie('csrftoken');
-                $.post(
-                    "/ajax-cart/",
-                    {
-                        csrfmiddlewaretoken: csrftoken,
-                        product_slug: '{{ product_slug }}',
-                        quantity: $('#id_quantity').val(),
-                        // что бы работать с селектами нормально подключен скрипт:
-                        // bootstrap-combobox https://github.com/cchantep/bootstrap-combobox
-                        atr_value: $('#option').btComboBox('value')
-                    },
-                    onAjaxSuccess
-                );
-                function onAjaxSuccess(data) {
-                    $('#id_quantity').addClass('animated bounceOutUp');
-                    $(".cart_items_menu").html(data.add_item_html);
-                    $("#total_count").html(data.global_quantity);
-                    setTimeout(function () {
-                        $("#id_quantity").removeClass('animated bounceOutUp');
-                    }, 1000);
-                }
-            });
-
-        });
-    })(jQuery);
-</script>
+			});
+		})(jQuery);
+	</script>
 
 
 {% endblock %}
