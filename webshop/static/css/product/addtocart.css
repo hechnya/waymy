@@ -1,3 +1,12 @@
+body {
+    background-color: #F6F7FB;
+}
+.panel.panel-default>.panel-heading, .panel>.panel-heading {
+    background-color: #F5F6F9;
+}
+.panel-footer {
+    background-color: #F5F6F9;
+}
 #old_price {
 	border: none; 
 	padding: 0; 
@@ -10,7 +19,7 @@
     border-top: none; 
     margin-top: 0; 
     border-bottom: none; 
-    height: 175px;
+    height: auto;
     padding: 0; 
 }
 
@@ -29,6 +38,25 @@
     /* border-top: 1px solid #E8E8E8; */
     padding-bottom: 60px;
     padding-top: 60px;
+}
+#product_lict .popular_products img.product-image {
+    float: left;
+    width: 150px;
+    margin-right: 15px;
+}
+#product_lict .popular_products .price {
+    text-align: right;
+}
+#product_lict .popular_products .name {
+    font-size: 20px;
+    margin-top: -5px;
+}
+#product_lict .reviews .media{
+    margin-bottom: 40px; 
+}
+#product_lict .popular_products, .best_selling {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 input#id_quantity {
@@ -61,4 +89,18 @@ textarea.form-control {
 .btn:not(.btn-raised).btn-success, .input-group-btn .btn:not(.btn-raised).btn-success {
     color: #009688;
 }
-    
+
+.cart-weight {
+    height: 70px;
+    width: 100%;
+}
+.cart-weight .weight-label {
+    line-height: 64px;
+}
+.cart-weight #option .dropdown-toggle {
+    font-size: 20px;
+}
+
+form#product-review textarea {
+    background-color: #fff;
+}

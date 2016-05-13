@@ -268,6 +268,7 @@ class Cupon(models.Model):
 
 
 class Review(models.Model):
+    product = models.ForeignKey(Product, verbose_name=u'Продукт', help_text=u'Выберите продукт к которому относиться данный отзыв')
     name = models.CharField(max_length=100, verbose_name=u'Ваше имя')
     review = models.TextField(verbose_name=u'Текст')
     photo = models.FileField(_(u'Фото'), upload_to='reviews/images/')

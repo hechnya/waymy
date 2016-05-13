@@ -236,7 +236,7 @@ def product_view(request, product_slug, template_name="catalog/product.html"):
         user.have_profile = True
     except:
         user.have_profile = False
-    reviews = ReviewsProduct.objects.filter(product=p)
+    reviews = Review.objects.filter(product=p)
     """Достаем присоединенные товары и их картинки"""
     try:
         attachedProducts = p.itemsAttached.all()
