@@ -2,78 +2,58 @@
 {% load i18n %}
 {% load catalog_tags %}
 {% load search_tags %}
-{#{% load mptt_tags %}#}
+
 {% block site_wrapper %}
-{% load sitetree %}
+    {% load sitetree %}
 
 
 
-{#    <!-- Site Overlay -->#}
-{#    <div class="site-overlay"></div>#}
+    {#    <!-- Site Overlay -->#}
+    {#    <div class="site-overlay"></div>#}
 
-    {% block top_menu %}
-        {% if device != 'mobile' %}
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="container">
-                    {% sitetree_menu from "top_menu" include 'trunk' %}
-                </div>
-            </nav>
-        {% endif %}
-
-
-    {#<main id="panel">#}
-
-    {#</main>#}
-
-{#        <nav class="navbar navbar-default navbar-fixed-top">#}
-{#          <div class="container">#}
-{#            <ul class="nav navbar-nav pull-right">#}
-{#                <li><a href="/">Главная <span class="sr-only"></span></a></li>#}
-{#                <li><a href="/page/o-dostavke"><span class=""></span>О доставке</a></li>#}
-{#                <li><a href="/page/ob-oplate"><span class=""></span>Об оплате</a></li>#}
-{#            </ul>#}
-{#          </div>#}
-{#        </nav>#}
-    {% endblock %}
+        {% block top_menu %}
+            {% if device != 'mobile' %}
+                <nav class="navbar navbar-default navbar-fixed-top">
+                    <div class="container">
+                        {% sitetree_menu from "top_menu" include 'trunk' %}
+                    </div>
+                </nav>
+            {% endif %}
+        {% endblock %}
 
 
-    {% block slider %}
-        {% slider request %}
-    {% endblock %}
+        {% block slider %}
+            {% slider request %}
+        {% endblock %}
 
-    {% include 'menu.html' %}
-    {% if request.path_info != '/' %}
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-5">
+        {% include 'menu.html' %}
+        {% if request.path_info != '/' %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-5">
 
-                    <ol class="breadcrumb">
-                        {% for breadcrumb in request.breadcrumbs %}
-                            {% if not forloop.last %}
-                                <li><a href="{{ breadcrumb.url }}">{{ breadcrumb.name }}</a></li>
-                            {% else %} <li class="active">{{ breadcrumb.name }}</li> {% endif %}
-                        {% endfor %}
-                    </ol>
+                        <ol class="breadcrumb">
+                            {% for breadcrumb in request.breadcrumbs %}
+                                {% if not forloop.last %}
+                                    <li><a href="{{ breadcrumb.url }}">{{ breadcrumb.name }}</a></li>
+                                {% else %} <li class="active">{{ breadcrumb.name }}</li> {% endif %}
+                            {% endfor %}
+                        </ol>
 
+                    </div>
                 </div>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
 
-    {# {{flavour}}#}
+        {% block tri_bloka %}
+        {% endblock %}
 
-    {% block tri_bloka %}
-    {% endblock %}
+        {% block content %}
+        {% endblock %}
 
-    {% block content %}
-    {% endblock %}
+        {% block partners %}
+        {% endblock %}
 
-    {% block partners %}
-    {% endblock %}
-
-{#        блок футер#}
-    {% include 'footer.html' %}
-
-{#    </div>#}
+        {% include 'footer.html' %}
 
 {% endblock %}
