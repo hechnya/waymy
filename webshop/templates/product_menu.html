@@ -1,0 +1,48 @@
+{% load catalog_tags %}
+
+	<div  id="menu_fixed">
+		{# {{device}}#}
+		<div class="main_menu"  >
+
+			<ul>
+				<li>
+					<div class="btn toggle-button menu-btn">&#9776; Меню</div>
+				</li>
+				<li class="pull-right">
+					<div class="cart_icon">
+						{% product_cart_box request %}
+					</div>
+				</li>
+				<li class="pull-right">
+					<div class="btn-group">
+			      <a href="" data-target="#" class="btn dropdown-toggle" data-toggle="dropdown">
+			        <i class="material-icons">account_circle</i>
+			      </a>
+			      <ul class="dropdown-menu">
+			        {% if user.is_authenticated %}
+								<li><a href="{% url 'my_account' %}">Мой аккаунт</a></li>
+								<li ><a href="{% url 'django.contrib.auth.views.logout' %}">Выйти</a></li>
+							{% else %}
+								<li><a href="{% url 'django.contrib.auth.views.login' %}">Войти</a></li>
+								<li><a href="{% url 'register' %}">Регистрация</a></li>
+							{% endif %}
+			      </ul>
+			    </div>
+				</li>
+			</ul>
+
+			<!--<div class="search">
+				<form class="navbar-form navbar-left" method="get" action="/search/results/" role="search">
+					<div class="">
+						<input name="query" style="float:left; height: 34px;" id="{{ form.auto_id }}" type="text" value=""
+							   class="search-query span2" placeholder="Поиск"/>
+						<span class="input-group-btn">
+							<button class="btn" style="margin-left:10px;" type="submit">поиск</button>
+						</span>
+					</div>
+				</form>
+			</div>-->
+
+		</div>
+	</div>
+

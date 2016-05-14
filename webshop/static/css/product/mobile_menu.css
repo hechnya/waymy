@@ -1,0 +1,54 @@
+.global_mobile {
+	background: #F6F7FB;
+}
+.main_menu .btn:not(.btn-raised):not(.btn-link):focus, .btn:not(.btn-raised):not(.btn-link):hover, .input-group-btn .btn:not(.btn-raised):not(.btn-link):focus, .input-group-btn .btn:not(.btn-raised):not(.btn-link):hover {
+  background: none; 
+}
+.main_menu {
+	background: #212121;
+	height: auto; 
+}
+.main_menu>ul {
+	padding: 0;
+	width: 100%;
+	overflow: hidden;
+}
+.main_menu>ul>li {
+	float: left;
+	list-style: none;
+}
+.main_menu>ul>li ul.dropdown-menu {
+	width: 100%;
+}
+.main_menu>ul>li .cart_icon a {
+	font-size: 16px;
+}
+.main_menu>ul>li .cart_icon a:hover {
+	background: #212121!important;
+}
+.main_menu>ul>li .cart_icon a:hover span {
+	color: #212121;
+	background: #2ad38e;
+}
+.toggle-button.menu-btn {
+  color: #8B8B8B;
+}
+.main_menu .btn-group>.btn.dropdown-toggle,
+.main_menu .btn {
+	background-color: #212121;
+}
+.main_menu i {
+	color: #8B8B8B; 
+}
+
+body {
+  margin-top: 0;
+}
+
+.breadcrumb {
+  margin-top: 0;
+}
+
+.main_menu .btn-group {
+	position: inherit;
+}

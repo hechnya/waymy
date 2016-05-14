@@ -4,56 +4,62 @@
 {% load search_tags %}
 
 {% block site_wrapper %}
-    {% load sitetree %}
+	{% load sitetree %}
 
 
 
-    {#    <!-- Site Overlay -->#}
-    {#    <div class="site-overlay"></div>#}
+	{#    <!-- Site Overlay -->#}
+	{#    <div class="site-overlay"></div>#}
 
-        {% block top_menu %}
-            {% if device != 'mobile' %}
-                <nav class="navbar navbar-default navbar-fixed-top">
-                    <div class="container">
-                        {% sitetree_menu from "top_menu" include 'trunk' %}
-                    </div>
-                </nav>
-            {% endif %}
-        {% endblock %}
+		{% block top_menu %}
+			{% if device != 'mobile' %}
+				<nav class="navbar navbar-default navbar-fixed-top">
+					<div class="container">
+						{% sitetree_menu from "top_menu" include 'trunk' %}
+					</div>
+				</nav>
+			{% endif %}
+		{% endblock %}
 
 
-        {% block slider %}
-            {% slider request %}
-        {% endblock %}
+		{% block slider %}
+			{% slider request %}
+		{% endblock %}
 
-        {% include 'menu.html' %}
-        {% if request.path_info != '/' %}
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12 col-md-5">
+		{% block current_menu %}
+			{% include 'menu.html' %}
+		{% endblock current_menu %}
+		
+		
 
-                        <ol class="breadcrumb">
-                            {% for breadcrumb in request.breadcrumbs %}
-                                {% if not forloop.last %}
-                                    <li><a href="{{ breadcrumb.url }}">{{ breadcrumb.name }}</a></li>
-                                {% else %} <li class="active">{{ breadcrumb.name }}</li> {% endif %}
-                            {% endfor %}
-                        </ol>
 
-                    </div>
-                </div>
-            </div>
-        {% endif %}
+		{% if request.path_info != '/' %}
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12 col-md-5">
 
-        {% block tri_bloka %}
-        {% endblock %}
+						<ol class="breadcrumb">
+							{% for breadcrumb in request.breadcrumbs %}
+								{% if not forloop.last %}
+									<li><a href="{{ breadcrumb.url }}">{{ breadcrumb.name }}</a></li>
+								{% else %} <li class="active">{{ breadcrumb.name }}</li> {% endif %}
+							{% endfor %}
+						</ol>
 
-        {% block content %}
-        {% endblock %}
+					</div>
+				</div>
+			</div>
+		{% endif %}
 
-        {% block partners %}
-        {% endblock %}
+		{% block tri_bloka %}
+		{% endblock %}
 
-        {% include 'footer.html' %}
+		{% block content %}
+		{% endblock %}
+
+		{% block partners %}
+		{% endblock %}
+
+		{% include 'footer.html' %}
 
 {% endblock %}

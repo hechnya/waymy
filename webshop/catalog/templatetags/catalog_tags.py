@@ -53,6 +53,20 @@ def cart_box(context, request):
     }
 register.inclusion_tag('tags/cart_box.html', takes_context=True)(cart_box)
 
+
+def product_cart_box(context, request):
+    cart_i = cart.get_cart_items(request)
+    quantity = cart.cart_distinct_item_count(request)
+    device = checkDevice(request)
+    return {
+        'cart_i': cart_i,
+        'device': device,
+        'quantity': quantity
+    }
+register.inclusion_tag('tags/product_cart_box.html', takes_context=True)(product_cart_box)
+
+
+
 def lider_box(context, request):
     lider_items = Product.objects.filter(is_bestseller='True')
     return {
@@ -81,7 +95,6 @@ def menu(context, request):
     return {
         'pages': pages,
     }
-
 register.inclusion_tag('tags/menu.html', takes_context=True)(menu)
 
 

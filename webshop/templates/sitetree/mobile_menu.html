@@ -1,54 +1,14 @@
 {% load sitetree %}
 
 <ul class="" id="">
-
-    {% for item in sitetree_items %}
-{#        <i class="icon-circle-blank"></i>#}
-
-        <li class="">
-            <a class="" {% if item.has_children %} data-toggle="" {% endif %} href="{% if item.has_children %}#{% else %}{% sitetree_url for item %}{% endif %}"
-               {% if item.hint %}title="{{ item.hint }}"{% endif %}
-               {% if item.is_current or item.in_current_branch %}class="{{ item.is_current|yesno:"current_item ," }}{{ item.in_current_branch|yesno:"current_branch," }}"{% endif %}>
-                <i class="fa fa-circle"></i><span>{{ item.title_resolved }}</span>
-                {% if item.has_children %}<b class=""></b>{% endif %}
-            </a>
-{#            {% if item.has_children %}#}
-                {#{% sitetree_children of item for menu template "sitetree/menu_dropdown.html" %}#}
-{##}
-{#                {% sitetree_children of item for menu template "sitetree/menu_dropdown.html" %}#}
-{##}
-{#            {% endif %}#}
-        </li>
-
-    {% endfor %}
+	{% for item in sitetree_items %}
+		<li class="">
+			<a class="" {% if item.has_children %} data-toggle="" {% endif %} href="{% if item.has_children %}#{% else %}{% sitetree_url for item %}{% endif %}"
+			   {% if item.hint %}title="{{ item.hint }}"{% endif %}
+			   {% if item.is_current or item.in_current_branch %}class="{{ item.is_current|yesno:"current_item ," }}{{ item.in_current_branch|yesno:"current_branch," }}"{% endif %}>
+				<i class="fa fa-circle"></i><span>{{ item.title_resolved }}</span>
+				{% if item.has_children %}<b class=""></b>{% endif %}
+			</a>
+		</li>
+	{% endfor %}
 </ul>
-
-
-{#<ul class="nav navbar-nav" id="mainMenu">#}
-{#    {% for item in sitetree_items %}#}
-{#        {% if request.get_full_path == "/" and forloop.counter != 1 %}#}
-{#            <i class="icon-circle-blank"></i>#}
-{#            <li class="dropdown">#}
-{#                <a class="dropdown-toggle" {% if item.has_children %} data-toggle="dropdown" {% endif %} href="{% if item.has_children %}#{% else %}{% sitetree_url for item %}{% endif %}" {% if item.hint %}title="{{ item.hint }}"{% endif %} {% if item.is_current or item.in_current_branch %}class="{{ item.is_current|yesno:"current_item ," }}{{ item.in_current_branch|yesno:"current_branch," }}"{% endif %}>{{ item.title_resolved }}{% if item.has_children %}<b class="caret"></b>{% endif %}</a>#}
-{#                {% if item.has_children %}#}
-                    {#{% sitetree_children of item for menu template "sitetree/menu_dropdown.html" %}#}
-{##}
-{##}
-{#                    {% sitetree_children of item for menu template "sitetree/menu_dropdown.html" %}#}
-{##}
-{#                {% endif %}#}
-{#            </li>#}
-{#        {% elif request.get_full_path != "/" %}#}
-{#            <li class="dropdown"><i class="icon-circle-blank"></i>#}
-{#                <a class="dropdown-toggle" {% if item.has_children %} data-toggle="dropdown" {% endif %} href="{% if item.has_children %}#{% else %}{% sitetree_url for item %}{% endif %}" {% if item.hint %}title="{{ item.hint }}"{% endif %} {% if item.is_current or item.in_current_branch %}class="{{ item.is_current|yesno:"current_item ," }}{{ item.in_current_branch|yesno:"current_branch," }}"{% endif %}>{{ item.title_resolved }}{% if item.has_children %}<b class="caret"></b>{% endif %}</a>#}
-{#                {% if item.has_children %}#}
-                    {#{% sitetree_children of item for menu template "sitetree/menu_dropdown.html" %}#}
-{##}
-{#                    {% sitetree_children of item for menu template "sitetree/menu_dropdown.html" %}#}
-{##}
-{#                {% endif %}#}
-{#            </li>#}
-{#        {% endif %}#}
-{##}
-{#    {% endfor %}#}
-{#</ul>#}
