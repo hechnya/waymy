@@ -15,6 +15,7 @@ from webshop.catalog.views import change_template_for_device
 def cart_view(request, template_name="cart/cart.html"):
     """Представление для отображения корзины"""
     device = change_template_for_device(request, template_name)['device']
+    template_name = change_template_for_device(request, template_name)['template_name']
     page_title = _(u'Shopping cart')
     if request.method == 'POST':
         postdata = request.POST.copy()

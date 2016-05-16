@@ -42,9 +42,10 @@ class CartItem(models.Model):
         return set_price
 
     def get_default_image(self):
-        # получаем дефолтыне изображения товаров
-        image = ProductImage.objects.get(product=self.product, default=True).url
-        return image
+        # получаем дефолтыное изображение товара
+        return ProductImage.objects.get(product=self.product, default=True).url
+    def get_image(self):
+        return ProductImage.objects.get(product=self.product, default=True)
 
     def get_absolute_url(self):
         """Получение абсолютной ссылки на товар"""
@@ -55,3 +56,4 @@ class CartItem(models.Model):
         if quantity.isdigit():
             self.quantity = self.quantity + int(quantity)
             self.save()
+

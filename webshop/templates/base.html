@@ -6,152 +6,142 @@
 {% load sitetree %}
 <!DOCTYPE HTML>
 <html>
-    <head>
-      <meta name='yandex-verification' content='63a2529f2a078842' />
-        {% block print_css %}
-        {% endblock %}
-        <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
-        {% block meta %}
-            <title>{% if page_title %}{{ page_title }} - {% endif %}{{ site_name }}</title>
-            <meta name="description" content="{{ meta_description }}" />
-        {% endblock %}
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-        <link rel="shortcut icon" type="image/png" href="/static/favicon.ico"/>
-        <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="/static/mightySlider/src/css/mightyslider.css"/>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<head>
+  <meta name='yandex-verification' content='63a2529f2a078842' />
+	{% block print_css %}
+	{% endblock %}
+	<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+	{% block meta %}
+		<title>{% if page_title %}{{ page_title }} - {% endif %}{{ site_name }}</title>
+		<meta name="description" content="{{ meta_description }}" />
+	{% endblock %}
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link rel="shortcut icon" type="image/png" href="/static/favicon.ico"/>
+	<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="/static/mightySlider/src/css/mightyslider.css"/>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
-{#        подключаем стили в зависимости от устройства#}
-    {% block target_css %}
-        {% if device == 'mobile' %}
-            <link href="/static/css/mobile.css" rel="stylesheet" />
-            <link rel="stylesheet" href="/static/css/selectbox.css"/>
-            <link href="/static/css/slideout.css" rel="stylesheet" />
-        {% elif device == 'tablet' %}
-            <link href="/static/css/style.css" rel="stylesheet" />
-            <link href="/static/css/tablet.css" rel="stylesheet" />
-            <link rel="stylesheet" href="/static/css/selectbox.css"/>
-            <link href="/static/css/slideout.css" rel="stylesheet" />
-        {% else %}
-            <link href="/static/css/style.css" rel="stylesheet" />
-            <link rel="stylesheet" href="/static/css/selectbox.css"/>
-            <link href="/static/css/slideout.css" rel="stylesheet" />
-        {% endif %}
-    {% endblock target_css %}
-        
-        <script src="/static/js/jquery.min.js"></script>
-        <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-        {% block onload_cart_script %}
-        {% endblock %}
-        {% block ckeditor %}
-        {% endblock %}
-        {% block product_js %}
-        {% endblock %}
+	{% block target_css %}
+		{% if device == 'mobile' %}
+			<link href="/static/css/mobile.css" rel="stylesheet" />
+			<link rel="stylesheet" href="/static/css/selectbox.css"/>
+			<link href="/static/css/slideout.css" rel="stylesheet" />
+		{% elif device == 'tablet' %}
+			<link href="/static/css/style.css" rel="stylesheet" />
+			<link href="/static/css/tablet.css" rel="stylesheet" />
+			<link rel="stylesheet" href="/static/css/selectbox.css"/>
+			<link href="/static/css/slideout.css" rel="stylesheet" />
+		{% else %}
+			<link href="/static/css/style.css" rel="stylesheet" />
+			<link rel="stylesheet" href="/static/css/selectbox.css"/>
+			<link href="/static/css/slideout.css" rel="stylesheet" />
+		{% endif %}
+	{% endblock target_css %}
 
-{#    защита контента#}
-{% if not request.user.is_staff %}
-    <script type="text/javascript">
-        document.ondragstart = test;
-        document.onselectstart = test;
-        document.oncontextmenu = test;
-        function test() {
-            return false;
-        }
-        document.oncontextmenu;
-            function catchControlKeys(event){
-            var code=event.keyCode ? event.keyCode : event.which ? event.which : null;
-            if (event.ctrlKey){
-                // Ctrl+U
-                if (code == 117) return false;
-                if (code == 85) return false;
-                // Ctrl+C
-                if (code == 99) return false;
-                if (code == 67) return false;
-                // Ctrl+A
-                if (code == 97) return false;
-                if (code == 65) return false;
-            }
-        }
-    </script>
-{% endif %}
-    </head>
+	<script src="/static/js/jquery.min.js"></script>
+	<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+	{% block onload_cart_script %}
+	{% endblock %}
+	{% block ckeditor %}
+	{% endblock %}
+	{% block product_js %}
+	{% endblock %}
 
-
-    <body>
-    {# проверка device#}
-
-    {#мобильное меню!!! #}
-        <nav id="menu" class="menu slideout-menu">
-            <a href="/cart">
-                <button class="btn-menu menu-header-title"><i class="fa fa-shopping-cart"></i> Смотреть корзину </button>
-            </a>
-            <section class="menu-section">
-                <h3 class="menu-section-title"><span class="glyphicon glyphicon-home"></span> Основное меню</h3>
-                {% sitetree_menu from "mobile_menu" include 'trunk' template "sitetree/mobile_menu.html" %}
-            </section>
-
-            <section id="mobile_category">
-                <h3><span class="glyphicon glyphicon-th"></span> Категории</h3>
-                {% categories_tree_mobile request %}
-            </section>
-        </nav>
-
-    <div id="panel"> {# открыт slideout#}
-
-        {% block menu %}
-            {% if flavour == 'mobile' %}
-                <div class="site-overlay"></div>
-            {% endif %}
-        {% endblock %}
-        {#                содержимое в catalog.html#}
-        {# заварачиваем контент в классы в зависимости от устройства #}
-        <div {% if device == 'mobile' %}class="global_mobile"{%elif device == 'tablet' %}class="global_tablet"{% endif %} >
-                {% block site_wrapper %}
-                {% endblock %}
-        </div>
-
-    </div> {# закрыт SLIDEOUT #}
+	{#    защита контента#}
+	{% if not request.user.is_staff %}
+		<script type="text/javascript">
+			document.ondragstart = test;
+			document.onselectstart = test;
+			document.oncontextmenu = test;
+			function test() {
+				return false;
+			}
+			document.oncontextmenu;
+				function catchControlKeys(event){
+				var code=event.keyCode ? event.keyCode : event.which ? event.which : null;
+				if (event.ctrlKey){
+					// Ctrl+U
+					if (code == 117) return false;
+					if (code == 85) return false;
+					// Ctrl+C
+					if (code == 99) return false;
+					if (code == 67) return false;
+					// Ctrl+A
+					if (code == 97) return false;
+					if (code == 65) return false;
+				}
+			}
+		</script>
+	{% endif %}
+</head>
 
 
-        {#        подключаем скрипты в зависимости от устройства#}
-        {% if flavour == 'mobile' %}
-            <script type="text/javascript" src="/static/mightySlider/assets/js/jquery.mobile.just-touch.js"></script>
-            <script src="/static/js/jquery.tap.js"></script>
-        {% endif %}
+<body>
+	<!--мобильное меню!!! -->
+	<nav id="menu" class="menu slideout-menu">
+		<a href="/cart">
+			<button class="btn-menu menu-header-title"><i class="fa fa-shopping-cart"></i> Смотреть корзину </button>
+		</a>
+		<section class="menu-section">
+			<h3 class="menu-section-title"><span class="glyphicon glyphicon-home"></span> Основное меню</h3>
+			{% sitetree_menu from "mobile_menu" include 'trunk' template "sitetree/mobile_menu.html" %}
+		</section>
 
-        {% block combobox %}
-            <script src="/static/js/bootstrap-combobox.min.js"></script>
-            <script>$('select').btComboBox()</script>
-        {% endblock %}
+		<section id="mobile_category">
+			<h3><span class="glyphicon glyphicon-th"></span> Категории</h3>
+			{% categories_tree_mobile request %}
+		</section>
+	</nav>
 
-        <script type="text/javascript" src="/static/mightySlider/assets/js/jquery.easing.1.3.js"></script>
-        <script src="/static/mightySlider/src/js/mightyslider.min.js"></script>
-        <script src="/static/js/custom.js"></script>
-        <script src="/static/js/add-this.js"></script>
-        {% block bottom_script %}
-        {% endblock %}
+	<div id="panel"> <!-- открыт slideout -->
+		{% block menu %}
+			{% if flavour == 'mobile' %}
+				<div class="site-overlay"></div>
+			{% endif %}
+		{% endblock %}
+		<!--                содержимое в catalog.html -->
+		<!-- заварачиваем контент в классы в зависимости от устройства -->
+		<div {% if device == 'mobile' %}class="global_mobile"{%elif device == 'tablet' %}class="global_tablet"{% endif %} >
+			{% block site_wrapper %}
+			{% endblock %}
+		</div>
+	</div>
 
-    {#SLIDEOUT#}
-    <script src="/static/js/jquery.tap.js"></script>
-    <script src="/static/js/slideout/dist/slideout.min.js"></script>
-    <script>
-        var slideout = new Slideout({
-            'panel': document.getElementById('panel'),
-            'menu': document.getElementById('menu'),
-            'padding': 256,
-            'tolerance': 70
-        });
+	<!--        подключаем скрипты в зависимости от устройства -->
+	{% if device == 'mobile' %}
+		<script type="text/javascript" src="/static/mightySlider/assets/js/jquery.mobile.just-touch.js"></script>
+		<script src="/static/js/jquery.tap.js"></script>
+		<script src="/static/js/slideout/dist/slideout.min.js"></script>
+	{% endif %}
 
-        // jQuery tap библиотека что бы нажатие не тормозило !
-        $('.toggle-button').on('tap', function(){
-            slideout.toggle();
-        });
-{#        $('.toggle-button').on('click', function() {#}
-{#            slideout.toggle();#}
-{#        });#}
-    </script>
-    </body>
+	{% block combobox %}
+		<script src="/static/js/bootstrap-combobox.min.js"></script>
+		<script>$('select').btComboBox()</script>
+	{% endblock %}
+
+	<script type="text/javascript" src="/static/mightySlider/assets/js/jquery.easing.1.3.js"></script>
+	<script src="/static/mightySlider/src/js/mightyslider.min.js"></script>
+	<script src="/static/js/custom.js"></script>
+	<script src="/static/js/add-this.js"></script>
+	{% block bottom_script %}
+	{% endblock %}
+
+	<!-- SLIDEOUT -->
+	<script>
+		var slideout = new Slideout({
+			'panel': document.getElementById('panel'),
+			'menu': document.getElementById('menu'),
+			'padding': 256,
+			'tolerance': 70
+		});
+		// jQuery tap библиотека что бы нажатие не тормозило !
+		$('.toggle-button').on('tap', function(e){
+			e.preventDefault();
+			slideout.toggle();
+		});
+	</script>
+</body>
 </html>
