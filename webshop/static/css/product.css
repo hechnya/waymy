@@ -67,6 +67,12 @@ a:link,a:visited {
 	text-decoration:none;
 }
 
+#id_minus {
+	cursor: pointer;
+}
+#id_plus {
+	cursor: pointer;
+}
 /*a:hover,a:active {
 	color:#599100;
 	text-decoration:underline;
