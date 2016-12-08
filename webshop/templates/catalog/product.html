@@ -413,8 +413,12 @@
 						$('#old_price').html(data.price);
 					}
 				});
+                $('#2click').click(function () {
+                    yaCounter29898264.reachGoal('2click');
+                });
 
 				$('#clickbutton').click(function (){
+                    yaCounter29898264.reachGoal('tocart');
 					csrftoken = $.cookie('csrftoken');
 					$.post(
 						"/ajax-cart/",
